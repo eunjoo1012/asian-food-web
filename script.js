@@ -46,14 +46,14 @@ const foodInfo = {
     description:
       "A communal dish where diners cook meats and vegetables in a simmering pot of broth at the table."
   },
-  "Mapo Tofu": {
+  "Mapo tofu": {
     country: "China",
     flag: "🇨🇳",
     calories: 420,
     description:
       "Spicy Sichuan dish featuring tofu and ground meat in chili and bean-based sauce."
   },
-  "Peking Duck": {
+  "Peking duck": {
     country: "China",
     flag: "🇨🇳",
     calories: 465,
@@ -62,14 +62,14 @@ const foodInfo = {
   },
 
   // Japan
-  "Sushi": {
+  "sushi": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 350,
     description:
       "Vinegared rice combined with seafood, vegetables, or egg; the most iconic dish of Japanese cuisine."
   },
-  "Miso-soup": {
+  "Miso_soup": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 50,
@@ -90,14 +90,14 @@ const foodInfo = {
     description:
       "Ball-shaped snacks with diced octopus, fried in wheat batter and topped with sauce and bonito flakes."
   },
-  "Tempura": {
+  "tempura": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 400,
     description:
       "Seafood or vegetables battered and deep-fried until light and crispy."
   },
-  "Katsu Don": {
+  "Katsu don": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 540,
@@ -148,14 +148,14 @@ const foodInfo = {
     description:
       "Unseasoned pork belly slices grilled at the table and eaten with dipping sauces."
   },
-  "Gimbap": {
+  "Kimbap": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 125,
     description:
       "Seaweed rice roll filled with vegetables, egg, and meat; a popular Korean picnic snack."
   },
-  "Doenjang Jjigae": {
+  "Doenjang jjigae": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 280,
@@ -220,7 +220,7 @@ const foodInfo = {
     description:
       "Rich and mild curry with coconut milk, potato, peanuts, influenced by Indian spices."
   },
-  "Pad Kra Phao": {
+  "Pad kra pao": {
     country: "Thailand",
     flag: "🇹🇭",
     calories: 410,
@@ -325,6 +325,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
