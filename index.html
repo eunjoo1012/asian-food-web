@@ -2,44 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Asian Food Classifier</title>
+  <title>Asian Food Image Classifier</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
-
-  <!-- TensorFlow.js & TM -->
+  <!-- TensorFlow.js & Teachable Machine Image lib -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 
 <body>
   <header>
-    <h1>🌏 Asian Food Image Classifier</h1>
-    <p class="subtitle">Detect Korean, Japanese, Chinese, and Thai cuisine using AI</p>
+    <h1>🌍 Asian Food Image Classifier</h1>
+    <p class="subtitle">
+      Detect Korean, Japanese, Chinese, and Thai cuisine with calories and descriptions.
+    </p>
   </header>
 
   <main class="container">
-    <!-- Upload Button -->
+    <!-- 업로드 버튼 -->
     <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
     <input type="file" id="image-input" accept="image/*" />
 
-    <!-- Preview -->
+    <!-- 미리보기 -->
     <div class="preview-area">
       <img id="preview-image" alt="Preview will appear here" />
     </div>
 
-    <!-- Status -->
+    <!-- 상태 -->
     <p id="status">Model is loading...</p>
 
-    <!-- Result -->
+    <!-- 메인 결과 + 설명 -->
     <div id="result-country"></div>
+
+    <!-- Top-K 결과 리스트 -->
     <div id="result-list"></div>
   </main>
 
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
