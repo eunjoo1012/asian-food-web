@@ -277,7 +277,7 @@ function handleUpload(e) {
   reader.readAsDataURL(file);
 }
 
-// 예측
+// 예측 (최고 확률 < 0.5면 '없음' 표시)
 async function predict(image) {
   statusEl.textContent = "Predicting...";
 
@@ -287,7 +287,19 @@ async function predict(image) {
   const top1 = prediction[0];
   const info = foodInfo[top1.className];
 
-  if (info) {
+  // 🔴 1) 최고 확률이 50% 미만이면 '없음' 크게 표시
+  if (top1.probability < 0.5) {
+    resultCountry.innerHTML = `
+      <div class="main-result-line" style="color:#ff6b6b; font-size:26px; font-weight:800;">
+        ❌ 없음 — No matching food
+      </div>
+      <div class="sub-info">
+        Model confidence only ${(top1.probability * 100).toFixed(1)}%.
+      </div>
+    `;
+  }
+  // 🟢 2) 50% 이상 + info 존재 → 정상적으로 나라/음식/칼로리/설명 표시
+  else if (info) {
     resultCountry.innerHTML = `
       <div class="main-result-line">
         <span class="flag">${info.flag}</span>
@@ -300,7 +312,9 @@ async function predict(image) {
         ${info.calories} kcal · ${info.description}
       </div>
     `;
-  } else {
+  }
+  // 🟡 3) info가 없으면 Unknown으로 표시
+  else {
     resultCountry.innerHTML = `
       <div class="main-result-line">
         🌏 Unknown cuisine — ${top1.className}
@@ -309,7 +323,7 @@ async function predict(image) {
     `;
   }
 
-  // Top-3 리스트
+  // 📌 Top-3 리스트는 항상 아래에 표시
   resultList.innerHTML = "";
   prediction.slice(0, 3).forEach((p) => {
     const item = foodInfo[p.className];
@@ -325,6 +339,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
