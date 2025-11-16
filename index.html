@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Asian Food Classifier</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ✅ TensorFlow.js & Teachable Machine (정확한 주소) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Asian Food Classifier</h1>
+    <p>Upload a food image. The model will predict which dish it belongs to.</p>
+
+    <!-- 이미지 업로드 -->
+    <label for="image-input" class="upload-btn">Choose a food image</label>
+    <input type="file" id="image-input" accept="image/*" />
+
+    <!-- 미리보기 -->
+    <div class="preview-area">
+      <img id="preview-image" alt="Preview will appear here" />
+    </div>
+
+    <!-- 상태 메시지 -->
+    <p id="status">Model is loading...</p>
+
+    <!-- 결과 -->
+    <div id="result-country"></div>
+    <div id="result-list"></div>
+  </main>
+
+  <!-- 우리 JS 파일 -->
+  <script src="script.js"></script>
+</body>
+</html>
+
