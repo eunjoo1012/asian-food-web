@@ -1,4 +1,7 @@
-// 음식별 국가/깃발/칼로리/설명 정보 (Food Name 그대로 사용!)
+// Teachable Machine model URL
+const URL = "https://teachablemachine.withgoogle.com/models/SCrCm4nRI/";
+
+// 음식별 국가/깃발/칼로리/설명 정보
 const foodInfo = {
   // China
   "Dim sum": {
@@ -232,6 +235,98 @@ const foodInfo = {
       "Sweet glutinous rice topped with coconut milk and slices of ripe mango."
   }
 };
+
+// 모델 / 상태
+let model;
+let isModelReady = false;
+
+// HTML elements
+const fileInput = document.getElementById("image-input");
+const previewImage = document.getElementById("preview-image");
+const resultCountry = document.getElementById("result-country");
+const resultList = document.getElementById("result-list");
+const statusEl = document.getElementById("status");
+
+// 모델 로딩
+window.addEventListener("load", async () => {
+  try {
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+
+    model = await tmImage.load(modelURL, metadataURL);
+    isModelReady = true;
+    statusEl.textContent = "Model loaded! Upload a food image.";
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = "Model failed to load. Refresh and try again.";
+  }
+});
+
+// 파일 업로드
+fileInput.addEventListener("change", handleUpload);
+
+function handleUpload(e) {
+  const file = e.target.files[0];
+  if (!file || !isModelReady) return;
+
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    previewImage.src = ev.target.result;
+    previewImage.onload = () => predict(previewImage);
+  };
+  reader.readAsDataURL(file);
+}
+
+// 예측
+async function predict(image) {
+  statusEl.textContent = "Predicting...";
+
+  const prediction = await model.predict(image);
+  prediction.sort((a, b) => b.probability - a.probability);
+
+  const top1 = prediction[0];
+  const info = foodInfo[top1.className];
+
+  if (info) {
+    resultCountry.innerHTML = `
+      <div class="main-result-line">
+        <span class="flag">${info.flag}</span>
+        <span class="country">${info.country}</span>
+        <span class="dash"> — </span>
+        <span class="food">${top1.className}</span>
+        <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
+      </div>
+      <div class="sub-info">
+        ${info.calories} kcal · ${info.description}
+      </div>
+    `;
+  } else {
+    resultCountry.innerHTML = `
+      <div class="main-result-line">
+        🌏 Unknown cuisine — ${top1.className}
+        <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
+      </div>
+    `;
+  }
+
+  // Top-3 리스트
+  resultList.innerHTML = "";
+  prediction.slice(0, 3).forEach((p) => {
+    const item = foodInfo[p.className];
+    const prefix = item ? `${item.flag} ${item.country}` : "🌏";
+    const extra = item ? ` · ${item.calories} kcal` : "";
+
+    const div = document.createElement("div");
+    div.textContent = `${prefix} — ${p.className}: ${(p.probability * 100).toFixed(
+      1
+    )}%${extra}`;
+    resultList.appendChild(div);
+  });
+
+  statusEl.textContent = "Prediction complete!";
+}
+
+
 
 
 
