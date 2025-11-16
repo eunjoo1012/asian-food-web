@@ -220,7 +220,7 @@ const foodInfo = {
     description:
       "Rich and mild curry with coconut milk, potato, peanuts, influenced by Indian spices."
   },
-  "Pad kra pao": {
+  "Pad kra phao": {
     country: "Thailand",
     flag: "🇹🇭",
     calories: 410,
@@ -325,6 +325,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
