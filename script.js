@@ -291,7 +291,7 @@ async function predict(image) {
   if (top1.probability < 0.5) {
     resultCountry.innerHTML = `
       <div class="main-result-line" style="color:#ff6b6b; font-size:26px; font-weight:800;">
-        ❌ 없음 — No matching food
+        ❌ No matching food
       </div>
       <div class="sub-info">
         Model confidence only ${(top1.probability * 100).toFixed(1)}%.
@@ -339,6 +339,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
