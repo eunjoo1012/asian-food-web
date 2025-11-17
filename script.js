@@ -4,7 +4,7 @@ const URL = "https://teachablemachine.withgoogle.com/models/SCrCm4nRI/";
 // 음식별 국가/깃발/칼로리/설명 정보
 const foodInfo = {
   // China
-  "Dim sum": {
+  "Dim Sum": {
     country: "China",
     flag: "🇨🇳",
     calories: 360,
@@ -339,6 +339,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
