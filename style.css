@@ -150,4 +150,30 @@ h1 {
   }
 }
 
+/* 칼로리 가이드 (상단 안내문) */
+.calorie-guide {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 칼로리 메시지 (결과 아래 멘트) */
+.calorie-message {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: #ffd27f;
+}
+
+/* Top-3 결과 텍스트 + 막대 그래프 */
+#result-list {
+  margin-top: 12px;
+  font-family: "JetBrains Mono", Menlo, Consolas, "Courier New", monospace;
+  line-height: 1.5;
+}
+
+#result-list .result-line {
+  margin-bottom: 6px;
+}
+
 
