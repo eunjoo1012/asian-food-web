@@ -358,34 +358,39 @@ async function predict(image) {
     `;
   }
 
-  // Top-3 visualization
+  // Top-3 visualization (ASCII bar style)
   resultList.innerHTML = "";
   const maxProb = prediction[0].probability || 1;
+
+  function makeAsciiBar(prob) {
+    const totalBlocks = 20; // 20칸짜리 막대
+    const filled = Math.max(1, Math.round((prob / maxProb) * totalBlocks));
+    const empty = totalBlocks - filled;
+    return "█".repeat(filled) + "░".repeat(empty);
+  }
 
   prediction.slice(0, 3).forEach((p) => {
     const item = foodInfo[p.className];
     const prefix = item ? `${item.flag} ${item.country}` : "🌏";
     const extra = item ? ` · ${item.calories} kcal` : "";
     const percent = (p.probability * 100).toFixed(1);
-    const barWidth = Math.max(5, Math.round((p.probability / maxProb) * 100));
+    const bar = makeAsciiBar(p.probability);
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "result-row";
-
-    wrapper.innerHTML = `
-      <div class="result-row-text">
+    const row = document.createElement("div");
+    row.className = "ascii-row";
+    row.innerHTML = `
+      <div class="ascii-text">
         ${prefix} — ${p.className}: ${percent}%${extra}
       </div>
-      <div class="prob-bar">
-        <div class="prob-bar-fill" style="width:${barWidth}%;"></div>
-      </div>
+      <div class="ascii-bar">${bar}</div>
     `;
-
-    resultList.appendChild(wrapper);
+    resultList.appendChild(row);
   });
+
 
   setStatus("Prediction complete!");
 }
+
 
 
 
