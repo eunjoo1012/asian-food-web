@@ -11,7 +11,7 @@ const foodInfo = {
     description:
       "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea."
   },
-  "Chinese Eight Treasures": {
+  "Chinese Eight Treasures Stir-fry": {
     country: "China",
     flag: "🇨🇳",
     calories: 293,
@@ -339,6 +339,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
