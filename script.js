@@ -358,13 +358,13 @@ async function predict(image) {
     `;
   }
 
-  // Top-3 visualization (ASCII bar style)
+    // Top-3 visualization (ASCII bar style)
   resultList.innerHTML = "";
-  const maxProb = prediction[0].probability || 1;
 
   function makeAsciiBar(prob) {
-    const totalBlocks = 20; // 20칸짜리 막대
-    const filled = Math.max(1, Math.round((prob / maxProb) * totalBlocks));
+    const totalBlocks = 20; // 20 cells total
+    // Scale directly by probability (0~1) instead of relative to max
+    const filled = Math.max(1, Math.round(prob * totalBlocks));
     const empty = totalBlocks - filled;
     return "█".repeat(filled) + "░".repeat(empty);
   }
@@ -388,8 +388,10 @@ async function predict(image) {
   });
 
 
+
   setStatus("Prediction complete!");
 }
+
 
 
 
