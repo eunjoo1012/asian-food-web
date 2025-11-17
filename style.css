@@ -194,6 +194,22 @@ h1 {
   border-radius: 999px;
 }
 
+.ascii-row {
+  margin-bottom: 10px;
+}
+
+.ascii-text {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.ascii-bar {
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
 
 
 
