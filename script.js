@@ -90,7 +90,7 @@ const foodInfo = {
     description:
       "Ball-shaped snacks with diced octopus, fried in wheat batter and topped with sauce and bonito flakes."
   },
-  "tempura": {
+  "Tempura": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 400,
@@ -339,6 +339,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
