@@ -46,14 +46,14 @@ const foodInfo = {
     description:
       "A communal dish where diners cook meats and vegetables in a simmering pot of broth at the table."
   },
-  "Mapo tofu": {
+  "Mapo Tofu": {
     country: "China",
     flag: "🇨🇳",
     calories: 420,
     description:
       "Spicy Sichuan dish featuring tofu and ground meat in chili and bean-based sauce."
   },
-  "Peking duck": {
+  "Peking Duck": {
     country: "China",
     flag: "🇨🇳",
     calories: 465,
@@ -62,14 +62,14 @@ const foodInfo = {
   },
 
   // Japan
-  "sushi": {
+  "Sushi": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 350,
     description:
       "Vinegared rice combined with seafood, vegetables, or egg; the most iconic dish of Japanese cuisine."
   },
-  "Miso_soup": {
+  "Miso_Soup": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 50,
@@ -97,7 +97,7 @@ const foodInfo = {
     description:
       "Seafood or vegetables battered and deep-fried until light and crispy."
   },
-  "Katsu don": {
+  "Katsu Don": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 540,
@@ -155,7 +155,7 @@ const foodInfo = {
     description:
       "Seaweed rice roll filled with vegetables, egg, and meat; a popular Korean picnic snack."
   },
-  "Doenjang jjigae": {
+  "Doenjang Jjigae": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 280,
@@ -339,6 +339,7 @@ async function predict(image) {
 
   statusEl.textContent = "Prediction complete!";
 }
+
 
 
 
