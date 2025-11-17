@@ -150,7 +150,7 @@ h1 {
   }
 }
 
-/* 칼로리 가이드 (상단 안내문) */
+/* Status calorie guide */
 .calorie-guide {
   display: block;
   margin-top: 4px;
@@ -158,22 +158,42 @@ h1 {
   opacity: 0.8;
 }
 
-/* 칼로리 메시지 (결과 아래 멘트) */
+/* Calorie feedback message */
 .calorie-message {
   margin-top: 6px;
   font-size: 0.95rem;
   color: #ffd27f;
 }
 
-/* Top-3 결과 텍스트 + 막대 그래프 */
+/* Top-3 result rows */
 #result-list {
-  margin-top: 12px;
-  font-family: "JetBrains Mono", Menlo, Consolas, "Courier New", monospace;
-  line-height: 1.5;
+  margin-top: 14px;
 }
 
-#result-list .result-line {
-  margin-bottom: 6px;
+.result-row {
+  margin-bottom: 10px;
 }
+
+.result-row-text {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+/* Thin probability bar */
+.prob-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.prob-bar-fill {
+  height: 100%;
+  background: #4fa3ff;
+  border-radius: 999px;
+}
+
+
 
 
