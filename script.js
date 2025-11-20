@@ -316,83 +316,47 @@ async function predict(image) {
   const top1 = prediction[0];
   const info = foodInfo[top1.className];
 
-  if (top1.probability < 0.5) {
-    // No clear match
-    resultCountry.innerHTML = `
-      <div class="main-result-line" style="color:#ff6b6b; font-size:26px; font-weight:800;">
-        ❌ No clear match
-      </div>
-      <div class="sub-info">
-        The model is only ${(top1.probability * 100).toFixed(
-          1
-        )}% confident. Try another photo or angle.
-      </div>
-    `;
-  } else if (info) {
-    // Normal case
-    const emoji = calorieEmoji(info.calories);
-    const msg = calorieMessage(info.calories);
-
-    resultCountry.innerHTML = `
-      <div class="main-result-line">
-        <span class="flag">${info.flag}</span>
-        <span class="country">${info.country}</span>
-        <span class="dash"> — </span>
-        <span class="food">${top1.className}</span>
-        <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
-      </div>
-      <div class="sub-info">
-        ${emoji} ${info.calories} kcal · ${info.description}
-      </div>
-      <div class="calorie-message">
-        ${msg}
-      </div>
-    `;
-  } else {
-    // Label not found in foodInfo
+  if (!info) {
     resultCountry.innerHTML = `
       <div class="main-result-line">
         🌏 Unknown cuisine — ${top1.className}
         <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
       </div>
     `;
+    statusEl.textContent = "Prediction complete!";
+    return;
   }
 
-    // Top-3 visualization (ASCII bar style)
-  resultList.innerHTML = "";
+  // --- Calorie indicator (just icon, no judgement sentence) ---
+  let calorieIcon = "🟡"; // default
 
-  function makeAsciiBar(prob) {
-    const totalBlocks = 20; // 20 cells total
-    // Scale directly by probability (0~1) instead of relative to max
-    const filled = Math.max(1, Math.round(prob * totalBlocks));
-    const empty = totalBlocks - filled;
-    return "█".repeat(filled) + "░".repeat(empty);
+  if (info.calories < 500) {
+    calorieIcon = "🟡";        // low
+  } else if (info.calories <= 700) {
+    calorieIcon = "🔵";        // recommended range for one meal
+  } else {
+    calorieIcon = "🔴";        // high
   }
 
-  prediction.slice(0, 3).forEach((p) => {
-    const item = foodInfo[p.className];
-    const prefix = item ? `${item.flag} ${item.country}` : "🌏";
-    const extra = item ? ` · ${item.calories} kcal` : "";
-    const percent = (p.probability * 100).toFixed(1);
-    const bar = makeAsciiBar(p.probability);
+  // NEW: neutral explanation (no “too low / too high” judgement)
+  const calorieMessage =
+    "This calorie value is based on a typical serving. Your actual intake can be higher or lower depending on how much you eat.";
 
-    const row = document.createElement("div");
-    row.className = "ascii-row";
-    row.innerHTML = `
-      <div class="ascii-text">
-        ${prefix} — ${p.className}: ${percent}%${extra}
-      </div>
-      <div class="ascii-bar">${bar}</div>
-    `;
-    resultList.appendChild(row);
-  });
-
-
-
-  setStatus("Prediction complete!");
-}
-
-
+  resultCountry.innerHTML = `
+    <div class="main-result-line">
+      <span class="flag">${info.flag}</span>
+      <span class="country">${info.country}</span>
+      <span class="dash"> — </span>
+      <span class="food">${top1.className}</span>
+      <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
+    </div>
+    <div class="sub-info">
+      ${calorieIcon} ${info.calories} kcal · ${info.description}
+    </div>
+    <div class="calorie-message">
+      ${calorieMessage}
+    </div>
+  `;
 
 
 
