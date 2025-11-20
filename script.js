@@ -250,30 +250,27 @@ const resultCountry = document.getElementById("result-country");
 const resultList = document.getElementById("result-list");
 const statusEl = document.getElementById("status");
 
-// Calorie emoji & message
+// Calorie emoji (색만 표시, 평가 문장은 안 함)
 function calorieEmoji(cal) {
   if (cal < 500) return "🟡";
   if (cal <= 700) return "🔵";
   return "🔴";
 }
 
-function calorieMessage(cal) {
-  if (cal < 500)
-    return "Calories are a bit low. You could eat a little more in your next meal.";
-  if (cal <= 700)
-    return "This is within the recommended range for one meal. Nice choice!";
-  return "This meal is quite high in calories. A lighter option next time might be a good idea.";
-}
-
-// Status text + calorie guide
+// Status text + calorie guide (페이지 상단 설명)
 function setStatus(mainText) {
   statusEl.innerHTML = `
     ${mainText}<br>
     <span class="calorie-guide">
-      Calorie guide — 🟡: &lt; 500 kcal (low), 🔵: 500–700 kcal (recommended for one meal), 🔴: &gt; 700 kcal (high)
+      Calorie guide — 🟡: &lt; 500 kcal, 🔵: 500–700 kcal (typical one meal range), 🔴: &gt; 700 kcal.
     </span>
   `;
 }
+
+// 에러를 바로 확인하고 싶으면 콘솔 대신 alert로도 볼 수 있음
+window.onerror = function (msg, url, line, col, error) {
+  console.error("JS ERROR:", msg, "at", line + ":" + col);
+};
 
 // Model loading
 window.addEventListener("load", async () => {
@@ -316,32 +313,30 @@ async function predict(image) {
   const top1 = prediction[0];
   const info = foodInfo[top1.className];
 
+  // Unknown class인 경우
   if (!info) {
     resultCountry.innerHTML = `
       <div class="main-result-line">
         🌏 Unknown cuisine — ${top1.className}
         <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
       </div>
+      <div class="calorie-message">
+        This food is not in our database yet. The model is still learning!
+      </div>
     `;
-    statusEl.textContent = "Prediction complete!";
+    resultList.innerHTML = "";
+    setStatus("Prediction complete!");
     return;
   }
 
-  // --- Calorie indicator (just icon, no judgement sentence) ---
-  let calorieIcon = "🟡"; // default
+  // --- Calorie indicator (icon only) ---
+  const emoji = calorieEmoji(info.calories);
 
-  if (info.calories < 500) {
-    calorieIcon = "🟡";        // low
-  } else if (info.calories <= 700) {
-    calorieIcon = "🔵";        // recommended range for one meal
-  } else {
-    calorieIcon = "🔴";        // high
-  }
+  // 중립적인 칼로리 설명 문장
+  const neutralCalorieNote =
+    "This calorie value is based on a typical serving size. Your actual intake can be higher or lower depending on how much you eat.";
 
-  // NEW: neutral explanation (no “too low / too high” judgement)
-  const calorieMessage =
-    "This calorie value is based on a typical serving. Your actual intake can be higher or lower depending on how much you eat.";
-
+  // 메인 결과
   resultCountry.innerHTML = `
     <div class="main-result-line">
       <span class="flag">${info.flag}</span>
@@ -351,12 +346,40 @@ async function predict(image) {
       <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
     </div>
     <div class="sub-info">
-      ${calorieIcon} ${info.calories} kcal · ${info.description}
+      ${emoji} ${info.calories} kcal · ${info.description}
     </div>
     <div class="calorie-message">
-      ${calorieMessage}
+      ${neutralCalorieNote}
     </div>
   `;
+
+  // --- Top-3 결과: ASCII 스타일 막대 ---
+  resultList.innerHTML = "";
+  const maxBlocks = 20;
+
+  prediction.slice(0, 3).forEach((p) => {
+    const item = foodInfo[p.className];
+    const prefix = item ? `${item.flag} ${item.country}` : "🌏";
+    const extra = item ? ` · ${item.calories} kcal` : "";
+    const percentage = p.probability * 100;
+
+    const filledBlocks = Math.round((percentage / 100) * maxBlocks);
+    const emptyBlocks = Math.max(0, maxBlocks - filledBlocks);
+    const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
+
+    const row = document.createElement("div");
+    row.className = "ascii-row";
+    row.innerHTML = `
+      <div class="ascii-text">
+        ${prefix} — ${p.className}: ${percentage.toFixed(1)}%${extra}
+      </div>
+      <div class="ascii-bar">${bar}</div>
+    `;
+    resultList.appendChild(row);
+  });
+
+  setStatus("Prediction complete!");
+}
 
 
 
