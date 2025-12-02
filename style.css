@@ -380,6 +380,40 @@ h1 {
   color: #ffd27f;
 }
 
+/* ===== 기본: 둘 다 보이는 2분할 레이아웃 ===== */
+.two-column-layout {
+  display: grid;
+  gap: 32px;
+  align-items: flex-start;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* 음식만 보이는 모드 */
+body.view-food-only .two-column-layout {
+  grid-template-columns: 1fr;
+}
+
+body.view-food-only #travel-section {
+  display: none;
+}
+
+body.view-food-only #classifier-section::after {
+  display: none;   /* 가운데 세로선 숨김 */
+}
+
+/* 여행만 보이는 모드 */
+body.view-travel-only .two-column-layout {
+  grid-template-columns: 1fr;
+}
+
+body.view-travel-only #classifier-section {
+  display: none;
+}
+
+body.view-travel-only #classifier-section::after {
+  display: none;
+}
+
 
 
 
