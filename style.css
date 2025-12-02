@@ -313,6 +313,20 @@ h1 {
     grid-template-columns: 1fr;
   }
 }
+.main-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* 모바일에서는 다시 세로로 */
+@media (max-width: 800px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 
