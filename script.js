@@ -1,3 +1,6 @@
+const travelBtn = document.getElementById("travel-search-btn");
+
+
 // Simple console check
 console.log("script.js loaded");
 
@@ -458,6 +461,7 @@ function renderRecommendations(mainClassName) {
     </div>
   `;
 }
+
 
 
 
