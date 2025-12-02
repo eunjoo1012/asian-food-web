@@ -238,6 +238,33 @@ const foodInfo = {
       "Sweet glutinous rice topped with coconut milk and slices of ripe mango."
   }
 };
+// Food info: country, flag, calories, description
+const foodInfo = {
+  ...
+};
+
+// === Food recommendation based on main dish ===
+const foodRecommendations = {
+  Bibimbap: ["Bulgogi", "Japchae", "Tteokbokki"],
+  Bulgogi: ["Bibimbap", "Kimbap", "Japchae"],
+  "Kimchi Jjigae": ["Doenjang Jjigae", "Samgyeopsal"],
+  Samgyeopsal: ["Kimchi Jjigae", "Tteokbokki"],
+  Kimbap: ["Tteokbokki", "Bibimbap"],
+
+  Sushi: ["Ramen", "Tempura", "Takoyaki"],
+  Ramen: ["Sushi", "Katsu Don", "Takoyaki"],
+  Tempura: ["Sushi", "Okonomiyaki"],
+  "Miso_Soup": ["Sushi", "Ramen"],
+
+  "Dim Sum": ["Hot Pot", "Mapo Tofu", "Peking Duck"],
+  "Hot Pot": ["Dim Sum", "Mapo Tofu"],
+  "Mapo Tofu": ["Dim Sum", "Dongpo Pork"],
+
+  "Pad Thai": ["Tom Yum Goong", "Som Tam", "Mango Sticky Rice"],
+  "Tom Yum Goong": ["Pad Thai", "Som Tam"],
+  "Mango Sticky Rice": ["Pad Thai", "Khao Pad"],
+
+};
 
 // Model / state
 let model;
@@ -380,6 +407,7 @@ async function predict(image) {
 
   setStatus("Prediction complete!");
 }
+
 
 
 
