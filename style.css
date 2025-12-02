@@ -210,6 +210,37 @@ h1 {
   opacity: 0.9;
 }
 
+/* ===== 추천 음식 박스 ===== */
+#recommendation-box {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  text-align: left;
+}
+
+#recommendation-box h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+#recommendation-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 8px 0;
+}
+
+#recommendation-box li {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.recommend-note {
+  font-size: 12px;
+  color: #bbbbbb;
+}
+
 
 
 
