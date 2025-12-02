@@ -432,7 +432,41 @@ function renderRecommendations(mainClassName) {
     recommendationBox.innerHTML = "";
     return;
   }
+function handleTravelSearch(e) {
+  e.preventDefault();
 
+  const country = travelCountry.value;            // Korea / Japan / China / Thailand
+  const location = travelLocation.value.trim();   // 사용자가 입력한 여행 장소 (예: "Myeongdong, Seoul")
+  const service = mapServiceSelect.value;         // kakao / google / naver
+
+  // 만약 여행 장소 입력 안 하면 메시지 보여주기
+  if (!location) {
+    mapLinks.innerHTML = "<p>Please enter your travel area.</p>";
+    return;
+  }
+
+  // 검색 키워드 만들기 (ex: "Myeongdong Seoul Korea 맛집")
+  const keyword = encodeURIComponent(`${location} ${country} 맛집`);
+
+  let url = "";
+
+  if (service === "kakao") {
+    // 카카오맵 검색 URL
+    url = `https://map.kakao.com/?q=${keyword}`;
+  } else if (service === "google") {
+    // 구글맵 검색 URL
+    url = `https://www.google.com/maps/search/?api=1&query=${keyword}`;
+  } else if (service === "naver") {
+    // 네이버지도 검색 URL
+    url = `https://map.naver.com/p/search/${keyword}`;
+  }
+
+  // HTML에 링크 표시
+  mapLinks.innerHTML = `
+    <p>
+      Open restaurant search in <strong>${service}</strong>:<br>
+
+  
   // 추천 음식 하나하나를 HTML <li>로 변환
   const itemsHtml = recList
     .map((name) => {
@@ -465,6 +499,7 @@ function renderRecommendations(mainClassName) {
     </div>
   `;
 }
+
 
 
 
