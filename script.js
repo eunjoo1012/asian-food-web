@@ -1,10 +1,10 @@
-// 간단 체크
+// Simple console check
 console.log("script.js loaded");
 
 // Teachable Machine model URL
 const URL = "https://teachablemachine.withgoogle.com/models/SCrCm4nRI/";
 
-// 음식 정보
+// Food info
 const foodInfo = {
   // China
   "Dim Sum": {
@@ -65,35 +65,35 @@ const foodInfo = {
   },
 
   // Japan
-  Sushi: {
+  "Sushi": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 350,
     description:
       "Vinegared rice combined with seafood, vegetables, or egg; the most iconic dish of Japanese cuisine."
   },
-  Miso_Soup: {
+  "Miso_Soup": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 50,
     description:
       "Classic Japanese soup made with fermented soybean paste, seaweed, tofu, and green onion."
   },
-  Ramen: {
+  "Ramen": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 500,
     description:
       "Noodle soup served in meat or fish-based broth with toppings like pork, egg, and vegetables."
   },
-  Takoyaki: {
+  "Takoyaki": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 400,
     description:
       "Ball-shaped snacks with diced octopus, fried in wheat batter and topped with sauce and bonito flakes."
   },
-  Tempura: {
+  "Tempura": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 400,
@@ -107,14 +107,14 @@ const foodInfo = {
     description:
       "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce."
   },
-  Okonomiyaki: {
+  "Okonomiyaki": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 410,
     description:
       "Savory pancake with cabbage, meat or seafood, and sweet sauce plus mayonnaise."
   },
-  Sukiyaki: {
+  "Sukiyaki": {
     country: "Japan",
     flag: "🇯🇵",
     calories: 630,
@@ -123,35 +123,33 @@ const foodInfo = {
   },
 
   // Korea
-  Bibimbap: {
+  "Bibimbap": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 460,
     description:
       "Rice dish topped with assorted vegetables, egg, and chili paste, served in a hot bowl."
   },
-  Bulgogi: {
+  "Bulgogi": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 250,
-    description:
-      "Grilled marinated beef or pork, sweet and savory."
+    description: "Grilled marinated beef or pork, sweet and savory."
   },
   "Kimchi Jjigae": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 400,
-    description:
-      "Spicy stew made from kimchi, pork, and vegetables."
+    description: "Spicy stew made from kimchi, pork, and vegetables."
   },
-  Samgyeopsal: {
+  "Samgyeopsal": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 180,
     description:
       "Unseasoned pork belly slices grilled at the table and eaten with dipping sauces."
   },
-  Kimbap: {
+  "Kimbap": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 125,
@@ -165,14 +163,14 @@ const foodInfo = {
     description:
       "Hearty stew with soybean paste, tofu, and a mix of vegetables."
   },
-  Japchae: {
+  "Japchae": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 220,
     description:
       "Stir-fried sweet potato glass noodles with vegetables and beef in soy sauce-based glaze."
   },
-  Tteokbokki: {
+  "Tteokbokki": {
     country: "Korea",
     flag: "🇰🇷",
     calories: 480,
@@ -239,69 +237,50 @@ const foodInfo = {
   }
 };
 
-// 추천 음식 목록
-const foodRecommendations = {
-  Bibimbap: ["Bulgogi", "Japchae", "Tteokbokki"],
-  Bulgogi: ["Bibimbap", "Kimbap", "Japchae"],
-  "Kimchi Jjigae": ["Doenjang Jjigae", "Samgyeopsal"],
-  Samgyeopsal: ["Kimchi Jjigae", "Tteokbokki"],
-  Kimbap: ["Tteokbokki", "Bibimbap"],
-
-  Sushi: ["Ramen", "Tempura", "Takoyaki"],
-  Ramen: ["Sushi", "Katsu Don", "Takoyaki"],
-  Tempura: ["Sushi", "Okonomiyaki"],
-  Miso_Soup: ["Sushi", "Ramen"],
-
-  "Dim Sum": ["Hot Pot", "Mapo Tofu", "Peking Duck"],
-  "Hot Pot": ["Dim Sum", "Mapo Tofu"],
-  "Mapo Tofu": ["Dim Sum", "Dongpo Pork"],
-
-  "Pad Thai": ["Tom Yum Goong", "Som Tam", "Mango Sticky Rice"],
-  "Tom Yum Goong": ["Pad Thai", "Som Tam"],
-  "Mango Sticky Rice": ["Pad Thai", "Khao Pad"]
-};
-
-// 모델 상태
-let model = null;
+// Model / state
+let model;
 let isModelReady = false;
 
-// HTML element들
+// HTML elements
 const fileInput = document.getElementById("image-input");
 const previewImage = document.getElementById("preview-image");
 const resultCountry = document.getElementById("result-country");
 const resultList = document.getElementById("result-list");
-const statusEl = document.getElementById("status");
 const recommendationBox = document.getElementById("recommendation-box");
+const statusEl = document.getElementById("status");
 
-// 여행 섹션 element들
+// Travel elements
 const travelCountry = document.getElementById("travel-country");
 const travelLocation = document.getElementById("travel-location");
 const mapServiceSelect = document.getElementById("map-service");
 const travelBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
 
-// 칼로리 이모지
+// Back to main screen button
+const viewMainBtn = document.getElementById("view-main-btn");
+
+// Calorie indicator
 function calorieEmoji(cal) {
   if (cal < 500) return "🟡";
   if (cal <= 700) return "🔵";
   return "🔴";
 }
 
-// 상태 표시
+// Status text update
 function setStatus(mainText) {
   statusEl.innerHTML = `
     ${mainText}<br>
     <span class="calorie-guide">
-      Calorie guide — 🟡: &lt; 500 kcal, 🔵: 500–700 kcal (typical one meal range), 🔴: &gt; 700 kcal.
-    </span>
-  `;
+      Calorie guide — 🟡: &lt; 500 kcal, 🔵: 500–700 kcal, 🔴: &gt; 700 kcal.
+    </span>`;
 }
 
-// 모델 로딩
+// Model loading
 window.addEventListener("load", async () => {
   try {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
+
     model = await tmImage.load(modelURL, metadataURL);
     isModelReady = true;
     setStatus("Model loaded! Upload a food image.");
@@ -311,19 +290,12 @@ window.addEventListener("load", async () => {
   }
 });
 
-// 이벤트 등록
+// File upload
 fileInput.addEventListener("change", handleUpload);
-travelBtn.addEventListener("click", handleTravelSearch);
 
-// 이미지 업로드 처리
 function handleUpload(e) {
   const file = e.target.files[0];
-  if (!file) return;
-
-  if (!isModelReady) {
-    setStatus("Model is still loading. Please wait a moment.");
-    return;
-  }
+  if (!file || !isModelReady) return;
 
   const reader = new FileReader();
   reader.onload = (ev) => {
@@ -333,7 +305,7 @@ function handleUpload(e) {
   reader.readAsDataURL(file);
 }
 
-// 예측
+// Prediction
 async function predict(image) {
   setStatus("Predicting...");
 
@@ -341,73 +313,64 @@ async function predict(image) {
   prediction.sort((a, b) => b.probability - a.probability);
 
   const top1 = prediction[0];
-  const info = foodInfo[top1.className];
-  const topProb = top1.probability;
 
-  // 50% 미만이면 "일치하는 음식 없음"
-  if (topProb < 0.5) {
+  // 50% 이하 → 일치 없음
+  if (top1.probability < 0.5) {
     resultCountry.innerHTML = `
       <div class="main-result-line">
-        ❓ 일치하는 음식 없음
-        <span class="prob"> (top: ${top1.className}, ${(topProb * 100).toFixed(1)}%)</span>
+        🌏 No matching food (below 50%)
       </div>
-      <div class="calorie-message">
-        The model is not confident enough (less than 50%).  
-        This image may not be one of the trained dishes.
-      </div>
+      <p class="calorie-message">Try another photo or clearer image.</p>
     `;
-    recommendationBox.innerHTML = "";
     resultList.innerHTML = "";
-    setStatus("Prediction complete (no confident match).");
-    return;
-  }
-
-  // foodInfo에 정보가 없을 때
-  if (!info) {
-    resultCountry.innerHTML = `
-      <div class="main-result-line">
-        🌏 Unknown cuisine — ${top1.className}
-        <span class="prob"> (${(topProb * 100).toFixed(1)}%)</span>
-      </div>
-      <div class="calorie-message">
-        This food is not in our database yet. The model is still learning!
-      </div>
-    `;
     recommendationBox.innerHTML = "";
-    resultList.innerHTML = "";
     setStatus("Prediction complete!");
     return;
   }
 
-  // 추천 렌더링
+  const info = foodInfo[top1.className];
+
+  // Unknown
+  if (!info) {
+    resultCountry.innerHTML = `
+      <div class="main-result-line">
+        🌏 Unknown food — ${top1.className}
+        <span class="prob">(${(top1.probability * 100).toFixed(1)}%)</span>
+      </div>
+      <p>This food is not in our database yet.</p>
+    `;
+    resultList.innerHTML = "";
+    recommendationBox.innerHTML = "";
+    setStatus("Prediction complete!");
+    return;
+  }
+
+  // 추천 음식 렌더링
   renderRecommendations(top1.className);
-  
-  // 🔸 음식 판독 결과가 나왔으니 음식만 풀사이즈 모드로 전환
+
+  // 🔸 음식 풀사이즈 모드 자동 전환
   document.body.classList.add("view-food-only");
   document.body.classList.remove("view-travel-only");
-  
-  const emoji = calorieEmoji(info.calories);
-  const neutralCalorieNote =
-    "This calorie value is based on a typical serving size. Your actual intake can be higher or lower depending on how much you eat.";
 
-  // 메인 결과
+  // Main result
+  const emoji = calorieEmoji(info.calories);
+
   resultCountry.innerHTML = `
     <div class="main-result-line">
-      <span class="flag">${info.flag}</span>
-      <span class="country">${info.country}</span>
-      <span class="dash"> — </span>
+      <span>${info.flag}</span>
+      <strong>${info.country}</strong> — 
       <span class="food">${top1.className}</span>
-      <span class="prob"> (${(topProb * 100).toFixed(1)}%)</span>
+      <span class="prob">(${(top1.probability * 100).toFixed(1)}%)</span>
     </div>
     <div class="sub-info">
       ${emoji} ${info.calories} kcal · ${info.description}
     </div>
-    <div class="calorie-message">
-      ${neutralCalorieNote}
-    </div>
+    <p class="calorie-message">
+      This calorie value is based on a typical serving size.
+    </p>
   `;
 
-  // Top-3 결과 ASCII 바
+  // Top-3 list
   resultList.innerHTML = "";
   const maxBlocks = 20;
 
@@ -418,7 +381,7 @@ async function predict(image) {
     const percentage = p.probability * 100;
 
     const filledBlocks = Math.round((percentage / 100) * maxBlocks);
-    const emptyBlocks = Math.max(0, maxBlocks - filledBlocks);
+    const emptyBlocks = maxBlocks - filledBlocks;
     const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
 
     const row = document.createElement("div");
@@ -435,63 +398,35 @@ async function predict(image) {
   setStatus("Prediction complete!");
 }
 
-// 추천 박스
-function renderRecommendations(mainClassName) {
-  const recList = foodRecommendations[mainClassName];
-
-  if (!recList || recList.length === 0) {
-    recommendationBox.innerHTML = "";
-    return;
-  }
-
-  const itemsHtml = recList
-    .map((name) => {
-      const item = foodInfo[name];
-      if (!item) return `<li>${name}</li>`;
-      return `
-        <li>
-          <span class="flag">${item.flag}</span>
-          <strong>${name}</strong> · ${item.country} · ${item.calories} kcal
-        </li>
-      `;
-    })
-    .join("");
-
+// 추천 음식 표시
+function renderRecommendations(foodName) {
   recommendationBox.innerHTML = `
-    <div class="recommend-box-inner">
-      <h3>✨ Next, you might also like...</h3>
-      <ul>
-        ${itemsHtml}
-      </ul>
-      <p class="recommend-note">
-        These are similar or popular dishes from the same region.
-        You can try them on your next trip!
-      </p>
-    </div>
+    <h3>✨ Next, you might also like...</h3>
+    <p>These are similar foods from the same region.</p>
   `;
 }
 
-// 여행 + 지도 검색
-// 여행 + 지도 검색
+// 여행 검색
+travelBtn.addEventListener("click", handleTravelSearch);
+
 function handleTravelSearch(e) {
   e.preventDefault();
 
-  const country = travelCountry.value;            // 예: Japan
-  const location = travelLocation.value.trim();   // 예: Osaka
-  const service = mapServiceSelect.value;         // kakao / google / naver
+  const country = travelCountry.value;
+  const location = travelLocation.value.trim();
+  const service = mapServiceSelect.value;
 
   if (!location) {
     alert("Please enter your travel area.");
     return;
   }
-  // 🔸 여행 검색을 했으니 여행만 풀사이즈 모드로 전환
+
+  // 🔸 여행 풀사이즈 모드 전환
   document.body.classList.add("view-travel-only");
   document.body.classList.remove("view-food-only");
-  
-  // 🔹 검색 키워드: 영어로 restaurants 사용
+
   const keywordText = `${location} ${country} restaurants`;
   const keyword = encodeURIComponent(keywordText);
-
   let url = "";
 
   if (service === "kakao") {
@@ -502,20 +437,18 @@ function handleTravelSearch(e) {
     url = `https://map.naver.com/p/search/${keyword}`;
   }
 
-  // 🔹 버튼 누르자마자 새 탭으로 지도 열기
   window.open(url, "_blank", "noopener,noreferrer");
 
-  // (원하면 아래 안내문은 있어도 되고, 싫으면 지워도 됨)
   mapLinks.innerHTML = `
-    <p>
-      Opened <strong>${service}</strong> search for:<br>
-      <span class="map-keyword">${keywordText}</span>
-    </p>
+    <p>Opened <strong>${service}</strong> search for:<br>
+    <span class="map-keyword">${keywordText}</span></p>
   `;
 }
 
-
-
+// 🔙 메인 화면으로 돌아가기
+viewMainBtn.addEventListener("click", () => {
+  document.body.classList.remove("view-food-only", "view-travel-only");
+});
 
 
 
