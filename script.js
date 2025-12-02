@@ -381,7 +381,11 @@ async function predict(image) {
 
   // 추천 렌더링
   renderRecommendations(top1.className);
-
+  
+  // 🔸 음식 판독 결과가 나왔으니 음식만 풀사이즈 모드로 전환
+  document.body.classList.add("view-food-only");
+  document.body.classList.remove("view-travel-only");
+  
   const emoji = calorieEmoji(info.calories);
   const neutralCalorieNote =
     "This calorie value is based on a typical serving size. Your actual intake can be higher or lower depending on how much you eat.";
@@ -480,7 +484,10 @@ function handleTravelSearch(e) {
     alert("Please enter your travel area.");
     return;
   }
-
+  // 🔸 여행 검색을 했으니 여행만 풀사이즈 모드로 전환
+  document.body.classList.add("view-travel-only");
+  document.body.classList.remove("view-food-only");
+  
   // 🔹 검색 키워드: 영어로 restaurants 사용
   const keywordText = `${location} ${country} restaurants`;
   const keyword = encodeURIComponent(keywordText);
@@ -506,6 +513,7 @@ function handleTravelSearch(e) {
     </p>
   `;
 }
+
 
 
 
