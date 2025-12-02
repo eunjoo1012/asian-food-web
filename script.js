@@ -356,7 +356,8 @@ async function predict(image) {
     setStatus("Prediction complete!");
     return;
   }
-
+  renderRecommendations(top1.className);
+  
   // --- Calorie indicator (icon only) ---
   const emoji = calorieEmoji(info.calories);
 
@@ -407,6 +408,48 @@ async function predict(image) {
   });
 
   setStatus("Prediction complete!");
+}
+
+function renderRecommendations(mainClassName) {
+  const recList = foodRecommendations[mainClassName];
+
+  // 추천 목록이 없으면 박스 비우기
+  if (!recList || recList.length === 0) {
+    recommendationBox.innerHTML = "";
+    return;
+  }
+
+  // 추천 음식 하나하나를 HTML <li>로 변환
+  const itemsHtml = recList
+    .map((name) => {
+      const item = foodInfo[name];
+      if (!item) {
+        // 혹시 foodInfo에 없으면 이름만 보여주기
+        return `<li>${name}</li>`;
+      }
+      return `
+        <li>
+          <span class="flag">${item.flag}</span>
+          <strong>${name}</strong>
+          · ${item.country}
+          · ${item.calories} kcal
+        </li>
+      `;
+    })
+    .join("");
+
+  recommendationBox.innerHTML = `
+    <div class="recommend-box-inner">
+      <h3>✨ Next, you might also like...</h3>
+      <ul>
+        ${itemsHtml}
+      </ul>
+      <p class="recommend-note">
+        These are similar or popular dishes from the same region.
+        You can try them on your next trip!
+      </p>
+    </div>
+  `;
 }
 
 
