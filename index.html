@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Asian Food Image Classifier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- TensorFlow.js & Teachable Machine Image lib -->
@@ -18,79 +19,83 @@
     </p>
   </header>
 
-<main class="container">
-  <div class="two-column-layout">
-    <!-- 왼쪽: 음식 이미지 분류기 -->
-    <section id="classifier-section">
-      <h2 class="section-title">🍱 Asian Food Classifier</h2>
+  <main class="container">
+    <div class="two-column-layout">
+      <!-- 왼쪽: 음식 이미지 분류기 -->
+      <section id="classifier-section">
+        <h2 class="section-title">🍱 Asian Food Classifier</h2>
 
-      <!-- 업로드 버튼 -->
-      <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
-      <input type="file" id="image-input" accept="image/*" />
+        <!-- 업로드 버튼 -->
+        <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
+        <input type="file" id="image-input" accept="image/*" />
 
-      <!-- 미리보기 -->
-      <div class="preview-area">
-        <img id="preview-image" alt="Preview will appear here" />
-      </div>
+        <!-- 미리보기 -->
+        <div class="preview-area">
+          <img id="preview-image" alt="Preview will appear here" />
+        </div>
 
-      <!-- 상태 -->
-      <p id="status">Model is loading...</p>
+        <!-- 상태 -->
+        <p id="status">Model is loading...</p>
 
-      <!-- 메인 결과 + 설명 -->
-      <div id="result-country"></div>
+        <!-- 메인 결과 + 설명 -->
+        <div id="result-country"></div>
 
-      <!-- 추천 음식 영역 -->
-      <div id="recommendation-box"></div>
+        <!-- 추천 음식 영역 -->
+        <div id="recommendation-box"></div>
 
-      <!-- Top-K 결과 리스트 -->
-      <div id="result-list"></div>
-    </section>
+        <!-- Top-K 결과 리스트 -->
+        <div id="result-list"></div>
+      </section>
 
-    <!-- 오른쪽: 여행코스 + 맛집 추천 -->
-    <section id="travel-section">
-      <h2 class="section-title">🗺️ 여행코스 주변 음식점 추천</h2>
-      <p class="subtitle-mini">
-        Type your travel area and we will help you find nearby restaurants on your favorite map.
-      </p>
+      <!-- 오른쪽: 여행코스 + 맛집 추천 -->
+      <section id="travel-section">
+        <h2 class="section-title">🗺️ 여행코스 주변 음식점 추천</h2>
+        <p class="subtitle-mini">
+          Type your travel area and we will help you find nearby restaurants on your favorite map.
+        </p>
 
-      <div class="travel-form">
-        <label>
-          Country
-          <select id="travel-country">
-            <option value="Korea">Korea</option>
-            <option value="Japan">Japan</option>
-            <option value="China">China</option>
-            <option value="Thailand">Thailand</option>
-          </select>
-        </label>
+        <div class="travel-form">
+          <label>
+            Country
+            <select id="travel-country">
+              <option value="Korea">Korea</option>
+              <option value="Japan">Japan</option>
+              <option value="China">China</option>
+              <option value="Thailand">Thailand</option>
+            </select>
+          </label>
 
-        <label>
-          Travel area
-          <input
-            type="text"
-            id="travel-location"
-            placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
-          />
-        </label>
+          <label>
+            Travel area
+            <input
+              type="text"
+              id="travel-location"
+              placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
+            />
+          </label>
 
-        <label>
-          Map service
-          <select id="map-service">
-            <option value="kakao">Kakao Map</option>
-            <option value="google">Google Maps</option>
-            <option value="naver">Naver Map</option>
-          </select>
-        </label>
+          <label>
+            Map service
+            <select id="map-service">
+              <option value="kakao">Kakao Map</option>
+              <option value="google">Google Maps</option>
+              <option value="naver">Naver Map</option>
+            </select>
+          </label>
 
-        <button id="travel-search-btn" type="button">
-          🔍 Find restaurants
-        </button>
-      </div>
+          <button id="travel-search-btn" type="button">
+            🔍 Find restaurants
+          </button>
+        </div>
 
-      <div id="map-links"></div>
-    </section>
-  </div>
-</main>
+        <div id="map-links"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
 
 
