@@ -369,6 +369,12 @@ h1 {
     display: none;
   }
 }
+/* 드롭다운 옵션은 어두운 배경 + 흰 글자 */
+.travel-form select option {
+  background-color: #1b1e26;
+  color: #ffffff;
+}
+
 
 
 
