@@ -276,6 +276,7 @@ const previewImage = document.getElementById("preview-image");
 const resultCountry = document.getElementById("result-country");
 const resultList = document.getElementById("result-list");
 const statusEl = document.getElementById("status");
+const recommendationBox = document.getElementById("recommendation-box");
 
 // Calorie emoji (색만 표시, 평가 문장은 안 함)
 function calorieEmoji(cal) {
@@ -407,6 +408,7 @@ async function predict(image) {
 
   setStatus("Prediction complete!");
 }
+
 
 
 
