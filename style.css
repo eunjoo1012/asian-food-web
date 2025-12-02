@@ -414,6 +414,35 @@ body.view-travel-only #classifier-section::after {
   display: none;
 }
 
+/* 메인 화면으로 돌아가기 버튼 바 */
+.view-toggle-bar {
+  max-width: 820px;
+  margin: 12px auto 40px;
+  display: none;                /* 기본은 안 보이게 */
+  justify-content: center;
+}
+
+.view-toggle-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f5f5;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+}
+
+.view-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* 음식만 보거나 여행만 볼 때에만 버튼 보이게 */
+body.view-food-only .view-toggle-bar,
+body.view-travel-only .view-toggle-bar {
+  display: flex;
+}
+
 
 
 
