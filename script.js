@@ -1,4 +1,3 @@
-
 // Simple console check
 console.log("script.js loaded");
 
@@ -239,12 +238,8 @@ const foodInfo = {
       "Sweet glutinous rice topped with coconut milk and slices of ripe mango."
   }
 };
-// Food info: country, flag, calories, description
-const foodInfo = {
-  ...
-};
 
-// === Food recommendation based on main dish ===
+// === Food recommendations based on main dish ===
 const foodRecommendations = {
   Bibimbap: ["Bulgogi", "Japchae", "Tteokbokki"],
   Bulgogi: ["Bibimbap", "Kimbap", "Japchae"],
@@ -255,7 +250,7 @@ const foodRecommendations = {
   Sushi: ["Ramen", "Tempura", "Takoyaki"],
   Ramen: ["Sushi", "Katsu Don", "Takoyaki"],
   Tempura: ["Sushi", "Okonomiyaki"],
-  "Miso_Soup": ["Sushi", "Ramen"],
+  Miso_Soup: ["Sushi", "Ramen"],
 
   "Dim Sum": ["Hot Pot", "Mapo Tofu", "Peking Duck"],
   "Hot Pot": ["Dim Sum", "Mapo Tofu"],
@@ -263,15 +258,14 @@ const foodRecommendations = {
 
   "Pad Thai": ["Tom Yum Goong", "Som Tam", "Mango Sticky Rice"],
   "Tom Yum Goong": ["Pad Thai", "Som Tam"],
-  "Mango Sticky Rice": ["Pad Thai", "Khao Pad"],
-
+  "Mango Sticky Rice": ["Pad Thai", "Khao Pad"]
 };
 
 // Model / state
 let model;
 let isModelReady = false;
 
-// HTML elements
+// HTML elements (classifier)
 const fileInput = document.getElementById("image-input");
 const previewImage = document.getElementById("preview-image");
 const resultCountry = document.getElementById("result-country");
@@ -279,27 +273,21 @@ const resultList = document.getElementById("result-list");
 const statusEl = document.getElementById("status");
 const recommendationBox = document.getElementById("recommendation-box");
 
-//travel elements
+// HTML elements (travel section)
 const travelCountry = document.getElementById("travel-country");
 const travelLocation = document.getElementById("travel-location");
 const mapServiceSelect = document.getElementById("map-service");
 const travelBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
 
-// 이벤트 연결
-fileInput.addEventListener("change", handleUpload);
-
-// ⭐ 여행 검색 버튼 클릭 시 함수 실행 ⭐
-travelBtn.addEventListener("click", handleTravelSearch);
-
-// Calorie emoji (색만 표시, 평가 문장은 안 함)
+// Calorie emoji
 function calorieEmoji(cal) {
   if (cal < 500) return "🟡";
   if (cal <= 700) return "🔵";
   return "🔴";
 }
 
-// Status text + calorie guide (페이지 상단 설명)
+// Status text + calorie guide
 function setStatus(mainText) {
   statusEl.innerHTML = `
     ${mainText}<br>
@@ -309,9 +297,10 @@ function setStatus(mainText) {
   `;
 }
 
-// 에러를 바로 확인하고 싶으면 콘솔 대신 alert로도 볼 수 있음
+// Global error catch
 window.onerror = function (msg, url, line, col, error) {
   console.error("JS ERROR:", msg, "at", line + ":" + col);
+  setStatus("Something went wrong in the script. Please refresh the page.");
 };
 
 // Model loading
@@ -321,21 +310,32 @@ window.addEventListener("load", async () => {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
+    // tmImage는 Teachable Machine 이미지 라이브러리 전역 객체
     model = await tmImage.load(modelURL, metadataURL);
     isModelReady = true;
     setStatus("Model loaded! Upload a food image.");
+    fileInput.disabled = false;
   } catch (err) {
     console.error(err);
     setStatus("Model failed to load. Please refresh and try again.");
   }
 });
 
-// File upload
+// File upload event
 fileInput.addEventListener("change", handleUpload);
+
+// Travel search button
+travelBtn.addEventListener("click", handleTravelSearch);
 
 function handleUpload(e) {
   const file = e.target.files[0];
-  if (!file || !isModelReady) return;
+
+  if (!file) return;
+
+  if (!isModelReady) {
+    setStatus("Model is still loading. Please wait a moment.");
+    return;
+  }
 
   const reader = new FileReader();
   reader.onload = (ev) => {
@@ -355,7 +355,7 @@ async function predict(image) {
   const top1 = prediction[0];
   const info = foodInfo[top1.className];
 
-  // Unknown class인 경우
+  // Unknown class
   if (!info) {
     resultCountry.innerHTML = `
       <div class="main-result-line">
@@ -367,19 +367,19 @@ async function predict(image) {
       </div>
     `;
     resultList.innerHTML = "";
+    recommendationBox.innerHTML = "";
     setStatus("Prediction complete!");
     return;
   }
-  renderRecommendations(top1.className);
-  
-  // --- Calorie indicator (icon only) ---
-  const emoji = calorieEmoji(info.calories);
 
-  // 중립적인 칼로리 설명 문장
+  // Show recommendations for this dish
+  renderRecommendations(top1.className);
+
+  const emoji = calorieEmoji(info.calories);
   const neutralCalorieNote =
     "This calorie value is based on a typical serving size. Your actual intake can be higher or lower depending on how much you eat.";
 
-  // 메인 결과
+  // Main result
   resultCountry.innerHTML = `
     <div class="main-result-line">
       <span class="flag">${info.flag}</span>
@@ -396,7 +396,7 @@ async function predict(image) {
     </div>
   `;
 
-  // --- Top-3 결과: ASCII 스타일 막대 ---
+  // Top-3 ASCII bar
   resultList.innerHTML = "";
   const maxBlocks = 20;
 
@@ -424,63 +424,23 @@ async function predict(image) {
   setStatus("Prediction complete!");
 }
 
+// Recommendation box
 function renderRecommendations(mainClassName) {
   const recList = foodRecommendations[mainClassName];
 
-  // 추천 목록이 없으면 박스 비우기
   if (!recList || recList.length === 0) {
     recommendationBox.innerHTML = "";
     return;
   }
-function handleTravelSearch(e) {
-  e.preventDefault();
 
-  const country = travelCountry.value;            // Korea / Japan / China / Thailand
-  const location = travelLocation.value.trim();   // 사용자가 입력한 여행 장소 (예: "Myeongdong, Seoul")
-  const service = mapServiceSelect.value;         // kakao / google / naver
-
-  // 만약 여행 장소 입력 안 하면 메시지 보여주기
-  if (!location) {
-    mapLinks.innerHTML = "<p>Please enter your travel area.</p>";
-    return;
-  }
-
-  // 검색 키워드 만들기 (ex: "Myeongdong Seoul Korea 맛집")
-  const keyword = encodeURIComponent(`${location} ${country} 맛집`);
-
-  let url = "";
-
-  if (service === "kakao") {
-    // 카카오맵 검색 URL
-    url = `https://map.kakao.com/?q=${keyword}`;
-  } else if (service === "google") {
-    // 구글맵 검색 URL
-    url = `https://www.google.com/maps/search/?api=1&query=${keyword}`;
-  } else if (service === "naver") {
-    // 네이버지도 검색 URL
-    url = `https://map.naver.com/p/search/${keyword}`;
-  }
-
-  // HTML에 링크 표시
-  mapLinks.innerHTML = `
-    <p>
-      Open restaurant search in <strong>${service}</strong>:<br>
-
-  
-  // 추천 음식 하나하나를 HTML <li>로 변환
   const itemsHtml = recList
     .map((name) => {
       const item = foodInfo[name];
-      if (!item) {
-        // 혹시 foodInfo에 없으면 이름만 보여주기
-        return `<li>${name}</li>`;
-      }
+      if (!item) return `<li>${name}</li>`;
       return `
         <li>
           <span class="flag">${item.flag}</span>
-          <strong>${name}</strong>
-          · ${item.country}
-          · ${item.calories} kcal
+          <strong>${name}</strong> · ${item.country} · ${item.calories} kcal
         </li>
       `;
     })
@@ -500,18 +460,39 @@ function handleTravelSearch(e) {
   `;
 }
 
+// Travel & map search
+function handleTravelSearch(e) {
+  e.preventDefault();
 
+  const country = travelCountry.value;
+  const location = travelLocation.value.trim();
+  const service = mapServiceSelect.value;
 
+  if (!location) {
+    mapLinks.innerHTML = "<p>Please enter your travel area.</p>";
+    return;
+  }
 
+  const keyword = encodeURIComponent(`${location} ${country} 맛집`);
+  let url = "";
 
+  if (service === "kakao") {
+    url = `https://map.kakao.com/?q=${keyword}`;
+  } else if (service === "google") {
+    url = `https://www.google.com/maps/search/?api=1&query=${keyword}`;
+  } else if (service === "naver") {
+    url = `https://map.naver.com/p/search/${keyword}`;
+  }
 
-
-
-
-
-
-
-
+  mapLinks.innerHTML = `
+    <p>
+      Open restaurant search in <strong>${service}</strong>:<br>
+      <a href="${url}" target="_blank" rel="noopener noreferrer">
+        View restaurants on map
+      </a>
+    </p>
+  `;
+}
 
 
 
