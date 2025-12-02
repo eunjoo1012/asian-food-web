@@ -328,6 +328,48 @@ h1 {
 }
 
 
+/* 두 칼럼 레이아웃 */
+.two-column-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* 왼쪽/오른쪽 공통 스타일 */
+#classifier-section,
+#travel-section {
+  position: relative;
+}
+
+/* 가운데 세로선 (왼쪽 섹션 오른쪽 경계) */
+#classifier-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -16px;           /* gap 절반 정도 */
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* 섹션 제목 */
+.section-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* 모바일에서는 한 줄로 내려가기 */
+@media (max-width: 900px) {
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #classifier-section::after {
+    display: none;
+  }
+}
+
 
 
 
