@@ -468,19 +468,23 @@ function renderRecommendations(mainClassName) {
 }
 
 // 여행 + 지도 검색
+// 여행 + 지도 검색
 function handleTravelSearch(e) {
   e.preventDefault();
 
-  const country = travelCountry.value;
-  const location = travelLocation.value.trim();
-  const service = mapServiceSelect.value;
+  const country = travelCountry.value;            // 예: Japan
+  const location = travelLocation.value.trim();   // 예: Osaka
+  const service = mapServiceSelect.value;         // kakao / google / naver
 
   if (!location) {
-    mapLinks.innerHTML = "<p>Please enter your travel area.</p>";
+    alert("Please enter your travel area.");
     return;
   }
 
-  const keyword = encodeURIComponent(`${location} ${country} 맛집`);
+  // 🔹 검색 키워드: 영어로 restaurants 사용
+  const keywordText = `${location} ${country} restaurants`;
+  const keyword = encodeURIComponent(keywordText);
+
   let url = "";
 
   if (service === "kakao") {
@@ -491,15 +495,19 @@ function handleTravelSearch(e) {
     url = `https://map.naver.com/p/search/${keyword}`;
   }
 
+  // 🔹 버튼 누르자마자 새 탭으로 지도 열기
+  window.open(url, "_blank", "noopener,noreferrer");
+
+  // (원하면 아래 안내문은 있어도 되고, 싫으면 지워도 됨)
   mapLinks.innerHTML = `
     <p>
-      Open restaurant search in <strong>${service}</strong>:<br>
-      <a href="${url}" target="_blank" rel="noopener noreferrer">
-        View restaurants on map
-      </a>
+      Opened <strong>${service}</strong> search for:<br>
+      <span class="map-keyword">${keywordText}</span>
     </p>
   `;
 }
+
+
 
 
 
