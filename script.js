@@ -1,5 +1,3 @@
-const travelBtn = document.getElementById("travel-search-btn");
-
 
 // Simple console check
 console.log("script.js loaded");
@@ -288,6 +286,12 @@ const mapServiceSelect = document.getElementById("map-service");
 const travelBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
 
+// 이벤트 연결
+fileInput.addEventListener("change", handleUpload);
+
+// ⭐ 여행 검색 버튼 클릭 시 함수 실행 ⭐
+travelBtn.addEventListener("click", handleTravelSearch);
+
 // Calorie emoji (색만 표시, 평가 문장은 안 함)
 function calorieEmoji(cal) {
   if (cal < 500) return "🟡";
@@ -461,6 +465,7 @@ function renderRecommendations(mainClassName) {
     </div>
   `;
 }
+
 
 
 
