@@ -278,6 +278,13 @@ const resultList = document.getElementById("result-list");
 const statusEl = document.getElementById("status");
 const recommendationBox = document.getElementById("recommendation-box");
 
+//travel elements
+const travelCountry = document.getElementById("travel-country");
+const travelLocation = document.getElementById("travel-location");
+const mapServiceSelect = document.getElementById("map-service");
+const travelBtn = document.getElementById("travel-search-btn");
+const mapLinks = document.getElementById("map-links");
+
 // Calorie emoji (색만 표시, 평가 문장은 안 함)
 function calorieEmoji(cal) {
   if (cal < 500) return "🟡";
@@ -451,6 +458,7 @@ function renderRecommendations(mainClassName) {
     </div>
   `;
 }
+
 
 
 
