@@ -353,24 +353,43 @@ async function predict(image) {
   prediction.sort((a, b) => b.probability - a.probability);
 
   const top1 = prediction[0];
-  const info = foodInfo[top1.className];
+const info = foodInfo[top1.className];
+const topProb = top1.probability;   // 0~1 사이 확률 값
 
-  // Unknown class
-  if (!info) {
-    resultCountry.innerHTML = `
-      <div class="main-result-line">
-        🌏 Unknown cuisine — ${top1.className}
-        <span class="prob"> (${(top1.probability * 100).toFixed(1)}%)</span>
-      </div>
-      <div class="calorie-message">
-        This food is not in our database yet. The model is still learning!
-      </div>
-    `;
-    resultList.innerHTML = "";
-    recommendationBox.innerHTML = "";
-    setStatus("Prediction complete!");
-    return;
-  }
+// (1) 확률이 50% 미만이면 "일치하는 음식 없음"
+if (topProb < 0.5) {
+  resultCountry.innerHTML = `
+    <div class="main-result-line">
+      ❓ 일치하는 음식 없음
+      <span class="prob"> (가장 비슷한 후보: ${top1.className}, ${(topProb * 100).toFixed(1)}%)</span>
+    </div>
+    <div class="calorie-message">
+      모델의 확신이 50% 미만이라 이 이미지는 학습된 음식과 충분히 일치하지 않는다고 판단했습니다.
+    </div>
+  `;
+  recommendationBox.innerHTML = "";
+  resultList.innerHTML = "";
+  setStatus("Prediction complete (no confident match).");
+  return;   // 여기서 함수 끝내기
+}
+
+// (2) Unknown class인 경우
+if (!info) {
+  resultCountry.innerHTML = `
+    <div class="main-result-line">
+      🌏 Unknown cuisine — ${top1.className}
+      <span class="prob"> (${(topProb * 100).toFixed(1)}%)</span>
+    </div>
+    <div class="calorie-message">
+      This food is not in our database yet. The model is still learning!
+    </div>
+  `;
+  recommendationBox.innerHTML = "";
+  resultList.innerHTML = "";
+  setStatus("Prediction complete!");
+  return;
+}
+
 
   // Show recommendations for this dish
   renderRecommendations(top1.className);
@@ -493,6 +512,7 @@ function handleTravelSearch(e) {
     </p>
   `;
 }
+
 
 
 
