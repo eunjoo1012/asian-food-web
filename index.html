@@ -19,27 +19,31 @@
   </header>
 
   <main class="container">
-    <!-- 업로드 버튼 -->
-    <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
-    <input type="file" id="image-input" accept="image/*" />
+<main class="container">
+  <div class="main-layout">
+    <!-- 왼쪽: 여행 + 맛집 -->
+    <section id="travel-section" class="panel-left">
+      ... (지금 travel-section 안에 있던 내용 그대로) ...
+    </section>
 
-    <!-- 미리보기 -->
-    <div class="preview-area">
-      <img id="preview-image" alt="Preview will appear here" />
-    </div>
+    <!-- 오른쪽: 이미지 분류기 -->
+    <section class="panel-right">
+      <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
+      <input type="file" id="image-input" accept="image/*" />
 
-    <!-- 상태 -->
-    <p id="status">Model is loading...</p>
+      <div class="preview-area">
+        <img id="preview-image" alt="Preview will appear here" />
+      </div>
 
-    <!-- 메인 결과 + 설명 -->
-    <div id="result-country"></div>
-    
-    <!-- 추천 음식 영역 (새로 추가) -->
-    <div id="recommendation-box"></div>
-    
-    <!-- Top-K 결과 리스트 -->
-    <div id="result-list"></div>
-  </main>
+      <p id="status">Model is loading...</p>
+
+      <div id="result-country"></div>
+      <div id="recommendation-box"></div>
+      <div id="result-list"></div>
+    </section>
+  </div>
+</main>
+
   <!-- 🗺️ Travel & Restaurant Recommendation Section -->
   <section id="travel-section">
     <h2>🗺️ Plan your Asian food trip</h2>
@@ -88,6 +92,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
