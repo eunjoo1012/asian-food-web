@@ -438,19 +438,59 @@ function handleTravelSearch(e) {
   e.preventDefault();
 
   const country = travelCountry.value;
-  const location = travelLocation.value.trim();
   const service = mapServiceSelect.value;
+  const searchMode = document.querySelector(
+    'input[name="search-mode"]:checked'
+  ).value;
+
+  // 🔹 공통: 여행 모드 → 오른쪽만 풀사이즈
+  document.body.classList.add("view-travel-only");
+  document.body.classList.remove("view-food-only");
+
+  // 1) 현재 위치 기반 모드
+  if (searchMode === "current") {
+    if (!navigator.geolocation) {
+      alert(
+        "Your browser does not support location services. Please use the travel area mode."
+      );
+      return;
+    }
+
+    // 위치 요청
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        // 위치 모드는 Google Maps만 사용 (near me 검색)
+        const url = `https://www.google.com/maps/search/restaurants/@${lat},${lng},15z`;
+
+        window.open(url, "_blank", "noopener,noreferrer");
+
+        mapLinks.innerHTML = `
+          <p>Opened <strong>Google Maps</strong> search near your current location.</p>
+        `;
+      },
+      (err) => {
+        console.error(err);
+        alert(
+          "We could not get your location. Please allow location access or use the travel area mode."
+        );
+      }
+    );
+
+    return; // 여기서 끝
+  }
+
+  // 2) 여행지 이름 기반 모드 (기존 로직 + 검색어 살짝 업그레이드)
+  const location = travelLocation.value.trim();
 
   if (!location) {
     alert("Please enter your travel area.");
     return;
   }
 
-  // 여행 풀사이즈 모드 전환
-  document.body.classList.add("view-travel-only");
-  document.body.classList.remove("view-food-only");
-
-  const keywordText = `${location} ${country} restaurants`;
+  const keywordText = `${location} ${country} best restaurants`;
   const keyword = encodeURIComponent(keywordText);
   let url = "";
 
@@ -474,6 +514,7 @@ function handleTravelSearch(e) {
 viewMainBtn.addEventListener("click", () => {
   document.body.classList.remove("view-food-only", "view-travel-only");
 });
+
 
 
 
