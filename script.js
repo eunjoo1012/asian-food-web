@@ -252,7 +252,6 @@ const statusEl = document.getElementById("status");
 // Travel elements
 const travelCountry = document.getElementById("travel-country");
 const travelLocation = document.getElementById("travel-location");
-const mapServiceSelect = document.getElementById("map-service");
 const travelBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
 
@@ -407,13 +406,13 @@ async function predict(image) {
     const extra = item ? ` · ${item.calories} kcal` : "";
     const percentage = p.probability * 100;
 
-  const filledBlocks = Math.round((percentage / 100) * maxBlocks);
-  const emptyBlocks = maxBlocks - filledBlocks;
-  const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
+    const filledBlocks = Math.round((percentage / 100) * maxBlocks);
+    const emptyBlocks = maxBlocks - filledBlocks;
+    const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
 
-  const row = document.createElement("div");
-  row.className = "ascii-row";
-  row.innerHTML = `
+    const row = document.createElement("div");
+    row.className = "ascii-row";
+    row.innerHTML = `
       <div class="ascii-text">
         ${prefix} — ${p.className}: ${percentage.toFixed(1)}%${extra}
       </div>
@@ -440,7 +439,6 @@ function handleTravelSearch(e) {
   e.preventDefault();
 
   const country = travelCountry.value;
-  const service = mapServiceSelect.value;
   const searchMode = document.querySelector(
     'input[name="search-mode"]:checked'
   ).value;
@@ -449,7 +447,7 @@ function handleTravelSearch(e) {
   document.body.classList.add("view-travel-only");
   document.body.classList.remove("view-food-only");
 
-  // 1) 현재 위치 기반 모드
+  // 1) 현재 위치 기반 모드 (Google Maps, 좌표 사용)
   if (searchMode === "current") {
     if (!navigator.geolocation) {
       alert(
@@ -463,7 +461,7 @@ function handleTravelSearch(e) {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        // 위치 모드는 Google Maps만 사용
+        // 좌표 기준 주변 restaurants 검색
         const url = `https://www.google.com/maps/search/restaurants/@${lat},${lng},15z`;
         window.open(url, "_blank", "noopener,noreferrer");
 
@@ -482,7 +480,7 @@ function handleTravelSearch(e) {
     return;
   }
 
-  // 2) 여행지 이름 기반 모드
+  // 2) 여행지 이름 기반 모드 (나라별 언어로 검색어 생성)
   const location = travelLocation.value.trim();
 
   if (!location) {
@@ -492,39 +490,30 @@ function handleTravelSearch(e) {
 
   let keywordText = "";
 
-  // Google Maps → 영어 검색어
-  if (service === "google") {
-    keywordText = `${location} ${country} best restaurants`;
+  if (country === "Korea") {
+    // 한국 → 한국어
+    keywordText = `${location} 맛집`;
+  } else if (country === "Japan") {
+    // 일본 → 일본어
+    keywordText = `${location} 美味しい店`;
+  } else if (country === "China") {
+    // 중국 → 중국어
+    keywordText = `${location} 美食`;
+  } else if (country === "Thailand") {
+    // 태국 → 태국어
+    keywordText = `${location} ร้านอาหาร`;
   } else {
-    // Kakao / Naver → 현지 언어로 변환
-    if (country === "Korea") {
-      keywordText = `${location} 맛집`;
-    } else if (country === "Japan") {
-      keywordText = `${location} 美味しい店`;
-    } else if (country === "China") {
-      keywordText = `${location} 美食`;
-    } else if (country === "Thailand") {
-      keywordText = `${location} ร้านอาหาร`;
-    } else {
-      keywordText = `${location} restaurants`;
-    }
+    // 기타 나라 (혹시 추가될 경우)
+    keywordText = `${location} restaurants`;
   }
 
   const keyword = encodeURIComponent(keywordText);
-  let url = "";
-
-  if (service === "kakao") {
-    url = `https://map.kakao.com/?q=${keyword}`;
-  } else if (service === "google") {
-    url = `https://www.google.com/maps/search/?api=1&query=${keyword}`;
-  } else if (service === "naver") {
-    url = `https://map.naver.com/p/search/${keyword}`;
-  }
+  const url = `https://www.google.com/maps/search/?api=1&query=${keyword}`;
 
   window.open(url, "_blank", "noopener,noreferrer");
 
   mapLinks.innerHTML = `
-    <p>Opened <strong>${service}</strong> search for:<br>
+    <p>Opened <strong>Google Maps</strong> search for:<br>
     <span class="map-keyword">${keywordText}</span></p>
   `;
 }
@@ -533,9 +522,6 @@ function handleTravelSearch(e) {
 viewMainBtn.addEventListener("click", () => {
   document.body.classList.remove("view-food-only", "view-travel-only");
 });
-
-
-
 
 
 
