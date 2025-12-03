@@ -255,6 +255,9 @@ const travelLocation = document.getElementById("travel-location");
 const mapServiceSelect = document.getElementById("map-service");
 const travelBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
+// Search mode radios
+const modeAreaRadio = document.getElementById("mode-area");
+const modeCurrentRadio = document.getElementById("mode-current");
 
 // Back to main screen button
 const viewMainBtn = document.getElementById("view-main-btn");
@@ -411,6 +414,22 @@ function renderRecommendations(foodName) {
     <p>These are similar or popular dishes from the same region.</p>
   `;
 }
+// 🔹 검색 모드에 따라 travel-location 입력창 상태 업데이트
+function updateTravelInputState() {
+  const isAreaMode = modeAreaRadio.checked;
+
+  travelLocation.disabled = !isAreaMode;
+  travelLocation.placeholder = isAreaMode
+    ? "e.g. Myeongdong, Seoul / Shibuya, Tokyo"
+    : "Using your current GPS location";
+}
+
+// 라디오 변경 시 상태 업데이트
+modeAreaRadio.addEventListener("change", updateTravelInputState);
+modeCurrentRadio.addEventListener("change", updateTravelInputState);
+
+// 페이지 처음 로드될 때 한 번 설정
+window.addEventListener("load", updateTravelInputState);
 
 // 여행 검색
 travelBtn.addEventListener("click", handleTravelSearch);
@@ -455,6 +474,7 @@ function handleTravelSearch(e) {
 viewMainBtn.addEventListener("click", () => {
   document.body.classList.remove("view-food-only", "view-travel-only");
 });
+
 
 
 
