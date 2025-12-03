@@ -314,8 +314,11 @@ async function predict(image) {
 
   const top1 = prediction[0];
 
-  // 50% 이하 → 일치 없음
+  // 50% 이하 → 일치 없음 (그래도 음식 화면 풀사이즈)
   if (top1.probability < 0.5) {
+    document.body.classList.add("view-food-only");
+    document.body.classList.remove("view-travel-only");
+
     resultCountry.innerHTML = `
       <div class="main-result-line">
         🌏 No matching food (below 50%)
@@ -330,11 +333,11 @@ async function predict(image) {
 
   const info = foodInfo[top1.className];
 
-  // Unknown
+  // Unknown 라벨 (역시 음식 화면 풀사이즈)
   if (!info) {
-      document.body.classList.add("view-food-only");
-  document.body.classList.remove("view-travel-only");
-    
+    document.body.classList.add("view-food-only");
+    document.body.classList.remove("view-travel-only");
+
     resultCountry.innerHTML = `
       <div class="main-result-line">
         🌏 Unknown food — ${top1.className}
@@ -348,10 +351,10 @@ async function predict(image) {
     return;
   }
 
-  // 추천 음식 렌더링
+  // 추천 음식 렌더링 (간단 설명용)
   renderRecommendations(top1.className);
 
-  // 🔸 음식 풀사이즈 모드 자동 전환
+  // 정상 예측 → 음식 풀사이즈 모드
   document.body.classList.add("view-food-only");
   document.body.classList.remove("view-travel-only");
 
@@ -373,7 +376,7 @@ async function predict(image) {
     </p>
   `;
 
-  // Top-3 list
+  // Top-3 list (ASCII bar)
   resultList.innerHTML = "";
   const maxBlocks = 20;
 
@@ -401,11 +404,11 @@ async function predict(image) {
   setStatus("Prediction complete!");
 }
 
-// 추천 음식 표시
+// 추천 음식 표시 (간단 버전 – 필요하면 리스트로 확장 가능)
 function renderRecommendations(foodName) {
   recommendationBox.innerHTML = `
     <h3>✨ Next, you might also like...</h3>
-    <p>These are similar foods from the same region.</p>
+    <p>These are similar or popular dishes from the same region.</p>
   `;
 }
 
@@ -424,7 +427,7 @@ function handleTravelSearch(e) {
     return;
   }
 
-  // 🔸 여행 풀사이즈 모드 전환
+  // 여행 풀사이즈 모드 전환
   document.body.classList.add("view-travel-only");
   document.body.classList.remove("view-food-only");
 
