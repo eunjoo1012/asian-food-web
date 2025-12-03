@@ -332,6 +332,9 @@ async function predict(image) {
 
   // Unknown
   if (!info) {
+      document.body.classList.add("view-food-only");
+  document.body.classList.remove("view-travel-only");
+    
     resultCountry.innerHTML = `
       <div class="main-result-line">
         🌏 Unknown food — ${top1.className}
@@ -449,6 +452,7 @@ function handleTravelSearch(e) {
 viewMainBtn.addEventListener("click", () => {
   document.body.classList.remove("view-food-only", "view-travel-only");
 });
+
 
 
 
