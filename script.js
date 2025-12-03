@@ -241,7 +241,7 @@ const foodInfo = {
 let model;
 let isModelReady = false;
 
-// HTML elements
+// HTML elements (food classifier)
 const fileInput = document.getElementById("image-input");
 const previewImage = document.getElementById("preview-image");
 const resultCountry = document.getElementById("result-country");
@@ -255,6 +255,7 @@ const travelLocation = document.getElementById("travel-location");
 const mapServiceSelect = document.getElementById("map-service");
 const travelBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
+
 // Search mode radios
 const modeAreaRadio = document.getElementById("mode-area");
 const modeCurrentRadio = document.getElementById("mode-current");
@@ -278,8 +279,21 @@ function setStatus(mainText) {
     </span>`;
 }
 
-// Model loading
+// 🔹 검색 모드에 따라 travel-location 입력창 상태 업데이트
+function updateTravelInputState() {
+  const isAreaMode = modeAreaRadio.checked;
+
+  travelLocation.disabled = !isAreaMode;
+  travelLocation.placeholder = isAreaMode
+    ? "e.g. Myeongdong, Seoul / Shibuya, Tokyo"
+    : "Using your current GPS location";
+}
+
+// Model loading + 초기 상태 설정
 window.addEventListener("load", async () => {
+  // search mode UI 초기화
+  updateTravelInputState();
+
   try {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
@@ -292,6 +306,10 @@ window.addEventListener("load", async () => {
     setStatus("Model failed to load. Please refresh and try again.");
   }
 });
+
+// search mode 라디오 변경 시 input 상태 변경
+modeAreaRadio.addEventListener("change", updateTravelInputState);
+modeCurrentRadio.addEventListener("change", updateTravelInputState);
 
 // File upload
 fileInput.addEventListener("change", handleUpload);
@@ -389,13 +407,13 @@ async function predict(image) {
     const extra = item ? ` · ${item.calories} kcal` : "";
     const percentage = p.probability * 100;
 
-    const filledBlocks = Math.round((percentage / 100) * maxBlocks);
-    const emptyBlocks = maxBlocks - filledBlocks;
-    const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
+  const filledBlocks = Math.round((percentage / 100) * maxBlocks);
+  const emptyBlocks = maxBlocks - filledBlocks;
+  const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
 
-    const row = document.createElement("div");
-    row.className = "ascii-row";
-    row.innerHTML = `
+  const row = document.createElement("div");
+  row.className = "ascii-row";
+  row.innerHTML = `
       <div class="ascii-text">
         ${prefix} — ${p.className}: ${percentage.toFixed(1)}%${extra}
       </div>
@@ -414,24 +432,8 @@ function renderRecommendations(foodName) {
     <p>These are similar or popular dishes from the same region.</p>
   `;
 }
-// 🔹 검색 모드에 따라 travel-location 입력창 상태 업데이트
-function updateTravelInputState() {
-  const isAreaMode = modeAreaRadio.checked;
 
-  travelLocation.disabled = !isAreaMode;
-  travelLocation.placeholder = isAreaMode
-    ? "e.g. Myeongdong, Seoul / Shibuya, Tokyo"
-    : "Using your current GPS location";
-}
-
-// 라디오 변경 시 상태 업데이트
-modeAreaRadio.addEventListener("change", updateTravelInputState);
-modeCurrentRadio.addEventListener("change", updateTravelInputState);
-
-// 페이지 처음 로드될 때 한 번 설정
-window.addEventListener("load", updateTravelInputState);
-
-// 여행 검색
+// 여행 검색 버튼 클릭
 travelBtn.addEventListener("click", handleTravelSearch);
 
 function handleTravelSearch(e) {
@@ -443,7 +445,7 @@ function handleTravelSearch(e) {
     'input[name="search-mode"]:checked'
   ).value;
 
-  // 🔹 공통: 여행 모드 → 오른쪽만 풀사이즈
+  // 여행 모드 → 오른쪽만 풀사이즈
   document.body.classList.add("view-travel-only");
   document.body.classList.remove("view-food-only");
 
@@ -456,15 +458,13 @@ function handleTravelSearch(e) {
       return;
     }
 
-    // 위치 요청
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        // 위치 모드는 Google Maps만 사용 (near me 검색)
+        // 위치 모드는 Google Maps만 사용
         const url = `https://www.google.com/maps/search/restaurants/@${lat},${lng},15z`;
-
         window.open(url, "_blank", "noopener,noreferrer");
 
         mapLinks.innerHTML = `
@@ -479,10 +479,10 @@ function handleTravelSearch(e) {
       }
     );
 
-    return; // 여기서 끝
+    return;
   }
 
-  // 2) 여행지 이름 기반 모드 (기존 로직 + 검색어 살짝 업그레이드)
+  // 2) 여행지 이름 기반 모드
   const location = travelLocation.value.trim();
 
   if (!location) {
@@ -490,7 +490,26 @@ function handleTravelSearch(e) {
     return;
   }
 
-  const keywordText = `${location} ${country} best restaurants`;
+  let keywordText = "";
+
+  // Google Maps → 영어 검색어
+  if (service === "google") {
+    keywordText = `${location} ${country} best restaurants`;
+  } else {
+    // Kakao / Naver → 현지 언어로 변환
+    if (country === "Korea") {
+      keywordText = `${location} 맛집`;
+    } else if (country === "Japan") {
+      keywordText = `${location} 美味しい店`;
+    } else if (country === "China") {
+      keywordText = `${location} 美食`;
+    } else if (country === "Thailand") {
+      keywordText = `${location} ร้านอาหาร`;
+    } else {
+      keywordText = `${location} restaurants`;
+    }
+  }
+
   const keyword = encodeURIComponent(keywordText);
   let url = "";
 
@@ -514,7 +533,6 @@ function handleTravelSearch(e) {
 viewMainBtn.addEventListener("click", () => {
   document.body.classList.remove("view-food-only", "view-travel-only");
 });
-
 
 
 
