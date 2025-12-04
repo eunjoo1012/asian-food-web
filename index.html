@@ -5,160 +5,181 @@
   <title>Asian Food Image Classifier</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- TensorFlow.js + Teachable Machine -->
+  <!-- TensorFlow.js & Teachable Machine Image lib -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 
 <body>
-
-  <!-- 🔸 Header -->
+  <!-- 전체 헤더 -->
   <header>
-    <h1>🌏 Asian Food Image Classifier</h1>
-    <p class="subtitle">Detect Korean, Japanese, Chinese, and Thai cuisine and plan your next food trip.</p>
+    <h1>🌍 Asian Food Image Classifier</h1>
+    <p class="subtitle">
+      Detect Korean, Japanese, Chinese, and Thai cuisine and plan your next food trip.
+    </p>
   </header>
 
-  <!-- ========================================================= -->
-  <!-- 🔸 Main Menu – 관광지 추천 / 맛집 추천 두 가지 선택 -->
-  <!-- ========================================================= -->
+  <main class="container">
+    <div class="two-column-layout">
+      <!-- ================= 왼쪽: 음식 이미지 분류기 ================= -->
+      <section id="classifier-section">
+        <h2 class="section-title">🍱 Asian Food Classifier</h2>
 
-  <main id="main-menu" class="menu-container">
+        <!-- 업로드 버튼 -->
+        <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
+        <input type="file" id="image-input" accept="image/*" />
 
-    <h2 class="menu-title">What would you like to do?</h2>
+        <!-- 미리보기 -->
+        <div class="preview-area">
+          <img id="preview-image" alt="Preview will appear here" />
+        </div>
 
-    <div class="menu-btn-wrapper">
+        <!-- 상태 -->
+        <p id="status">Model is loading...</p>
 
-      <button id="btn-food" class="menu-btn">
-        🍱 Use Asian Food Classifier
-      </button>
+        <!-- 메인 결과 + 설명 -->
+        <div id="result-country"></div>
 
-      <button id="btn-travel" class="menu-btn">
-        🧭 Recommend Nearby Tourist Spots
-      </button>
+        <!-- 추천 음식 영역 -->
+        <div id="recommendation-box"></div>
 
-      <button id="btn-restaurant" class="menu-btn">
-        🍽️ Find restaurants around your travel course
-      </button>
+        <!-- 음식별 맛집 찾기 버튼 (JS에서 show 클래스 붙여서 보여줌) -->
+        <button id="food-restaurant-btn" type="button" class="sub-btn">
+          🍽️ Find restaurants for this food
+        </button>
 
+        <!-- Top-K 결과 리스트 -->
+        <div id="result-list"></div>
+      </section>
+
+      <!-- ================= 오른쪽: 여행 / 맛집 기능 ================= -->
+      <section id="travel-section">
+        <!-- 메인 선택 화면: 두 가지 모드를 선택 -->
+        <section id="travel-main-menu">
+          <h2 class="section-title">📖 Travel & Restaurant Assistant</h2>
+          <p class="subtitle-mini">
+            Choose what you want to explore. You can always come back to this screen.
+          </p>
+
+          <div class="menu-buttons">
+            <button id="btn-tourist-mode" class="mode-btn">
+              🗺 Recommend nearby tourist spots
+            </button>
+            <button id="btn-food-mode" class="mode-btn">
+              🍽 Find nearby restaurants
+            </button>
+          </div>
+        </section>
+
+        <!-- ---------- 모드 1: 주변 관광지 추천 (풀사이즈 화면) ---------- -->
+        <section id="tourist-mode" class="travel-mode hidden">
+          <button class="back-btn" type="button">← Back to travel menu</button>
+
+          <h2 class="section-title">🗺 Nearby Tourist Spots</h2>
+          <p class="subtitle-mini">
+            We will recommend tourist attractions around your current location
+            and show them on Google Maps.
+          </p>
+
+          <button id="tourist-location-btn" type="button" class="sub-btn">
+            📍 Use my current location
+          </button>
+
+          <!-- 왼쪽: 관광지 리스트 / 오른쪽: 작은 구글 지도 -->
+          <div id="tourist-layout">
+            <div id="tourist-list">
+              <!-- JS에서 관광지 4개를 여기 넣음 -->
+            </div>
+            <div id="tourist-map-wrapper">
+              <iframe
+                id="tourist-map"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- 모드 2: 주변 맛집 찾기 (풀사이즈 화면) ---------- -->
+        <section id="restaurant-mode" class="travel-mode hidden">
+          <button class="back-btn" type="button">← Back to travel menu</button>
+
+          <h2 class="section-title">
+            📖 Recommendation of restaurants around the travel course
+          </h2>
+          <p class="subtitle-mini">
+            Type your travel area or use your current location and we will help you
+            find nearby restaurants on <strong>Google Maps</strong>.
+          </p>
+
+          <div class="travel-form">
+            <!-- Country 선택 -->
+            <label>
+              Country
+              <select id="travel-country">
+                <option value="Korea">Korea</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="Thailand">Thailand</option>
+              </select>
+            </label>
+
+            <!-- 검색 모드 선택 -->
+            <div class="search-mode">
+              <p class="search-mode-title">Search mode</p>
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="search-mode"
+                  id="mode-area"
+                  value="area"
+                  checked
+                />
+                Search by travel area (city / district)
+              </label>
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="search-mode"
+                  id="mode-current"
+                  value="current"
+                />
+                Use my current location (Google Maps)
+              </label>
+            </div>
+
+            <!-- 여행 지역 입력 -->
+            <label>
+              Travel area
+              <input
+                type="text"
+                id="travel-location"
+                placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
+              />
+            </label>
+
+            <p class="map-note">
+              Results will open in <strong>Google Maps</strong>.
+            </p>
+
+            <!-- 맛집 찾기 버튼 -->
+            <button id="travel-search-btn" type="button">
+              🔍 Find restaurants
+            </button>
+          </div>
+
+          <!-- 검색 결과 텍스트 표시 -->
+          <div id="map-links"></div>
+        </section>
+      </section>
     </div>
-
   </main>
 
-
-  <!-- ========================================================= -->
-  <!-- 🔸 음식 판별 화면 -->
-  <!-- ========================================================= -->
-
-  <section id="food-mode" class="hidden">
-
-    <button id="back-to-travel-main" class="back-to-main-btn">
-      ← Back to main menu
-    </button>
-
-    <h2 class="section-title">🍱 Asian Food Classifier</h2>
-
-    <label for="image-input" class="upload-btn">📸 Upload Food Image</label>
-    <input type="file" id="image-input" accept="image/*" />
-
-    <div class="preview-area">
-      <img id="preview-image" alt="Preview will appear here" />
-    </div>
-
-    <p id="status">Model is loading...</p>
-
-    <div id="result-country"></div>
-    <div id="recommendation-box"></div>
-
-    <!-- 음식과 관련된 맛집 검색 버튼 -->
-    <button id="food-restaurant-btn" class="sub-btn">🍽️ Restaurants for this food</button>
-
-    <div id="result-list"></div>
-
-  </section>
-
-
-  <!-- ========================================================= -->
-  <!-- 🔸 관광지 추천 화면 -->
-  <!-- ========================================================= -->
-
-  <section id="tourist-mode" class="hidden">
-
-    <button id="back-to-main-1" class="back-small-btn">← Back to main menu</button>
-
-    <h2 class="section-title">🗺️ Nearby Tourist Spots</h2>
-    <p>We will recommend tourist attractions around your current location and display them on Google Maps.</p>
-
-    <button id="btn-current-location" class="sub-btn">📍 Use my current location</button>
-
-    <div class="tourist-flex">
-      <!-- 왼쪽 추천 관광지 목록 -->
-      <div id="tourist-list" class="tourist-list-box">
-        <h3>Recommended attractions</h3>
-        <ul>
-          <li>🏙️ City Tower</li>
-          <li>🏛️ History Museum</li>
-          <li>🌳 Central Park</li>
-          <li>🛍️ Popular Shopping Street</li>
-        </ul>
-      </div>
-
-      <!-- 오른쪽 Google Maps -->
-      <iframe id="tourist-map" class="tourist-map-box" loading="lazy"></iframe>
-    </div>
-
-  </section>
-
-
-  <!-- ========================================================= -->
-  <!-- 🔸 맛집 추천 화면 -->
-  <!-- ========================================================= -->
-
-  <section id="restaurant-mode" class="hidden">
-
-    <button id="back-to-main-2" class="back-small-btn">← Back to main menu</button>
-
-    <h2 class="section-title">🍽️ Recommendation of restaurants</h2>
-    <p>Type your travel area and we will help you find restaurants on Google Maps.</p>
-
-    <div class="travel-form">
-
-      <label>
-        Country
-        <select id="travel-country">
-          <option value="Korea">Korea</option>
-          <option value="Japan">Japan</option>
-          <option value="China">China</option>
-          <option value="Thailand">Thailand</option>
-        </select>
-      </label>
-
-      <label>
-        Travel area
-        <input type="text" id="travel-location" placeholder="e.g. Osaka / Bangkok / Beijing" />
-      </label>
-
-      <button id="travel-search-btn" class="sub-btn">
-        🔍 Find restaurants
-      </button>
-
-    </div>
-
-    <p id="restaurant-result-text"></p>
-
-  </section>
-
-
-  <!-- ========================================================= -->
-  <!-- JS -->
-  <!-- ========================================================= -->
+  <!-- 메인 스크립트 -->
   <script src="script.js"></script>
-
 </body>
 </html>
-
-
-
-
 
 
 
