@@ -48,63 +48,70 @@
           Type your travel area and we will help you find nearby restaurants on your favorite map.
         </p>
 
- <div class="travel-form">
-  <label>
-    Country
-    <select id="travel-country">
-      <option value="Korea">Korea</option>
-      <option value="Japan">Japan</option>
-      <option value="China">China</option>
-      <option value="Thailand">Thailand</option>
-    </select>
-  </label>
+<section id="travel-section">
+  <h2 class="section-title">🗺️ Recommendation of restaurants around the travel course</h2>
+  <p class="subtitle-mini">
+    Type your travel area or use your current location and we will help you find nearby
+    restaurants on <strong>Google Maps</strong>.
+  </p>
 
-  <!-- 🔹 검색 모드 선택 -->
-  <div class="search-mode">
-    <p class="search-mode-title">Search mode</p>
-    <label class="radio-label">
-      <input
-        type="radio"
-        name="search-mode"
-        id="mode-area"
-        value="area"
-        checked
-      />
-      Search by travel area (city / district)
+  <div class="travel-form">
+    <label>
+      Country
+      <select id="travel-country">
+        <option value="Korea">Korea</option>
+        <option value="Japan">Japan</option>
+        <option value="China">China</option>
+        <option value="Thailand">Thailand</option>
+      </select>
     </label>
-    <label class="radio-label">
+
+    <!-- 검색 모드 선택 -->
+    <div class="search-mode">
+      <p class="search-mode-title">Search mode</p>
+      <label class="radio-label">
+        <input
+          type="radio"
+          name="search-mode"
+          id="mode-area"
+          value="area"
+          checked
+        />
+        Search by travel area (city / district)
+      </label>
+      <label class="radio-label">
+        <input
+          type="radio"
+          name="search-mode"
+          id="mode-current"
+          value="current"
+        />
+        Use my current location (Google Maps)
+      </label>
+    </div>
+
+    <label>
+      Travel area
       <input
-        type="radio"
-        name="search-mode"
-        id="mode-current"
-        value="current"
+        type="text"
+        id="travel-location"
+        placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
       />
-      Use my current location (Google Maps)
     </label>
+
+    <!-- 이제는 Map service 선택 없음, 항상 Google Maps -->
+    <p class="map-note">
+      Results will open in <strong>Google Maps</strong>.
+    </p>
+
+    <button id="travel-search-btn" type="button">
+      🔍 Find restaurants
+    </button>
   </div>
 
-  <label>
-    Travel area
-    <input
-      type="text"
-      id="travel-location"
-      placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
-    />
-  </label>
+  <div id="map-links"></div>
+</section>
 
-  <label>
-    Map service
-    <select id="map-service">
-      <option value="kakao">Kakao Map</option>
-      <option value="google">Google Maps</option>
-      <option value="naver">Naver Map</option>
-    </select>
-  </label>
-
-  <button id="travel-search-btn" type="button">
-    🔍 Find restaurants
-  </button>
-</div>
 
 
         <div id="map-links"></div>
@@ -122,6 +129,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
