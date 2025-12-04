@@ -282,8 +282,9 @@ touristLocationBtn.addEventListener("click", () => {
     const lng = pos.coords.longitude;
 
     // Set Google Map iframe
-    touristMap.src =
-      `https://www.google.com/maps/embed/v1/search?key=AIzaSyCK-fakekey123&q=tourist+attractions&center=${lat},${lng}&zoom=14`;
+touristMap.src =
+  `https://www.google.com/maps?q=tourist+attractions+near+${lat},${lng}&hl=en&z=14&output=embed`;
+
 
     // Recommend 4 tourist spots (static sample)
     touristList.innerHTML = `
@@ -323,6 +324,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
