@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Asian Food Image Classifier</title>
+  <title>Taste Asia: Food & Travel Guide</title>
   <link rel="stylesheet" href="style.css" />
 
   <!-- TensorFlow.js & Teachable Machine Image lib -->
@@ -13,9 +13,9 @@
 <body>
   <!-- 전체 헤더 -->
   <header>
-    <h1>🌍 Asian Food Image Classifier</h1>
+    <h1>🌍 Taste Asia: Food & Travel Guide</h1>
     <p class="subtitle">
-      Detect Korean, Japanese, Chinese, and Thai cuisine and plan your next food trip.
+      Scan your dish, learn where it's from, and explore restaurants & travel courses nearby.
     </p>
   </header>
 
@@ -149,6 +149,16 @@
               </label>
             </div>
 
+            <!-- 사용법 안내 카드 -->
+            <div class="hint-card">
+              <h3>✨ How to use</h3>
+              <p>
+                1. Choose a country<br>
+                2. Type your travel area or tap a tag<br>
+                3. We’ll search popular local restaurants on Google Maps.
+              </p>
+            </div>
+
             <!-- 여행 지역 입력 -->
             <label>
               Travel area
@@ -158,21 +168,9 @@
                 placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
               />
             </label>
-            
-<!-- 자주 쓰는 지역 예시 태그 -->
-<div class="area-tags">
-  <!-- Korea 예시 -->
-  <button type="button" class="area-tag">Myeongdong, Seoul</button>
-  <button type="button" class="area-tag">Hongdae, Seoul</button>
-  <button type="button" class="area-tag">Seongsu, Seoul</button>
 
-  <!-- Japan 예시 -->
-  <button type="button" class="area-tag">Shibuya, Tokyo</button>
-  <button type="button" class="area-tag">Akihabara, Tokyo</button>
-
-  <!-- Thailand 예시 -->
-  <button type="button" class="area-tag">Siam, Bangkok</button>
-</div>
+            <!-- 나라별 대표 도시 태그 (JS로 채움) -->
+            <div class="area-tags"></div>
 
             <p class="map-note">
               Results will open in <strong>Google Maps</strong>.
@@ -183,15 +181,6 @@
               🔍 Find restaurants
             </button>
           </div>
-<!-- 사용법 안내 카드 -->
-<div class="hint-card">
-  <h3>✨ How to use</h3>
-  <p>
-    1. Choose a country<br>
-    2. Type your travel area or tap a tag<br>
-    3. We’ll search popular local restaurants on Google Maps.
-  </p>
-</div>
 
           <!-- 검색 결과 텍스트 표시 -->
           <div id="map-links"></div>
@@ -204,14 +193,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
