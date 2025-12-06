@@ -158,6 +158,21 @@
                 placeholder="e.g. Myeongdong, Seoul / Shibuya, Tokyo"
               />
             </label>
+            
+<!-- 자주 쓰는 지역 예시 태그 -->
+<div class="area-tags">
+  <!-- Korea 예시 -->
+  <button type="button" class="area-tag">Myeongdong, Seoul</button>
+  <button type="button" class="area-tag">Hongdae, Seoul</button>
+  <button type="button" class="area-tag">Seongsu, Seoul</button>
+
+  <!-- Japan 예시 -->
+  <button type="button" class="area-tag">Shibuya, Tokyo</button>
+  <button type="button" class="area-tag">Akihabara, Tokyo</button>
+
+  <!-- Thailand 예시 -->
+  <button type="button" class="area-tag">Siam, Bangkok</button>
+</div>
 
             <p class="map-note">
               Results will open in <strong>Google Maps</strong>.
@@ -168,6 +183,15 @@
               🔍 Find restaurants
             </button>
           </div>
+<!-- 사용법 안내 카드 -->
+<div class="hint-card">
+  <h3>✨ How to use</h3>
+  <p>
+    1. Choose a country<br>
+    2. Type your travel area or tap a tag<br>
+    3. We’ll search popular local restaurants on Google Maps.
+  </p>
+</div>
 
           <!-- 검색 결과 텍스트 표시 -->
           <div id="map-links"></div>
@@ -180,6 +204,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
