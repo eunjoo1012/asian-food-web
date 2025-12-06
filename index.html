@@ -125,38 +125,41 @@
               </select>
             </label>
 
-            <!-- 검색 모드 선택 -->
-            <div class="search-mode">
-              <p class="search-mode-title">Search mode</p>
-              <label class="radio-label">
-                <input
-                  type="radio"
-                  name="search-mode"
-                  id="mode-area"
-                  value="area"
-                  checked
-                />
-                Search by travel area (city / district)
-              </label>
-              <label class="radio-label">
-                <input
-                  type="radio"
-                  name="search-mode"
-                  id="mode-current"
-                  value="current"
-                />
-                Use my current location (Google Maps)
-              </label>
-            </div>
+            <!-- Search mode + How to use 를 가로로 배치 -->
+            <div class="travel-top-row">
+              <!-- 사용법 안내 카드 (왼쪽) -->
+              <div class="hint-card">
+                <h3>✨ How to use</h3>
+                <p>
+                  1. Choose a country<br>
+                  2. Type your travel area or tap a tag<br>
+                  3. We’ll search popular local restaurants on Google Maps.
+                </p>
+              </div>
 
-            <!-- 사용법 안내 카드 -->
-            <div class="hint-card">
-              <h3>✨ How to use</h3>
-              <p>
-                1. Choose a country<br>
-                2. Type your travel area or tap a tag<br>
-                3. We’ll search popular local restaurants on Google Maps.
-              </p>
+              <!-- 검색 모드 선택 (오른쪽) -->
+              <div class="search-mode">
+                <p class="search-mode-title">Search mode</p>
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="search-mode"
+                    id="mode-area"
+                    value="area"
+                    checked
+                  />
+                  Search by travel area (city / district)
+                </label>
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="search-mode"
+                    id="mode-current"
+                    value="current"
+                  />
+                  Use my current location (Google Maps)
+                </label>
+              </div>
             </div>
 
             <!-- 여행 지역 입력 -->
