@@ -379,7 +379,20 @@ header h1 {
   padding: 10px 12px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
+
+  /* 여기 추가 */
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+/* 모바일에서는 다시 전체 폭 사용 */
+@media (max-width: 900px) {
+  .search-mode {
+    max-width: 100%;
+  }
+}
+
 
 .search-mode-title {
   font-size: 0.9rem;
@@ -508,6 +521,7 @@ body.view-travel-only #travel-section {
   margin-bottom: 6px;
   font-size: 1rem;
 }
+
 
 
 
