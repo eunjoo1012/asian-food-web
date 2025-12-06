@@ -22,6 +22,45 @@ const travelCountry = document.getElementById("travel-country");
 const travelLocation = document.getElementById("travel-location");
 const travelSearchBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
+// 나라별 대표 도시 2개씩 추천
+const areaTagsContainer = document.querySelector(".area-tags");
+
+const areaSuggestions = {
+  Korea: ["Myeongdong, Seoul", "Seongsu, Seoul"],
+  Japan: ["Shibuya, Tokyo", "Akihabara, Tokyo"],
+  China: ["Wangfujing, Beijing", "The Bund, Shanghai"],
+  Thailand: ["Siam, Bangkok", "Old Town, Chiang Mai"]
+};
+
+function renderAreaTags(country) {
+  const cities = areaSuggestions[country] || [];
+
+  // 버튼 HTML 생성
+  areaTagsContainer.innerHTML = cities
+    .map(
+      (city) =>
+        `<button type="button" class="area-tag">${city}</button>`
+    )
+    .join("");
+
+  // 클릭 시 입력창에 넣기
+  const tags = areaTagsContainer.querySelectorAll(".area-tag");
+  tags.forEach((tag) => {
+    tag.addEventListener("click", () => {
+      travelLocation.value = tag.textContent;
+      travelLocation.focus();
+    });
+  });
+}
+
+// 처음 로드될 때 현재 선택된 나라 기준으로 태그 보여주기
+renderAreaTags(travelCountry.value);
+
+// 나라 선택 바뀔 때마다 태그 다시 렌더링
+travelCountry.addEventListener("change", () => {
+  renderAreaTags(travelCountry.value);
+});
+
 // 자주 쓰는 지역 태그
 const areaTags = document.querySelectorAll(".area-tag");
 areaTags.forEach(tag => {
@@ -331,6 +370,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
