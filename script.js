@@ -22,6 +22,14 @@ const travelCountry = document.getElementById("travel-country");
 const travelLocation = document.getElementById("travel-location");
 const travelSearchBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
+// 자주 쓰는 지역 태그
+const areaTags = document.querySelectorAll(".area-tag");
+areaTags.forEach(tag => {
+  tag.addEventListener("click", () => {
+    travelLocation.value = tag.textContent;
+    travelLocation.focus();
+  });
+});
 
 // Travel menu buttons
 const mainMenu = document.getElementById("travel-main-menu");
@@ -323,6 +331,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
