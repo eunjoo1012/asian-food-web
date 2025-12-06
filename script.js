@@ -61,14 +61,6 @@ travelCountry.addEventListener("change", () => {
   renderAreaTags(travelCountry.value);
 });
 
-// 자주 쓰는 지역 태그
-const areaTags = document.querySelectorAll(".area-tag");
-areaTags.forEach(tag => {
-  tag.addEventListener("click", () => {
-    travelLocation.value = tag.textContent;
-    travelLocation.focus();
-  });
-});
 
 // Travel menu buttons
 const mainMenu = document.getElementById("travel-main-menu");
@@ -370,6 +362,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
