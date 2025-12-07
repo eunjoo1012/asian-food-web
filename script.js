@@ -825,16 +825,40 @@ async function predict(img) {
   const top = prediction[0];
 
   if (top.probability < 0.5) {
+    const info = foodInfo[top.className];
+
+    // 가장 가능성 높은 음식 한 줄 (국기/나라까지 있으면 같이)
+    const guessLine = info
+      ? `${info.flag} <strong>${info.country}</strong> — ${top.className}`
+      : `<strong>${top.className}</strong>`;
+
     resultCountry.innerHTML = `
-      <h3>🌏 No matching food (below 50%)</h3>
-      <p>Try a clearer photo.</p>
+      <h3>🌏 Not confident (below 50%)</h3>
+      <p>
+        Most likely: ${guessLine}
+        <span class="prob">(${(top.probability * 100).toFixed(1)}%)</span><br>
+        Try a clearer photo or another angle.
+      </p>
     `;
+
+    // 🔹 Top-3 ASCII 리스트는 그대로 보여줌
     resultList.innerHTML = "";
+    prediction.slice(0, 3).forEach(p => {
+      resultList.innerHTML += `
+        <div class="ascii-row">
+          <div>${p.className} — ${(p.probability * 100).toFixed(1)}%</div>
+        </div>
+      `;
+    });
+
+    // 추천 박스/맛집 버튼은 숨김
     recommendationBox.innerHTML = "";
     foodRestaurantBtn.classList.remove("show");
     document.body.classList.add("view-food-only");
+    setStatus("Prediction complete, but confidence is low.");
     return;
   }
+
 
   const info = foodInfo[top.className];
   document.body.classList.add("view-food-only");
@@ -942,6 +966,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
