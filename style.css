@@ -640,6 +640,29 @@ body.view-travel-only #travel-section {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.ascii-bar {
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin: 4px 0;
+  color: #dfe6f3;
+}
+
+.ascii-header {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.ascii-desc {
+  font-size: 0.85rem;
+  color: #bfc7d9;
+}
+
+.ascii-kcal {
+  font-size: 0.85rem;
+  color: #ffd27f;
+  margin-bottom: 6px;
+}
+
 
 
 
