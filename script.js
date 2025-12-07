@@ -934,30 +934,7 @@ function translateWord(country, word) {
   };
   return dict[country] || word;
 }
-// --- Top-3 결과: ASCII 스타일 막대 ---
-  resultList.innerHTML = "";
-  const maxBlocks = 20;
 
-  prediction.slice(0, 3).forEach((p) => {
-    const item = foodInfo[p.className];
-    const prefix = item ? `${item.flag} ${item.country}` : "🌏";
-    const extra = item ? ` · ${item.calories} kcal` : "";
-    const percentage = p.probability * 100;
-
-    const filledBlocks = Math.round((percentage / 100) * maxBlocks);
-    const emptyBlocks = Math.max(0, maxBlocks - filledBlocks);
-    const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
-
-    const row = document.createElement("div");
-    row.className = "ascii-row";
-    row.innerHTML = `
-      <div class="ascii-text">
-        ${prefix} — ${p.className}: ${percentage.toFixed(1)}%${extra}
-      </div>
-      <div class="ascii-bar">${bar}</div>
-    `;
-    resultList.appendChild(row);
-  });
 
   setStatus("Prediction complete!");
 }
@@ -1039,12 +1016,12 @@ async function predict(img) {
 
   const top = prediction[0];
 
+  /* ── 1. 확률이 50% 미만인 경우 ───────────────── */
   if (top.probability < 0.5) {
-    const info = foodInfo[top.className];
+    const infoGuess = foodInfo[top.className];
 
-    // 가장 가능성 높은 음식 한 줄 (국기/나라까지 있으면 같이)
-    const guessLine = info
-      ? `${info.flag} <strong>${info.country}</strong> — ${top.className}`
+    const guessLine = infoGuess
+      ? `${infoGuess.flag} <strong>${infoGuess.country}</strong> — ${top.className}`
       : `<strong>${top.className}</strong>`;
 
     resultCountry.innerHTML = `
@@ -1056,15 +1033,87 @@ async function predict(img) {
       </p>
     `;
 
-    // 🔹 Top-3 ASCII 리스트는 그대로 보여줌
+    // Top-3는 간단히 텍스트 리스트 (원하면 여기도 ASCII로 바꿀 수 있음)
     resultList.innerHTML = "";
-    prediction.slice(0, 3).forEach(p => {
+    prediction.slice(0, 3).forEach((p) => {
       resultList.innerHTML += `
         <div class="ascii-row">
           <div>${p.className} — ${(p.probability * 100).toFixed(1)}%</div>
         </div>
       `;
     });
+
+    recommendationBox.innerHTML = "";
+    foodRestaurantBtn.classList.remove("show");
+    document.body.classList.add("view-food-only");
+    setStatus("Prediction complete, but confidence is low.");
+    return;
+  }
+
+  /* ── 2. 확률이 50% 이상인 경우 (정상 결과) ──────── */
+  const info = foodInfo[top.className];
+  document.body.classList.add("view-food-only");
+
+  if (!info) {
+    resultCountry.innerHTML = `<h3>Unknown Food: ${top.className}</h3>`;
+    resultList.innerHTML = "";
+    recommendationBox.innerHTML = "";
+    foodRestaurantBtn.classList.remove("show");
+    setStatus("Prediction complete!");
+    return;
+  }
+
+  // 메인 매칭 음식: 이름 + 설명 + 칼로리
+  resultCountry.innerHTML = `
+    <div class="main-result-line">
+      ${info.flag} <strong>${info.country}</strong> — ${top.className}
+      <span class="prob">(${(top.probability * 100).toFixed(1)}%)</span>
+    </div>
+
+    <div class="food-desc">
+      ${info.description}
+    </div>
+
+    <div class="sub-info">
+      ${calorieEmoji(info.calories)} ${info.calories} kcal
+    </div>
+  `;
+
+  // (선택) 같은 나라 추천 음식 박스 만들고 싶으면 여기서 recommendationBox 채우면 됨
+
+  /* ── 3. Top-3 결과: ASCII 막대 + 칼로리 ──────── */
+  resultList.innerHTML = "";
+  const maxBlocks = 20;
+
+  prediction.slice(0, 3).forEach((p) => {
+    const item = foodInfo[p.className];
+    const prefix = item ? `${item.flag} ${item.country}` : "🌏";
+    const extra = item ? ` · ${item.calories} kcal` : "";
+    const percentage = p.probability * 100;
+
+    const filledBlocks = Math.round((percentage / 100) * maxBlocks);
+    const emptyBlocks = Math.max(0, maxBlocks - filledBlocks);
+    const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
+
+    const row = document.createElement("div");
+    row.className = "ascii-row";
+    row.innerHTML = `
+      <div class="ascii-text">
+        ${prefix} — ${p.className}: ${percentage.toFixed(1)}%${extra}
+      </div>
+      <div class="ascii-bar">${bar}</div>
+    `;
+    resultList.appendChild(row);
+  });
+
+  /* ── 4. 음식별 맛집 버튼 세팅 ───────────────── */
+  foodRestaurantBtn.dataset.food = top.className;
+  foodRestaurantBtn.dataset.country = info.country;
+  foodRestaurantBtn.classList.add("show");
+
+  setStatus("Prediction complete!");
+}
+
 
     // 추천 박스/맛집 버튼은 숨김
     recommendationBox.innerHTML = "";
@@ -1203,6 +1252,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
