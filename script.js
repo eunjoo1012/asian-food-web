@@ -17,14 +17,14 @@ const resultList = document.getElementById("result-list");
 const recommendationBox = document.getElementById("recommendation-box");
 const foodRestaurantBtn = document.getElementById("food-restaurant-btn");
 
-// HTML Elements – Travel
+// HTML Elements – Travel (맛집 모드)
 const travelCountry = document.getElementById("travel-country");
 const travelLocation = document.getElementById("travel-location");
 const travelSearchBtn = document.getElementById("travel-search-btn");
 const mapLinks = document.getElementById("map-links");
-// 나라별 대표 도시 2개씩 추천
 const areaTagsContainer = document.querySelector(".area-tags");
 
+// 나라별 대표 도시 2개씩 추천
 const areaSuggestions = {
   Korea: ["Myeongdong, Seoul", "Seongsu, Seoul"],
   Japan: ["Shibuya, Tokyo", "Akihabara, Tokyo"],
@@ -34,8 +34,6 @@ const areaSuggestions = {
 
 function renderAreaTags(country) {
   const cities = areaSuggestions[country] || [];
-
-  // 버튼 HTML 생성
   areaTagsContainer.innerHTML = cities
     .map(
       (city) =>
@@ -43,7 +41,6 @@ function renderAreaTags(country) {
     )
     .join("");
 
-  // 클릭 시 입력창에 넣기
   const tags = areaTagsContainer.querySelectorAll(".area-tag");
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
@@ -55,14 +52,13 @@ function renderAreaTags(country) {
 
 // 처음 로드될 때 현재 선택된 나라 기준으로 태그 보여주기
 renderAreaTags(travelCountry.value);
-
-// 나라 선택 바뀔 때마다 태그 다시 렌더링
 travelCountry.addEventListener("change", () => {
   renderAreaTags(travelCountry.value);
 });
 
-
-// Travel menu buttons
+/**********************
+ * TRAVEL MENU (관광 코스 화면 전환)
+ **********************/
 const mainMenu = document.getElementById("travel-main-menu");
 const touristMode = document.getElementById("tourist-mode");
 const restaurantMode = document.getElementById("restaurant-mode");
@@ -73,12 +69,12 @@ const btnFood = document.getElementById("btn-food-mode");
 // Tourist mode elements
 const touristList = document.getElementById("tourist-list");
 const touristMap = document.getElementById("tourist-map");
-// Tourist course form elements
 const tourAreaInput = document.getElementById("tour-area-input");
 const tourCourseBtn = document.getElementById("tour-course-btn");
 const tourStyleButtons = document.querySelectorAll(".tour-style-btn");
-// 코스용 지역 예시 태그 (4나라 × 2개)
 const tourAreaTags = document.querySelectorAll(".tour-area-tag");
+
+// 코스용 지역 예시 태그 (4나라 × 2개)
 tourAreaTags.forEach(tag => {
   tag.addEventListener("click", () => {
     tourAreaInput.value = tag.textContent;
@@ -609,6 +605,7 @@ tourStyleButtons.forEach(btn => {
     selectedStyle = btn.dataset.style;
   });
 });
+
 function renderCourse(area, style) {
   const areaData = courseDB[area];
   if (!areaData) {
@@ -616,6 +613,7 @@ function renderCourse(area, style) {
       <h3>No course data for "${area}"</h3>
       <p>Try "Seongsu, Seoul" or "Shibuya, Tokyo".</p>
     `;
+    touristMap.src = "";
     return;
   }
 
@@ -624,16 +622,15 @@ function renderCourse(area, style) {
     touristList.innerHTML = `
       <h3>No "${style}" style course for "${area}"</h3>
     `;
+    touristMap.src = "";
     return;
   }
 
-  // 스타일 이름 변환
   const styleName =
     style === "chill" ? "Chill & Cafe" :
     style === "shopping" ? "Shopping" :
     "Night View";
 
-  // 왼쪽 리스트 HTML 생성
   let html = `
     <h3>${area} — ${styleName} Course</h3>
     <ol class="course-list">
@@ -657,12 +654,9 @@ function renderCourse(area, style) {
   html += `</ol>`;
   touristList.innerHTML = html;
 
-// 오른쪽 지도는 "지역 전체"가 보이도록 세팅
-touristMap.src =
-  `https://www.google.com/maps?q=${encodeURIComponent(area)}&output=embed`;
+  touristMap.src =
+    `https://www.google.com/maps?q=${encodeURIComponent(area)}&output=embed`;
 
-
-  // 리스트 내부 지도 버튼들 이벤트 연결
   const mapButtons = touristList.querySelectorAll(".course-map-btn");
   mapButtons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -674,21 +668,21 @@ touristMap.src =
     });
   });
 }
+
 tourCourseBtn.addEventListener("click", () => {
   const area = tourAreaInput.value.trim();
   if (!area) {
     alert("Please enter a travel area for the course.");
     return;
   }
-
   renderCourse(area, selectedStyle);
 });
 
 /**********************
  * FOOD INFO DATABASE
  **********************/
-
 const foodInfo = {
+  // (네가 적어준 foodInfo 그대로 – 생략 안 함)
   // China
   "Dim Sum": {
     country: "China",
@@ -935,9 +929,6 @@ function translateWord(country, word) {
   return dict[country] || word;
 }
 
-
-  setStatus("Prediction complete!");
-}
 /**********************
  * CALORIE EMOJI
  **********************/
@@ -951,15 +942,15 @@ function calorieEmoji(cal) {
  * ASCII BAR (확률 막대)
  **********************/
 function makeAsciiBar(prob) {
-  const totalBlocks = 20;              // 막대 칸 수
+  const totalBlocks = 20;
   const filled = Math.round(prob * totalBlocks);
   let bar = "";
-
   for (let i = 0; i < totalBlocks; i++) {
-    bar += i < filled ? "█" : "░";     // 채워진칸 / 빈칸
+    bar += i < filled ? "█" : "░";
   }
   return bar;
 }
+
 /**********************
  * STATUS UPDATE
  **********************/
@@ -979,7 +970,10 @@ let isModelReady = false;
 
 window.addEventListener("load", async () => {
   try {
-    model = await tmImage.load(MODEL_URL + "model.json", MODEL_URL + "metadata.json");
+    model = await tmImage.load(
+      MODEL_URL + "model.json",
+      MODEL_URL + "metadata.json"
+    );
     isModelReady = true;
     setStatus("Model loaded! Upload a food image.");
   } catch (e) {
@@ -1016,7 +1010,7 @@ async function predict(img) {
 
   const top = prediction[0];
 
-  /* ── 1. 확률이 50% 미만인 경우 ───────────────── */
+  // 1) 50% 미만이면: 가장 가능성 높은 음식만 보여주고 경고
   if (top.probability < 0.5) {
     const infoGuess = foodInfo[top.className];
 
@@ -1033,12 +1027,15 @@ async function predict(img) {
       </p>
     `;
 
-    // Top-3는 간단히 텍스트 리스트 (원하면 여기도 ASCII로 바꿀 수 있음)
     resultList.innerHTML = "";
     prediction.slice(0, 3).forEach((p) => {
+      const bar = makeAsciiBar(p.probability);
       resultList.innerHTML += `
         <div class="ascii-row">
-          <div>${p.className} — ${(p.probability * 100).toFixed(1)}%</div>
+          <div class="ascii-text">
+            ${p.className} — ${(p.probability * 100).toFixed(1)}%
+          </div>
+          <div class="ascii-bar">${bar}</div>
         </div>
       `;
     });
@@ -1050,7 +1047,7 @@ async function predict(img) {
     return;
   }
 
-  /* ── 2. 확률이 50% 이상인 경우 (정상 결과) ──────── */
+  // 2) 50% 이상: 정상 결과
   const info = foodInfo[top.className];
   document.body.classList.add("view-food-only");
 
@@ -1063,121 +1060,40 @@ async function predict(img) {
     return;
   }
 
-  // 메인 매칭 음식: 이름 + 설명 + 칼로리
+  // 메인 매칭 카드 (이름 + 설명 + 칼로리)
   resultCountry.innerHTML = `
     <div class="main-result-line">
       ${info.flag} <strong>${info.country}</strong> — ${top.className}
       <span class="prob">(${(top.probability * 100).toFixed(1)}%)</span>
     </div>
-
     <div class="food-desc">
       ${info.description}
     </div>
-
     <div class="sub-info">
       ${calorieEmoji(info.calories)} ${info.calories} kcal
     </div>
   `;
 
-  // (선택) 같은 나라 추천 음식 박스 만들고 싶으면 여기서 recommendationBox 채우면 됨
-
-  /* ── 3. Top-3 결과: ASCII 막대 + 칼로리 ──────── */
+  // Top-3 리스트 (ASCII bar + kcal)
   resultList.innerHTML = "";
-  const maxBlocks = 20;
-
   prediction.slice(0, 3).forEach((p) => {
     const item = foodInfo[p.className];
+    const percentage = (p.probability * 100).toFixed(1);
+    const bar = makeAsciiBar(p.probability);
     const prefix = item ? `${item.flag} ${item.country}` : "🌏";
-    const extra = item ? ` · ${item.calories} kcal` : "";
-    const percentage = p.probability * 100;
+    const kcal = item ? `${item.calories} kcal` : "";
 
-    const filledBlocks = Math.round((percentage / 100) * maxBlocks);
-    const emptyBlocks = Math.max(0, maxBlocks - filledBlocks);
-    const bar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
-
-    const row = document.createElement("div");
-    row.className = "ascii-row";
-    row.innerHTML = `
-      <div class="ascii-text">
-        ${prefix} — ${p.className}: ${percentage.toFixed(1)}%${extra}
+    resultList.innerHTML += `
+      <div class="ascii-row">
+        <div class="ascii-text">
+          ${prefix} — ${p.className}: ${percentage}% ${kcal ? "· " + kcal : ""}
+        </div>
+        <div class="ascii-bar">${bar}</div>
       </div>
-      <div class="ascii-bar">${bar}</div>
     `;
-    resultList.appendChild(row);
   });
 
-  /* ── 4. 음식별 맛집 버튼 세팅 ───────────────── */
-  foodRestaurantBtn.dataset.food = top.className;
-  foodRestaurantBtn.dataset.country = info.country;
-  foodRestaurantBtn.classList.add("show");
-
-  setStatus("Prediction complete!");
-}
-
-
-    // 추천 박스/맛집 버튼은 숨김
-    recommendationBox.innerHTML = "";
-    foodRestaurantBtn.classList.remove("show");
-    document.body.classList.add("view-food-only");
-    setStatus("Prediction complete, but confidence is low.");
-    return;
-  }
-
-
-  const info = foodInfo[top.className];
-  document.body.classList.add("view-food-only");
-
-  if (!info) {
-    resultCountry.innerHTML = `
-      <h3>Unknown Food: ${top.className}</h3>
-    `;
-    return;
-  }
-
- resultCountry.innerHTML = `
-  <div class="main-result-line">
-    ${info.flag} <strong>${info.country}</strong> — ${top.className}
-    <span class="prob">(${(top.probability * 100).toFixed(1)}%)</span>
-  </div>
-
-  <div class="food-desc">
-    ${info.description}
-  </div>
-
-  <div class="sub-info">
-    ${calorieEmoji(info.calories)} ${info.calories} kcal
-  </div>
-`;
-
- resultList.innerHTML = "";
-
-prediction.slice(0, 3).forEach(p => {
-  const item = foodInfo[p.className];
-  const percent = (p.probability * 100).toFixed(1);
-
-  resultList.innerHTML += `
-    <div class="ascii-row">
-      <div class="ascii-header">
-        ${item ? item.flag : ""} 
-        ${item ? item.country : ""} — 
-        ${p.className}: ${percent}%
-      </div>
-
-      <div class="ascii-bar">${makeAsciiBar(p.probability)}</div>
-
-      <div class="ascii-desc">
-        ${item ? item.description : ""}
-      </div>
-
-      <div class="ascii-kcal">
-        ${item ? `${item.calories} kcal` : ""}
-      </div>
-    </div>
-  `;
-});
-
-
-  // Show “find restaurants button”
+  // 맛집 검색 버튼 노출
   foodRestaurantBtn.dataset.food = top.className;
   foodRestaurantBtn.dataset.country = info.country;
   foodRestaurantBtn.classList.add("show");
@@ -1252,12 +1168,6 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
-
-
-
-
-
-
 
 
 
