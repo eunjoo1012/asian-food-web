@@ -758,6 +758,17 @@ function translateWord(country, word) {
   };
   return dict[country] || word;
 }
+// 확률 ASCII bar 만들기
+function makeAsciiBar(prob) {
+  const total = 24; // 막대 칸 수
+  const filled = Math.round(prob * total);
+  let bar = "";
+
+  for (let i = 0; i < total; i++) {
+    bar += i < filled ? "▮" : "▯";
+  }
+  return bar;
+}
 
 /**********************
  * CALORIE EMOJI
@@ -870,26 +881,48 @@ async function predict(img) {
     return;
   }
 
-  // Main result
-  resultCountry.innerHTML = `
-    <div class="main-result-line">
-      ${info.flag} <strong>${info.country}</strong> — ${top.className}
-      <span class="prob">(${(top.probability * 100).toFixed(1)}%)</span>
-    </div>
-    <div class="sub-info">
-      ${calorieEmoji(info.calories)} ${info.calories} kcal · ${info.description}
+ resultCountry.innerHTML = `
+  <div class="main-result-line">
+    ${info.flag} <strong>${info.country}</strong> — ${top.className}
+    <span class="prob">(${(top.probability * 100).toFixed(1)}%)</span>
+  </div>
+
+  <div class="food-desc">
+    ${info.description}
+  </div>
+
+  <div class="sub-info">
+    ${calorieEmoji(info.calories)} ${info.calories} kcal
+  </div>
+`;
+
+ resultList.innerHTML = "";
+
+prediction.slice(0, 3).forEach(p => {
+  const item = foodInfo[p.className];
+  const percent = (p.probability * 100).toFixed(1);
+
+  resultList.innerHTML += `
+    <div class="ascii-row">
+      <div class="ascii-header">
+        ${item ? item.flag : ""} 
+        ${item ? item.country : ""} — 
+        ${p.className}: ${percent}%
+      </div>
+
+      <div class="ascii-bar">${makeAsciiBar(p.probability)}</div>
+
+      <div class="ascii-desc">
+        ${item ? item.description : ""}
+      </div>
+
+      <div class="ascii-kcal">
+        ${item ? `${item.calories} kcal` : ""}
+      </div>
     </div>
   `;
+});
 
-  // Top-3 List
-  resultList.innerHTML = "";
-  prediction.slice(0, 3).forEach(p => {
-    resultList.innerHTML += `
-      <div class="ascii-row">
-        <div>${p.className} — ${(p.probability * 100).toFixed(1)}%</div>
-      </div>
-    `;
-  });
 
   // Show “find restaurants button”
   foodRestaurantBtn.dataset.food = top.className;
@@ -966,6 +999,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
