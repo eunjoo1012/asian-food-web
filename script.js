@@ -88,9 +88,12 @@ tourAreaTags.forEach(tag => {
 });
 
 /**********************
+/**********************
  * TOURIST COURSE DATABASE
+ * (태그로 보여주는 8개 지역)
  **********************/
 const courseDB = {
+  // ===== 한국 =====
   "Seongsu, Seoul": {
     chill: [
       {
@@ -154,6 +157,70 @@ const courseDB = {
     ]
   },
 
+  "Myeongdong, Seoul": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Myeongdong Cathedral",
+        desc: "Quiet time at a historic cathedral.",
+        mapsQuery: "Myeongdong Cathedral"
+      },
+      {
+        time: "15:00",
+        name: "Cafe Street in Myeongdong",
+        desc: "Relax in a dessert cafe after shopping.",
+        mapsQuery: "명동 카페 거리"
+      },
+      {
+        time: "17:30",
+        name: "Namsan Park Entrance",
+        desc: "Walk slowly toward Namsan tower.",
+        mapsQuery: "남산공원 입구"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Myeongdong Shopping Street",
+        desc: "Cosmetics, fashion, and souvenir street.",
+        mapsQuery: "Myeongdong Shopping Street"
+      },
+      {
+        time: "15:30",
+        name: "Lotte Department Store (Myeongdong)",
+        desc: "Department store and duty free.",
+        mapsQuery: "Lotte Department Store Myeongdong"
+      },
+      {
+        time: "18:00",
+        name: "Street Food Alley",
+        desc: "Try Korean street snacks for dinner.",
+        mapsQuery: "명동 길거리 음식"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Myeongdong Street Lights",
+        desc: "Enjoy night lights and buskers.",
+        mapsQuery: "Myeongdong night"
+      },
+      {
+        time: "19:30",
+        name: "N Seoul Tower",
+        desc: "Night view of Seoul from the tower.",
+        mapsQuery: "N Seoul Tower"
+      },
+      {
+        time: "21:00",
+        name: "View from Namsan",
+        desc: "Slow walk and photos at the observatory.",
+        mapsQuery: "Namsan Observatory"
+      }
+    ]
+  },
+
+  // ===== 일본 =====
   "Shibuya, Tokyo": {
     chill: [
       {
@@ -164,9 +231,9 @@ const courseDB = {
       },
       {
         time: "15:00",
-        name: "Shibuya Scramble Crossing",
-        desc: "Enjoy the most famous crossing in the world.",
-        mapsQuery: "Shibuya Scramble Crossing"
+        name: "Hachiko Statue & Scramble Crossing",
+        desc: "Take photos and watch the crossing.",
+        mapsQuery: "Hachiko Statue"
       },
       {
         time: "18:30",
@@ -215,9 +282,326 @@ const courseDB = {
         mapsQuery: "Shibuya nightlife"
       }
     ]
+  },
+
+  "Akihabara, Tokyo": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Akihabara Cafe",
+        desc: "Relax in a themed or anime-style cafe.",
+        mapsQuery: "Akihabara cafe"
+      },
+      {
+        time: "15:00",
+        name: "Kanda River Walk",
+        desc: "Quiet walk near the river around Akihabara.",
+        mapsQuery: "Kanda River Akihabara"
+      },
+      {
+        time: "17:30",
+        name: "Akihabara Park",
+        desc: "Short break before evening lights.",
+        mapsQuery: "Akihabara Park"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Akihabara Electric Town",
+        desc: "Explore electronics and games.",
+        mapsQuery: "Akihabara Electric Town"
+      },
+      {
+        time: "15:30",
+        name: "Anime & Figure Shops",
+        desc: "Character goods and anime items.",
+        mapsQuery: "Akihabara anime shop"
+      },
+      {
+        time: "18:00",
+        name: "Retro Game Stores",
+        desc: "Old consoles and games hunting.",
+        mapsQuery: "Akihabara retro game shop"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Akihabara Neon Streets",
+        desc: "Take photos of neon signs at night.",
+        mapsQuery: "Akihabara night"
+      },
+      {
+        time: "19:30",
+        name: "Game Center & Arcade",
+        desc: "Enjoy arcade games with friends.",
+        mapsQuery: "Akihabara game center"
+      },
+      {
+        time: "21:00",
+        name: "Late-night Ramen",
+        desc: "Finish the day with a ramen shop.",
+        mapsQuery: "Akihabara ramen"
+      }
+    ]
+  },
+
+  // ===== 중국 =====
+  "The Bund, Shanghai": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Bund Riverside Walk",
+        desc: "Walk along the Huangpu River.",
+        mapsQuery: "The Bund Shanghai"
+      },
+      {
+        time: "15:00",
+        name: "Historic Buildings",
+        desc: "See old European-style architecture.",
+        mapsQuery: "Bund historic buildings"
+      },
+      {
+        time: "17:30",
+        name: "Riverside Cafe",
+        desc: "Relax with coffee and river view.",
+        mapsQuery: "Bund cafe"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Nanjing Road Pedestrian Street",
+        desc: "One of the most famous shopping streets.",
+        mapsQuery: "Nanjing Road Pedestrian Street"
+      },
+      {
+        time: "15:30",
+        name: "IFC Mall",
+        desc: "Modern shopping mall near the Bund.",
+        mapsQuery: "Shanghai IFC Mall"
+      },
+      {
+        time: "18:00",
+        name: "Souvenir Shops",
+        desc: "Look for Shanghai-style gifts.",
+        mapsQuery: "Nanjing Road souvenir shop"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Bund Night View",
+        desc: "See the famous skyline with lights.",
+        mapsQuery: "The Bund night view"
+      },
+      {
+        time: "19:30",
+        name: "Huangpu River Cruise",
+        desc: "Enjoy the night scenery from a boat.",
+        mapsQuery: "Huangpu River night cruise"
+      },
+      {
+        time: "21:00",
+        name: "Rooftop Bar",
+        desc: "Relax with a drink and view.",
+        mapsQuery: "Bund rooftop bar"
+      }
+    ]
+  },
+
+  "Wangfujing, Beijing": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Wangfujing Bookstore & Cafe",
+        desc: "Quiet time with books and coffee.",
+        mapsQuery: "Wangfujing bookstore"
+      },
+      {
+        time: "15:00",
+        name: "Nearby Hutong Walk",
+        desc: "Walk through traditional alleys.",
+        mapsQuery: "Beijing Hutong near Wangfujing"
+      },
+      {
+        time: "17:30",
+        name: "Small Park Rest",
+        desc: "Short break before evening market.",
+        mapsQuery: "Wangfujing park"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Wangfujing Shopping Street",
+        desc: "Department stores and local shops.",
+        mapsQuery: "Wangfujing Shopping Street"
+      },
+      {
+        time: "15:30",
+        name: "Beijing Department Store",
+        desc: "Classic department store of Beijing.",
+        mapsQuery: "Beijing Department Store Wangfujing"
+      },
+      {
+        time: "18:00",
+        name: "Snack Street",
+        desc: "Try Beijing street food and snacks.",
+        mapsQuery: "Wangfujing Snack Street"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Night Market",
+        desc: "Explore local snacks and lights.",
+        mapsQuery: "Wangfujing night market"
+      },
+      {
+        time: "19:30",
+        name: "Night Walk on Shopping Street",
+        desc: "See neon signs and crowds.",
+        mapsQuery: "Wangfujing night"
+      },
+      {
+        time: "21:00",
+        name: "Late Dessert Cafe",
+        desc: "Finish with dessert or tea.",
+        mapsQuery: "Wangfujing dessert cafe"
+      }
+    ]
+  },
+
+  // ===== 태국 =====
+  "Siam, Bangkok": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Siam Square Cafe",
+        desc: "Relax in a cafe around Siam Square.",
+        mapsQuery: "Siam Square cafe"
+      },
+      {
+        time: "15:00",
+        name: "Lumpini Park",
+        desc: "Take a break in a big city park.",
+        mapsQuery: "Lumpini Park"
+      },
+      {
+        time: "17:30",
+        name: "Skywalk Around Siam",
+        desc: "Walk and watch the city from above.",
+        mapsQuery: "Siam BTS Skywalk"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Siam Paragon",
+        desc: "Luxury mall with many brands.",
+        mapsQuery: "Siam Paragon"
+      },
+      {
+        time: "15:30",
+        name: "Siam Center & Siam Discovery",
+        desc: "Trendy fashion and lifestyle shops.",
+        mapsQuery: "Siam Center"
+      },
+      {
+        time: "18:00",
+        name: "MBK Center",
+        desc: "Local-style shopping mall with good prices.",
+        mapsQuery: "MBK Center"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Siam Night Lights",
+        desc: "Enjoy the lights around the malls.",
+        mapsQuery: "Siam Bangkok night"
+      },
+      {
+        time: "19:30",
+        name: "Rooftop Bar near Siam",
+        desc: "City view with a drink.",
+        mapsQuery: "Bangkok rooftop bar near Siam"
+      },
+      {
+        time: "21:00",
+        name: "Night Street Food",
+        desc: "End with street food near Siam.",
+        mapsQuery: "Bangkok street food Siam"
+      }
+    ]
+  },
+
+  "Old Town, Chiang Mai": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Cafe in Old Town",
+        desc: "Relax in a calm local cafe.",
+        mapsQuery: "Chiang Mai Old Town cafe"
+      },
+      {
+        time: "15:00",
+        name: "Wat Phra Singh Temple",
+        desc: "Visit one of the most famous temples.",
+        mapsQuery: "Wat Phra Singh"
+      },
+      {
+        time: "17:30",
+        name: "City Walls & Moat Walk",
+        desc: "Walk along the old city walls.",
+        mapsQuery: "Chiang Mai old city wall"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Local Craft Shops",
+        desc: "Look for handmade goods and souvenirs.",
+        mapsQuery: "Chiang Mai Old Town craft shop"
+      },
+      {
+        time: "15:30",
+        name: "Warorot Market",
+        desc: "Traditional market with local products.",
+        mapsQuery: "Warorot Market"
+      },
+      {
+        time: "18:00",
+        name: "Sunday Walking Street (if weekend)",
+        desc: "Street market with food and crafts.",
+        mapsQuery: "Chiang Mai Sunday Walking Street"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Night Market in Old Town",
+        desc: "Explore small night markets around the old city.",
+        mapsQuery: "Chiang Mai Old Town night market"
+      },
+      {
+        time: "19:30",
+        name: "Riverside Dinner",
+        desc: "Have dinner at a riverside restaurant.",
+        mapsQuery: "Chiang Mai riverside restaurant"
+      },
+      {
+        time: "21:00",
+        name: "Chill Bar or Cafe",
+        desc: "Finish with a relaxed drink or dessert.",
+        mapsQuery: "Chiang Mai Old Town bar"
+      }
+    ]
   }
-  // 필요하면 나중에 Hongdae, Bangkok 등 추가 가능
 };
+
 let selectedStyle = "chill";
 
 tourStyleButtons.forEach(btn => {
@@ -589,6 +973,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
