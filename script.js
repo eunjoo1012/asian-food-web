@@ -78,6 +78,15 @@ const touristMap = document.getElementById("tourist-map");
 const tourAreaInput = document.getElementById("tour-area-input");
 const tourCourseBtn = document.getElementById("tour-course-btn");
 const tourStyleButtons = document.querySelectorAll(".tour-style-btn");
+// 코스용 지역 예시 태그 (4나라 × 2개)
+const tourAreaTags = document.querySelectorAll(".tour-area-tag");
+tourAreaTags.forEach(tag => {
+  tag.addEventListener("click", () => {
+    tourAreaInput.value = tag.textContent;
+    tourAreaInput.focus();
+  });
+});
+
 /**********************
  * TOURIST COURSE DATABASE
  **********************/
@@ -580,6 +589,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
