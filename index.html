@@ -85,7 +85,39 @@
             📍 Use my current location
           </button>
 
-          <!-- 왼쪽: 관광지 리스트 / 오른쪽: 작은 구글 지도 -->
+  <!-- 🔹 코스 추천 폼 -->
+  <div class="tour-form">
+    <p class="subtitle-mini">
+      Or type a travel area and choose your travel style to get a 1-day course.
+    </p>
+
+    <!-- 여행 지역 입력 -->
+    <label class="tour-label">
+      Travel area for course
+      <input
+        type="text"
+        id="tour-area-input"
+        placeholder="e.g. Seongsu, Seoul / Shibuya, Tokyo"
+      />
+    </label>
+
+    <!-- 스타일 선택 버튼 -->
+    <div class="tour-style-row">
+      <span class="tour-style-title">Travel style</span>
+      <div class="tour-style-buttons">
+        <button type="button" class="tour-style-btn active" data-style="chill">☕ Chill & Cafe</button>
+        <button type="button" class="tour-style-btn" data-style="shopping">🛍 Shopping</button>
+        <button type="button" class="tour-style-btn" data-style="night">🌉 Night View</button>
+      </div>
+    </div>
+
+    <!-- 코스 생성 버튼 -->
+    <button id="tour-course-btn" type="button" class="sub-btn">
+      ✨ Make my 1-day course
+    </button>
+  </div>
+
+!-- 왼쪽: 관광지 리스트 / 오른쪽: 작은 구글 지도 -->
           <div id="tourist-layout">
             <div id="tourist-list">
               <!-- JS에서 관광지 4개를 여기 넣음 -->
@@ -196,3 +228,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
