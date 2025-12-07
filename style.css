@@ -538,6 +538,80 @@ body.view-travel-only #travel-section {
   }
 }
 
+/* =======================
+   TOURIST MODE – COURSE FORM
+   ======================= */
+
+.tour-form {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tour-label {
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.tour-label input {
+  background: #171b28;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 10px;
+  color: #f5f5f5;
+  font-size: 0.94rem;
+}
+
+.tour-style-row {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tour-style-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #b9c0d2;
+}
+
+.tour-style-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tour-style-btn {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.82rem;
+  color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.tour-style-btn.active {
+  background: linear-gradient(135deg, #4f8cff, #6b5bff);
+  border-color: transparent;
+}
+
+.tour-style-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* 모바일에서 폼 여백 조금 줄이기 */
+@media (max-width: 900px) {
+  .tour-form {
+    padding: 8px 10px;
+  }
+}
+
 
 
 
