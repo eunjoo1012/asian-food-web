@@ -71,7 +71,6 @@ const btnTourist = document.getElementById("btn-tourist-mode");
 const btnFood = document.getElementById("btn-food-mode");
 
 // Tourist mode elements
-const touristLocationBtn = document.getElementById("tourist-location-btn");
 const touristList = document.getElementById("tourist-list");
 const touristMap = document.getElementById("tourist-map");
 // Tourist course form elements
@@ -659,10 +658,10 @@ function renderCourse(area, style) {
   html += `</ol>`;
   touristList.innerHTML = html;
 
-  // 오른쪽 지도는 첫 장소 기준으로
-  const firstQuery = course[0].mapsQuery;
-  touristMap.src =
-    `https://www.google.com/maps/embed/v1/search?key=AIzaSyCK-fakekey123&q=${encodeURIComponent(firstQuery)}&zoom=14`;
+// 오른쪽 지도는 "지역 전체"가 보이도록 세팅
+touristMap.src =
+  `https://www.google.com/maps?q=${encodeURIComponent(area)}&output=embed`;
+
 
   // 리스트 내부 지도 버튼들 이벤트 연결
   const mapButtons = touristList.querySelectorAll(".course-map-btn");
@@ -919,36 +918,6 @@ document.querySelectorAll(".back-btn").forEach(btn => {
 });
 
 /**********************
- * TOURIST MODE — USE USER LOCATION
- **********************/
-touristLocationBtn.addEventListener("click", () => {
-  if (!navigator.geolocation) {
-    alert("Location not supported.");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
-
-    // Set Google Map iframe
-    touristMap.src =
-      `https://www.google.com/maps/embed/v1/search?key=AIzaSyCK-fakekey123&q=tourist+attractions&center=${lat},${lng}&zoom=14`;
-
-    // Recommend 4 tourist spots (static sample)
-    touristList.innerHTML = `
-      <h3>Recommended attractions</h3>
-      <ul>
-        <li>🌄 City Tower</li>
-        <li>🏛 History Museum</li>
-        <li>🌳 Central Park</li>
-        <li>🛍 Popular Shopping Street</li>
-      </ul>
-    `;
-  });
-});
-
-/**********************
  * RESTAURANT MODE — SEARCH
  **********************/
 travelSearchBtn.addEventListener("click", () => {
@@ -973,6 +942,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
