@@ -74,6 +74,224 @@ const btnFood = document.getElementById("btn-food-mode");
 const touristLocationBtn = document.getElementById("tourist-location-btn");
 const touristList = document.getElementById("tourist-list");
 const touristMap = document.getElementById("tourist-map");
+// Tourist course form elements
+const tourAreaInput = document.getElementById("tour-area-input");
+const tourCourseBtn = document.getElementById("tour-course-btn");
+const tourStyleButtons = document.querySelectorAll(".tour-style-btn");
+/**********************
+ * TOURIST COURSE DATABASE
+ **********************/
+const courseDB = {
+  "Seongsu, Seoul": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Cafe Onion Seongsu",
+        desc: "Industrial mood cafe with great bread.",
+        mapsQuery: "Cafe Onion Seongsu"
+      },
+      {
+        time: "15:00",
+        name: "Seongsu Handmade Shoe Street",
+        desc: "Walk around local select shops and galleries.",
+        mapsQuery: "성수 수제화 거리"
+      },
+      {
+        time: "18:30",
+        name: "Seongsu Bridge Night View",
+        desc: "Han river and city night view.",
+        mapsQuery: "성수대교 전망"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Seongsu Select Shops",
+        desc: "Explore trendy fashion and lifestyle stores.",
+        mapsQuery: "성수 편집샵"
+      },
+      {
+        time: "16:00",
+        name: "Common Ground",
+        desc: "Container pop-up mall & photo spots.",
+        mapsQuery: "커먼그라운드"
+      },
+      {
+        time: "18:30",
+        name: "Local Restaurant Street",
+        desc: "End the day with dinner at a famous restaurant street.",
+        mapsQuery: "성수 맛집 거리"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Cafe with Sunset View",
+        desc: "Relax with coffee before night falls.",
+        mapsQuery: "성수 카페 뷰 좋은 곳"
+      },
+      {
+        time: "19:30",
+        name: "Seongsu Bridge Night View",
+        desc: "Walk along the bridge and enjoy night scenery.",
+        mapsQuery: "성수대교 전망"
+      },
+      {
+        time: "21:00",
+        name: "Riverside Walk",
+        desc: "Slow walk along the Han river.",
+        mapsQuery: "뚝섬 한강공원"
+      }
+    ]
+  },
+
+  "Shibuya, Tokyo": {
+    chill: [
+      {
+        time: "13:00",
+        name: "Shibuya Cafe Street",
+        desc: "Visit a cozy cafe around Shibuya.",
+        mapsQuery: "Shibuya cafe"
+      },
+      {
+        time: "15:00",
+        name: "Shibuya Scramble Crossing",
+        desc: "Enjoy the most famous crossing in the world.",
+        mapsQuery: "Shibuya Scramble Crossing"
+      },
+      {
+        time: "18:30",
+        name: "Shibuya Sky",
+        desc: "Night view from rooftop observatory.",
+        mapsQuery: "Shibuya Sky"
+      }
+    ],
+    shopping: [
+      {
+        time: "13:00",
+        name: "Shibuya 109",
+        desc: "Iconic fashion shopping mall.",
+        mapsQuery: "Shibuya 109"
+      },
+      {
+        time: "15:30",
+        name: "Center Gai Street",
+        desc: "Street full of shops and food.",
+        mapsQuery: "Shibuya Center Gai"
+      },
+      {
+        time: "18:00",
+        name: "PARCO Shibuya",
+        desc: "Modern shopping complex with anime & art.",
+        mapsQuery: "Shibuya PARCO"
+      }
+    ],
+    night: [
+      {
+        time: "18:00",
+        name: "Shibuya Crossing Night View",
+        desc: "See the lights and crowds at night.",
+        mapsQuery: "Shibuya Crossing night"
+      },
+      {
+        time: "19:30",
+        name: "Izakaya Street",
+        desc: "Experience Japanese bar food and drinks.",
+        mapsQuery: "Shibuya Izakaya"
+      },
+      {
+        time: "21:00",
+        name: "Shibuya Night Walk",
+        desc: "Walk around side streets and neon signs.",
+        mapsQuery: "Shibuya nightlife"
+      }
+    ]
+  }
+  // 필요하면 나중에 Hongdae, Bangkok 등 추가 가능
+};
+let selectedStyle = "chill";
+
+tourStyleButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    tourStyleButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedStyle = btn.dataset.style;
+  });
+});
+function renderCourse(area, style) {
+  const areaData = courseDB[area];
+  if (!areaData) {
+    touristList.innerHTML = `
+      <h3>No course data for "${area}"</h3>
+      <p>Try "Seongsu, Seoul" or "Shibuya, Tokyo".</p>
+    `;
+    return;
+  }
+
+  const course = areaData[style];
+  if (!course) {
+    touristList.innerHTML = `
+      <h3>No "${style}" style course for "${area}"</h3>
+    `;
+    return;
+  }
+
+  // 스타일 이름 변환
+  const styleName =
+    style === "chill" ? "Chill & Cafe" :
+    style === "shopping" ? "Shopping" :
+    "Night View";
+
+  // 왼쪽 리스트 HTML 생성
+  let html = `
+    <h3>${area} — ${styleName} Course</h3>
+    <ol class="course-list">
+  `;
+
+  course.forEach(stop => {
+    html += `
+      <li>
+        <div class="course-time">${stop.time}</div>
+        <div class="course-body">
+          <div class="course-name">${stop.name}</div>
+          <div class="course-desc">${stop.desc}</div>
+          <button type="button" class="course-map-btn" data-query="${stop.mapsQuery}">
+            📍 Open on Google Maps
+          </button>
+        </div>
+      </li>
+    `;
+  });
+
+  html += `</ol>`;
+  touristList.innerHTML = html;
+
+  // 오른쪽 지도는 첫 장소 기준으로
+  const firstQuery = course[0].mapsQuery;
+  touristMap.src =
+    `https://www.google.com/maps/embed/v1/search?key=AIzaSyCK-fakekey123&q=${encodeURIComponent(firstQuery)}&zoom=14`;
+
+  // 리스트 내부 지도 버튼들 이벤트 연결
+  const mapButtons = touristList.querySelectorAll(".course-map-btn");
+  mapButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const q = btn.dataset.query;
+      window.open(
+        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`,
+        "_blank"
+      );
+    });
+  });
+}
+tourCourseBtn.addEventListener("click", () => {
+  const area = tourAreaInput.value.trim();
+  if (!area) {
+    alert("Please enter a travel area for the course.");
+    return;
+  }
+
+  renderCourse(area, selectedStyle);
+});
 
 /**********************
  * FOOD INFO DATABASE
@@ -362,6 +580,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
