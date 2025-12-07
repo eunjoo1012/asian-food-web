@@ -87,7 +87,6 @@ tourAreaTags.forEach(tag => {
 });
 
 /**********************
-/**********************
  * TOURIST COURSE DATABASE
  * (태그로 보여주는 8개 지역)
  **********************/
@@ -972,6 +971,19 @@ function calorieEmoji(cal) {
 }
 
 /**********************
+ * ASCII BAR (확률 막대)
+ **********************/
+function makeAsciiBar(prob) {
+  const totalBlocks = 20;              // 막대 칸 수
+  const filled = Math.round(prob * totalBlocks);
+  let bar = "";
+
+  for (let i = 0; i < totalBlocks; i++) {
+    bar += i < filled ? "█" : "░";     // 채워진칸 / 빈칸
+  }
+  return bar;
+}
+/**********************
  * STATUS UPDATE
  **********************/
 function setStatus(text) {
@@ -1191,6 +1203,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
