@@ -613,6 +613,33 @@ body.view-travel-only #travel-section {
 }
 
 
+/* =======================
+   TOURIST MODE – AREA TAGS
+   ======================= */
+
+.tour-area-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.tour-area-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.8rem;
+  color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.tour-area-tag:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 
 
 
