@@ -65,6 +65,12 @@ const restaurantMode = document.getElementById("restaurant-mode");
 
 const btnTourist = document.getElementById("btn-tourist-mode");
 const btnFood = document.getElementById("btn-food-mode");
+
+const container = document.querySelector(".container");
+
+function showDetail() {
+  document.body.classList.add("show-detail");
+}
 // ===== 상단 3개 카드 → 아래 기능 대신 실행 =====
 const cardFindRest = document.getElementById("card-find-rest");
 const cardFoodMain = document.getElementById("card-food-main");
@@ -1216,6 +1222,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
