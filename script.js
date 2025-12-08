@@ -88,6 +88,8 @@ const travelSection = document.getElementById("travel-section");
 // 1) 가운데 카드: Asian Food Classifier → 업로드 버튼 기능
 cardFoodMain.addEventListener("click", (e) => {
   e.preventDefault();
+classifierSection.style.display = "none";   // UI 숨기기
+
 
   openDetail(); // 메인 카드 숨기고 아래 화면 켜기
   document.body.classList.add("view-food-only");
@@ -1059,6 +1061,8 @@ window.addEventListener("load", async () => {
 fileInput.addEventListener("change", handleUpload);
 
 function handleUpload(e) {
+  classifierSection.style.display = "block";  
+
   const file = e.target.files[0];
   if (!file || !isModelReady) return;
 
@@ -1251,6 +1255,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
