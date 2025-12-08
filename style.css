@@ -748,4 +748,8 @@ body.view-travel-only #travel-section {
   padding-top: 0 !important;
   margin-top: 0 !important;
 }
+.container {
+  display: none !important;
+}
+
 
