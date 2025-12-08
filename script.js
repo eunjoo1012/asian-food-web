@@ -67,10 +67,15 @@ const btnTourist = document.getElementById("btn-tourist-mode");
 const btnFood = document.getElementById("btn-food-mode");
 
 const container = document.querySelector(".container");
+const homeMenu = document.querySelector(".home-menu");
 
-function showDetail() {
+// 메인 카드에서 상세 화면으로 들어갈 때 공통으로 호출
+function openDetail() {
   document.body.classList.add("show-detail");
+  container.classList.remove("hidden-at-start"); // 아래 내용 보이게
+  homeMenu.style.display = "none";               // 위 3카드 숨기기
 }
+
 // ===== 상단 3개 카드 → 아래 기능 대신 실행 =====
 const cardFindRest = document.getElementById("card-find-rest");
 const cardFoodMain = document.getElementById("card-food-main");
@@ -84,49 +89,52 @@ const travelSection = document.getElementById("travel-section");
 cardFoodMain.addEventListener("click", (e) => {
   e.preventDefault();
 
-  showDetail();   
+  openDetail(); // 메인 카드 숨기고 아래 화면 켜기
+  document.body.classList.add("view-food-only");
+  document.body.classList.remove("view-travel-only");
 
-  // 화면을 음식 분류기로 스크롤
   if (classifierSection) {
     classifierSection.scrollIntoView({ behavior: "smooth" });
   }
-  // 실제 파일 업로드 input 클릭 (Upload Food Image와 동일 기능)
   if (fileInput) {
     fileInput.click();
   }
 });
 
 
-// 2) 오른쪽 카드: Make 1-day Course → "Recommend nearby tourist spots" 버튼 기능
+
+// 2) 오른쪽 카드: Make 1-day Course → 관광 모드
 cardCourseMain.addEventListener("click", (e) => {
   e.preventDefault();
 
-  showDetail();  
+  openDetail();
+  document.body.classList.add("view-travel-only");
+  document.body.classList.remove("view-food-only");
 
   if (travelSection) {
     travelSection.scrollIntoView({ behavior: "smooth" });
   }
-  // 아래 메인 메뉴에서 관광 모드 버튼 클릭
   if (btnTourist) {
     btnTourist.click();
   }
 });
 
-
-// 3) 왼쪽 카드: Find Asian Restaurants → "Find nearby restaurants" 버튼 기능
+// 3) 왼쪽 카드: Find Asian Restaurants → 맛집 모드
 cardFindRest.addEventListener("click", (e) => {
   e.preventDefault();
 
-  showDetail();  
+  openDetail();
+  document.body.classList.add("view-travel-only");
+  document.body.classList.remove("view-food-only");
 
   if (travelSection) {
     travelSection.scrollIntoView({ behavior: "smooth" });
   }
-  // 아래 메인 메뉴에서 맛집 모드 버튼 클릭
   if (btnFood) {
     btnFood.click();
   }
 });
+
 
 
 // Tourist mode elements
@@ -1183,12 +1191,23 @@ foodRestaurantBtn.addEventListener("click", () => {
 /**********************
  * MAIN TRAVEL MENU SWITCH
  **********************/
-function showMenu() {
+// 완전 메인화면(3개 카드)으로 돌아가는 함수
+function goHome() {
+  // body 상태 초기화
+  document.body.classList.remove("show-detail", "view-food-only", "view-travel-only");
+
+  // 아래 상세 컨테이너 다시 숨기기
+  container.classList.add("hidden-at-start");
+
+  // 위 3개 카드 다시 보이게
+  homeMenu.style.display = "flex";
+
+  // 여행 내부 화면도 초기화 (메인메뉴 보이게)
   mainMenu.classList.remove("hidden");
   touristMode.classList.add("hidden");
   restaurantMode.classList.add("hidden");
-  document.body.classList.remove("view-travel-only");
 }
+
 
 btnTourist.addEventListener("click", () => {
   mainMenu.classList.add("hidden");
@@ -1202,9 +1221,6 @@ btnFood.addEventListener("click", () => {
   document.body.classList.add("view-travel-only");
 });
 
-document.querySelectorAll(".back-btn").forEach(btn => {
-  btn.addEventListener("click", showMenu);
-});
 
 /**********************
  * RESTAURANT MODE — SEARCH
@@ -1230,6 +1246,10 @@ travelSearchBtn.addEventListener("click", () => {
     <p>Opened Google Maps search for:<br>
     <strong>${query}</strong></p>
   `;
+});
+
+document.querySelectorAll(".back-btn").forEach(btn => {
+  btn.addEventListener("click", goHome);
 });
 
 
