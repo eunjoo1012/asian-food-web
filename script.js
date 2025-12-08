@@ -84,6 +84,8 @@ const travelSection = document.getElementById("travel-section");
 cardFoodMain.addEventListener("click", (e) => {
   e.preventDefault();
 
+  showDetail();   
+
   // 화면을 음식 분류기로 스크롤
   if (classifierSection) {
     classifierSection.scrollIntoView({ behavior: "smooth" });
@@ -94,9 +96,12 @@ cardFoodMain.addEventListener("click", (e) => {
   }
 });
 
+
 // 2) 오른쪽 카드: Make 1-day Course → "Recommend nearby tourist spots" 버튼 기능
 cardCourseMain.addEventListener("click", (e) => {
   e.preventDefault();
+
+  showDetail();  
 
   if (travelSection) {
     travelSection.scrollIntoView({ behavior: "smooth" });
@@ -107,9 +112,12 @@ cardCourseMain.addEventListener("click", (e) => {
   }
 });
 
+
 // 3) 왼쪽 카드: Find Asian Restaurants → "Find nearby restaurants" 버튼 기능
 cardFindRest.addEventListener("click", (e) => {
   e.preventDefault();
+
+  showDetail();  
 
   if (travelSection) {
     travelSection.scrollIntoView({ behavior: "smooth" });
@@ -119,6 +127,7 @@ cardFindRest.addEventListener("click", (e) => {
     btnFood.click();
   }
 });
+
 
 // Tourist mode elements
 const touristList = document.getElementById("tourist-list");
@@ -1222,6 +1231,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
