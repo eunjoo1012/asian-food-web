@@ -750,7 +750,9 @@ tourCourseBtn.addEventListener("click", () => {
   }
   renderCourse(area, selectedStyle);
 });
-
+  // 🔥 코스 + 지도 풀사이즈 모드로 전환
+  document.body.classList.add("full-course-view");
+});
 /**********************
  * FOOD INFO DATABASE
  **********************/
@@ -1199,7 +1201,11 @@ foodRestaurantBtn.addEventListener("click", () => {
 function goHome() {
   // body 상태 초기화
   document.body.classList.remove("show-detail", "view-food-only", "view-travel-only");
-
+    "show-detail",
+    "view-food-only",
+    "view-travel-only",
+    "full-course-view"   // 🔥 풀사이즈 모드도 같이 해제
+  );
   // 아래 상세 컨테이너 다시 숨기기
   container.classList.add("hidden-at-start");
 
@@ -1255,6 +1261,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
