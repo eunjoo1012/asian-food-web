@@ -744,3 +744,8 @@ body.view-travel-only #travel-section {
 #travel-main-menu .menu-buttons {
   display: none !important;
 }
+#travel-main-menu {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
