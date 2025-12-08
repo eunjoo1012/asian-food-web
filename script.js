@@ -748,11 +748,14 @@ tourCourseBtn.addEventListener("click", () => {
     alert("Please enter a travel area for the course.");
     return;
   }
+
+  // 코스 렌더링
   renderCourse(area, selectedStyle);
-});
+
   // 🔥 코스 + 지도 풀사이즈 모드로 전환
   document.body.classList.add("full-course-view");
 });
+
 /**********************
  * FOOD INFO DATABASE
  **********************/
@@ -1197,15 +1200,15 @@ foodRestaurantBtn.addEventListener("click", () => {
 /**********************
  * MAIN TRAVEL MENU SWITCH
  **********************/
-// 완전 메인화면(3개 카드)으로 돌아가는 함수
 function goHome() {
-  // body 상태 초기화
-  document.body.classList.remove("show-detail", "view-food-only", "view-travel-only");
+  // body 상태 초기화 (풀사이즈 모드까지 전부 해제)
+  document.body.classList.remove(
     "show-detail",
     "view-food-only",
     "view-travel-only",
-    "full-course-view"   // 🔥 풀사이즈 모드도 같이 해제
+    "full-course-view"
   );
+
   // 아래 상세 컨테이너 다시 숨기기
   container.classList.add("hidden-at-start");
 
@@ -1261,6 +1264,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
