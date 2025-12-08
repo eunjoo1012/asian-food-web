@@ -763,6 +763,28 @@ body.show-detail .home-menu {
   display: none;
 }
 
+/* 전체 화면으로 확장 모드 */
+.full-course-view #course-form {
+  display: none;  /* 입력 폼 사라짐 */
+}
+
+.full-course-view #course-result-layout {
+  height: calc(100vh - 100px);  /* 헤더 제외 전체 높이 사용 */
+  display: flex;
+  gap: 20px;
+}
+
+.full-course-view #course-result,
+.full-course-view #course-map-wrapper {
+  flex: 1;
+  height: 100%;
+}
+
+.full-course-view #course-map {
+  width: 100%;
+  height: 100%;
+}
+
 
 
 
