@@ -65,6 +65,54 @@ const restaurantMode = document.getElementById("restaurant-mode");
 
 const btnTourist = document.getElementById("btn-tourist-mode");
 const btnFood = document.getElementById("btn-food-mode");
+// ===== 상단 3개 카드 → 아래 기능 대신 실행 =====
+const cardFindRest = document.getElementById("card-find-rest");
+const cardFoodMain = document.getElementById("card-food-main");
+const cardCourseMain = document.getElementById("card-course-main");
+
+// 각 섹션 (부드러운 스크롤용)
+const classifierSection = document.getElementById("classifier-section");
+const travelSection = document.getElementById("travel-section");
+
+// 1) 가운데 카드: Asian Food Classifier → 업로드 버튼 기능
+cardFoodMain.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  // 화면을 음식 분류기로 스크롤
+  if (classifierSection) {
+    classifierSection.scrollIntoView({ behavior: "smooth" });
+  }
+  // 실제 파일 업로드 input 클릭 (Upload Food Image와 동일 기능)
+  if (fileInput) {
+    fileInput.click();
+  }
+});
+
+// 2) 오른쪽 카드: Make 1-day Course → "Recommend nearby tourist spots" 버튼 기능
+cardCourseMain.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (travelSection) {
+    travelSection.scrollIntoView({ behavior: "smooth" });
+  }
+  // 아래 메인 메뉴에서 관광 모드 버튼 클릭
+  if (btnTourist) {
+    btnTourist.click();
+  }
+});
+
+// 3) 왼쪽 카드: Find Asian Restaurants → "Find nearby restaurants" 버튼 기능
+cardFindRest.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  if (travelSection) {
+    travelSection.scrollIntoView({ behavior: "smooth" });
+  }
+  // 아래 메인 메뉴에서 맛집 모드 버튼 클릭
+  if (btnFood) {
+    btnFood.click();
+  }
+});
 
 // Tourist mode elements
 const touristList = document.getElementById("tourist-list");
@@ -1168,6 +1216,7 @@ travelSearchBtn.addEventListener("click", () => {
     <strong>${query}</strong></p>
   `;
 });
+
 
 
 
