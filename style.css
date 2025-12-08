@@ -738,3 +738,9 @@ body.view-travel-only #travel-section {
     height: 160px;
   }
 }
+
+/* 메인 화면 아래에 표시되는 기존 버튼(3개) 완전히 숨기기 */
+#classifier-section .upload-btn,
+#travel-main-menu .menu-buttons {
+  display: none !important;
+}
