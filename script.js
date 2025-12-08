@@ -162,24 +162,30 @@ tourAreaTags.forEach(tag => {
 const courseDB = {
   // ===== 한국 =====
   "Seongsu, Seoul": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
+        time: "11:30",
         name: "Cafe Onion Seongsu",
-        desc: "Industrial mood cafe with great bread.",
+        desc: "Brunch at Seoul’s most iconic industrial-style cafe.",
         mapsQuery: "Cafe Onion Seongsu"
       },
       {
-        time: "15:00",
+        time: "13:30",
         name: "Seongsu Handmade Shoe Street",
-        desc: "Walk around local select shops and galleries.",
+        desc: "Explore local crafts, indie brands, and cultural artisan shops.",
         mapsQuery: "성수 수제화 거리"
       },
       {
-        time: "18:30",
-        name: "Seongsu Bridge Night View",
-        desc: "Han river and city night view.",
-        mapsQuery: "성수대교 전망"
+        time: "15:30",
+        name: "Seoul Forest",
+        desc: "Experience local culture through art installations and park life.",
+        mapsQuery: "서울숲"
+      },
+      {
+        time: "18:00",
+        name: "Seongsu Korean BBQ Street",
+        desc: "Taste authentic Korean BBQ, a key part of modern Korean food culture.",
+        mapsQuery: "성수 고기 맛집"
       }
     ],
     shopping: [
@@ -225,24 +231,30 @@ const courseDB = {
   },
 
   "Myeongdong, Seoul": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
+        time: "11:30",
+        name: "Myeongdong Kalguksu Street",
+        desc: "Try Korean noodle soup, a daily staple in Korean cuisine.",
+        mapsQuery: "명동 칼국수 맛집"
+      },
+      {
+        time: "13:30",
         name: "Myeongdong Cathedral",
-        desc: "Quiet time at a historic cathedral.",
+        desc: "Explore a key cultural landmark with historical significance.",
         mapsQuery: "Myeongdong Cathedral"
       },
       {
         time: "15:00",
-        name: "Cafe Street in Myeongdong",
-        desc: "Relax in a dessert cafe after shopping.",
+        name: "Myeongdong Cafe Street",
+        desc: "Enjoy dessert while experiencing Korea’s cafe culture.",
         mapsQuery: "명동 카페 거리"
       },
       {
-        time: "17:30",
-        name: "Namsan Park Entrance",
-        desc: "Walk slowly toward Namsan tower.",
-        mapsQuery: "남산공원 입구"
+        time: "18:00",
+        name: "Myeongdong Street Food Alley",
+        desc: "Taste famous Korean street foods such as tteokbokki & hotteok.",
+        mapsQuery: "명동 길거리 음식"
       }
     ],
     shopping: [
@@ -289,24 +301,30 @@ const courseDB = {
 
   // ===== 일본 =====
   "Shibuya, Tokyo": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
-        name: "Shibuya Cafe Street",
-        desc: "Visit a cozy cafe around Shibuya.",
-        mapsQuery: "Shibuya cafe"
+        time: "11:30",
+        name: "Shibuya Sushi Restaurant",
+        desc: "Experience authentic Japanese sushi culture in Tokyo.",
+        mapsQuery: "Shibuya sushi"
       },
       {
-        time: "15:00",
+        time: "13:30",
         name: "Hachiko Statue & Scramble Crossing",
-        desc: "Take photos and watch the crossing.",
+        desc: "A cultural symbol of loyalty + the world’s busiest crossing.",
         mapsQuery: "Hachiko Statue"
       },
       {
-        time: "18:30",
-        name: "Shibuya Sky",
-        desc: "Night view from rooftop observatory.",
-        mapsQuery: "Shibuya Sky"
+        time: "15:00",
+        name: "Meiji Shrine Entrance Walk",
+        desc: "Experience traditions, nature, and Japanese spirituality.",
+        mapsQuery: "Meiji Shrine"
+      },
+      {
+        time: "18:00",
+        name: "Izakaya Street",
+        desc: "Enjoy Japanese food culture through shared plates at an izakaya.",
+        mapsQuery: "Shibuya Izakaya"
       }
     ],
     shopping: [
@@ -352,24 +370,30 @@ const courseDB = {
   },
 
   "Akihabara, Tokyo": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
-        name: "Akihabara Cafe",
-        desc: "Relax in a themed or anime-style cafe.",
-        mapsQuery: "Akihabara cafe"
+        time: "11:30",
+        name: "Akihabara Ramen Shop",
+        desc: "Try classic Japanese ramen, a major cultural dish.",
+        mapsQuery: "Akihabara ramen"
       },
       {
-        time: "15:00",
+        time: "13:30",
         name: "Kanda River Walk",
-        desc: "Quiet walk near the river around Akihabara.",
+        desc: "A calm cultural walk near the river.",
         mapsQuery: "Kanda River Akihabara"
       },
       {
-        time: "17:30",
-        name: "Akihabara Park",
-        desc: "Short break before evening lights.",
-        mapsQuery: "Akihabara Park"
+        time: "15:00",
+        name: "Anime & Figure Shops",
+        desc: "Explore otaku culture and Japanese pop influence.",
+        mapsQuery: "Akihabara anime shop"
+      },
+      {
+        time: "18:00",
+        name: "Retro Game Center",
+        desc: "Experience Japan’s iconic arcade culture.",
+        mapsQuery: "Akihabara game center"
       }
     ],
     shopping: [
@@ -416,24 +440,30 @@ const courseDB = {
 
   // ===== 중국 =====
   "The Bund, Shanghai": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
+        time: "11:30",
+        name: "Traditional Shanghai Dim Sum",
+        desc: "Start with authentic dim sum — a key part of Chinese dining culture.",
+        mapsQuery: "Shanghai dim sum"
+      },
+      {
+        time: "13:30",
         name: "Bund Riverside Walk",
-        desc: "Walk along the Huangpu River.",
+        desc: "Experience Shanghai’s historical global influence.",
         mapsQuery: "The Bund Shanghai"
       },
       {
         time: "15:00",
-        name: "Historic Buildings",
-        desc: "See old European-style architecture.",
+        name: "Historic Buildings Tour",
+        desc: "Explore old European-style buildings and Chinese heritage.",
         mapsQuery: "Bund historic buildings"
       },
       {
-        time: "17:30",
-        name: "Riverside Cafe",
-        desc: "Relax with coffee and river view.",
-        mapsQuery: "Bund cafe"
+        time: "18:00",
+        name: "Local Shanghai Cuisine",
+        desc: "Taste dishes like braised pork or soup dumplings.",
+        mapsQuery: "Shanghai local food"
       }
     ],
     shopping: [
@@ -479,24 +509,30 @@ const courseDB = {
   },
 
   "Wangfujing, Beijing": {
-    chill: [
+    foodculture: [
+      {
+        time: "11:30",
+        name: "Beijing Local Noodles",
+        desc: "Try zhajiangmian, a cultural Beijing staple.",
+        mapsQuery: "Wangfujing noodles"
+      },
       {
         time: "13:00",
-        name: "Wangfujing Bookstore & Cafe",
-        desc: "Quiet time with books and coffee.",
-        mapsQuery: "Wangfujing bookstore"
+        name: "Nearby Hutong Walk",
+        desc: "Explore traditional Beijing alley culture.",
+        mapsQuery: "Beijing Hutong"
       },
       {
         time: "15:00",
-        name: "Nearby Hutong Walk",
-        desc: "Walk through traditional alleys.",
-        mapsQuery: "Beijing Hutong near Wangfujing"
+        name: "Bookstore & Tea Shop",
+        desc: "Relax with traditional Chinese tea.",
+        mapsQuery: "Wangfujing tea"
       },
       {
-        time: "17:30",
-        name: "Small Park Rest",
-        desc: "Short break before evening market.",
-        mapsQuery: "Wangfujing park"
+        time: "18:00",
+        name: "Beijing Snack Street",
+        desc: "Cultural food experience with unique Beijing snacks.",
+        mapsQuery: "Wangfujing Snack Street"
       }
     ],
     shopping: [
@@ -543,24 +579,30 @@ const courseDB = {
 
   // ===== 태국 =====
   "Siam, Bangkok": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
-        name: "Siam Square Cafe",
-        desc: "Relax in a cafe around Siam Square.",
-        mapsQuery: "Siam Square cafe"
+        time: "11:30",
+        name: "Pad Thai Local Restaurant",
+        desc: "Taste Thailand’s iconic noodle dish.",
+        mapsQuery: "Siam Pad Thai"
       },
       {
-        time: "15:00",
+        time: "13:00",
         name: "Lumpini Park",
-        desc: "Take a break in a big city park.",
+        desc: "Experience local Thai daily life in the city’s green space.",
         mapsQuery: "Lumpini Park"
       },
       {
-        time: "17:30",
-        name: "Skywalk Around Siam",
-        desc: "Walk and watch the city from above.",
-        mapsQuery: "Siam BTS Skywalk"
+        time: "15:00",
+        name: "Thai Cultural House or Museum",
+        desc: "Explore Thai art, temples, and cultural displays.",
+        mapsQuery: "Bangkok culture museum"
+      },
+      {
+        time: "18:00",
+        name: "Street Food in Siam",
+        desc: "Enjoy Thai food culture through night street food.",
+        mapsQuery: "Bangkok street food Siam"
       }
     ],
     shopping: [
@@ -606,24 +648,30 @@ const courseDB = {
   },
 
   "Old Town, Chiang Mai": {
-    chill: [
+    foodculture: [
       {
-        time: "13:00",
-        name: "Cafe in Old Town",
-        desc: "Relax in a calm local cafe.",
-        mapsQuery: "Chiang Mai Old Town cafe"
+        time: "11:30",
+        name: "Local Thai Curry Restaurant",
+        desc: "Experience northern Thai curry dishes.",
+        mapsQuery: "Chiang Mai curry restaurant"
       },
       {
-        time: "15:00",
+        time: "13:00",
         name: "Wat Phra Singh Temple",
-        desc: "Visit one of the most famous temples.",
+        desc: "Explore Chiang Mai’s Buddhist culture.",
         mapsQuery: "Wat Phra Singh"
       },
       {
-        time: "17:30",
-        name: "City Walls & Moat Walk",
-        desc: "Walk along the old city walls.",
+        time: "15:00",
+        name: "Old Town Walk",
+        desc: "See city walls, moat, and historical architecture.",
         mapsQuery: "Chiang Mai old city wall"
+      },
+      {
+        time: "18:00",
+        name: "Night Market & Local Food",
+        desc: "Try traditional Thai snacks and local crafts.",
+        mapsQuery: "Chiang Mai night market"
       }
     ],
     shopping: [
@@ -669,7 +717,8 @@ const courseDB = {
   }
 };
 
-let selectedStyle = "chill";
+let selectedStyle = "foodculture";   // 원래 chill 이던 부분
+
 
 tourStyleButtons.forEach(btn => {
   btn.addEventListener("click", () => {
@@ -699,10 +748,11 @@ function renderCourse(area, style) {
     return;
   }
 
-  const styleName =
-    style === "chill" ? "Chill & Cafe" :
-    style === "shopping" ? "Shopping" :
-    "Night View";
+const styleName =
+  style === "foodculture" ? "Local Food & Culture" :
+  style === "shopping"   ? "Street Market & Shopping" :
+                            "Night View & Drinks";
+
 
   let html = `
     <h3>${area} — ${styleName} Course</h3>
@@ -1264,6 +1314,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
