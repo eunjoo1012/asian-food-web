@@ -758,6 +758,11 @@ body.show-detail .hidden-at-start {
   display: block;
 }
 
+/* 디테일 모드에서는 위 3개 카드 숨기기 */
+body.show-detail .home-menu {
+  display: none;
+}
+
 
 
 
