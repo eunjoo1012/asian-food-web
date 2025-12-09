@@ -943,10 +943,7 @@ const foodInfo = {
   flag: "🇰🇷",
   calories: 460,
   description:
-    "Rice dish topped with assorted vegetables, egg, and chili paste, served in a hot bowl.",
-  compareText:
-    "People sometimes confuse bibimbap with Japanese donburi or poke bowls, but bibimbap always mixes gochujang, vegetables, and rice together at the table.",
-  compareImages: ["Bibimbap", "Japanese donburi"]
+    "Rice dish topped with assorted vegetables, egg, and chili paste, served in a hot bowl."
   },
   "Bulgogi": {
     country: "Korea",
@@ -1367,6 +1364,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
