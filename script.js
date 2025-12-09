@@ -833,12 +833,15 @@ const foodInfo = {
     description:
       "Braised pork belly cooked with soy sauce, sugar, and wine, resulting in rich and tender flavors."
   },
-  "Jjamppong": {
+   "Jjamppong": {
     country: "China",
     flag: "🇨🇳",
     calories: 713,
     description:
-      "Spicy mixed seafood noodle soup with vegetables, originally from China but popular in Korea too."
+      "Spicy mixed seafood noodle soup with vegetables, originally from China but popular in Korea too.",
+    compareText:
+      "Jjamppong looks like ramen but has a red, very spicy broth with seafood and many vegetables, coming from Chinese–Korean cuisine.",
+    compareImages: ["Jjamppong", "Japanese ramen"]
   },
   "Kkanpunggi": {
     country: "China",
@@ -846,10 +849,8 @@ const foodInfo = {
     calories: 865,
     description:
       "Spicy, garlicky fried chicken or shrimp, stir-fried with vegetables in Chinese-Korean cuisine."
-    compareText:
-     "Jjamppong looks like ramen but has a red, very spicy broth with seafood and many vegetables, coming from Chinese–Korean cuisine.",
-    compareImages: ["Jjamppong", "Japanese ramen"]
   },
+
   "Hot Pot": {
     country: "China",
     flag: "🇨🇳",
@@ -1366,6 +1367,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
