@@ -1061,6 +1061,9 @@ const foodInfo = {
 /**********************
  * LANGUAGE TRANSLATION FOR RESTAURANT SEARCH
  **********************/
+/**********************
+ * LANGUAGE TRANSLATION FOR RESTAURANT SEARCH
+ **********************/
 function translateWord(country, word) {
   const dict = {
     Korea: "맛집",
@@ -1070,6 +1073,14 @@ function translateWord(country, word) {
   };
   return dict[country] || word;
 }
+
+// 🔹 나라별로 검색을 걸어줄 대표 도시
+const countryRegion = {
+  Korea: "Seoul, South Korea",
+  Japan: "Tokyo, Japan",
+  China: "Shanghai, China",      
+  Thailand: "Bangkok, Thailand"
+};
 
 /**********************
  * CALORIE EMOJI
@@ -1372,6 +1383,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
