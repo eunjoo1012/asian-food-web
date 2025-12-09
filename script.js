@@ -846,6 +846,9 @@ const foodInfo = {
     calories: 865,
     description:
       "Spicy, garlicky fried chicken or shrimp, stir-fried with vegetables in Chinese-Korean cuisine."
+    compareText:
+     "Jjamppong looks like ramen but has a red, very spicy broth with seafood and many vegetables, coming from Chinese–Korean cuisine.",
+    compareImages: ["Jjamppong", "Japanese ramen"]
   },
   "Hot Pot": {
     country: "China",
@@ -871,11 +874,14 @@ const foodInfo = {
 
   // Japan
   "Sushi": {
-    country: "Japan",
-    flag: "🇯🇵",
-    calories: 350,
-    description:
-      "Vinegared rice combined with seafood, vegetables, or egg; the most iconic dish of Japanese cuisine."
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 350,
+  description:
+    "Vinegared rice combined with seafood, vegetables, or egg; the most iconic dish of Japanese cuisine.",
+  compareText:
+    "Often confused with Korean kimbap, but sushi uses vinegared rice and often raw seafood, so the taste is more sour and clean.",
+  compareImages: ["Sushi", "Kimbap"]
   },
   "Miso_Soup": {
     country: "Japan",
@@ -885,11 +891,14 @@ const foodInfo = {
       "Classic Japanese soup made with fermented soybean paste, seaweed, tofu, and green onion."
   },
   "Ramen": {
-    country: "Japan",
-    flag: "🇯🇵",
-    calories: 500,
-    description:
-      "Noodle soup served in meat or fish-based broth with toppings like pork, egg, and vegetables."
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 500,
+  description:
+    "Noodle soup served in meat or fish-based broth with toppings like pork, egg, and vegetables.",
+  compareText:
+    "Ramen is often confused with Korean spicy noodles, but ramen usually has thicker, slow-cooked broth and toppings like chashu and soft-boiled egg.",
+  compareImages: ["Japanese ramen", "Jjamppong"]
   },
   "Takoyaki": {
     country: "Japan",
@@ -929,11 +938,14 @@ const foodInfo = {
 
   // Korea
   "Bibimbap": {
-    country: "Korea",
-    flag: "🇰🇷",
-    calories: 460,
-    description:
-      "Rice dish topped with assorted vegetables, egg, and chili paste, served in a hot bowl."
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 460,
+  description:
+    "Rice dish topped with assorted vegetables, egg, and chili paste, served in a hot bowl.",
+  compareText:
+    "People sometimes confuse bibimbap with Japanese donburi or poke bowls, but bibimbap always mixes gochujang, vegetables, and rice together at the table.",
+  compareImages: ["Bibimbap", "Japanese donburi"]
   },
   "Bulgogi": {
     country: "Korea",
@@ -956,13 +968,17 @@ const foodInfo = {
     description:
       "Unseasoned pork belly slices grilled at the table and eaten with dipping sauces."
   },
+  // Korea
   "Kimbap": {
-    country: "Korea",
-    flag: "🇰🇷",
-    calories: 125,
-    description:
-      "Seaweed rice roll filled with vegetables, egg, and meat; a popular Korean picnic snack."
-  },
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 125,
+  description:
+    "Seaweed rice roll filled with vegetables, egg, and meat; a popular Korean picnic snack.",
+  compareText:
+    "Looks similar to Japanese sushi rolls, but kimbap uses sesame oil rice and mostly cooked fillings, so the taste is more savory and less sour.",
+  compareImages: ["Kimbap", "Sushi"]
+ },
   "Doenjang Jjigae": {
     country: "Korea",
     flag: "🇰🇷",
@@ -1190,7 +1206,29 @@ async function predict(img) {
     return;
   }
 
-  // 메인 매칭 카드 (이름 + 설명 + 칼로리)
+  // 🔍 비교 섹션 문자열 만들기
+  let compareSection = "";
+  if (info.compareText || (info.compareImages && info.compareImages.length > 0)) {
+    compareSection += `<div class="compare-box">`;
+    compareSection += `<div class="compare-title">🔍 Food comparison tip</div>`;
+    if (info.compareText) {
+      compareSection += `<p class="compare-body">${info.compareText}</p>`;
+    }
+    if (info.compareImages && info.compareImages.length > 0) {
+      compareSection += `<div class="compare-img-row">`;
+      info.compareImages.forEach((q) => {
+        compareSection += `
+          <button type="button" class="compare-img-btn" data-query="${q}">
+            📷 See ${q} photos
+          </button>
+        `;
+      });
+      compareSection += `</div>`;
+    }
+    compareSection += `</div>`;
+  }
+
+  // 메인 매칭 카드 (이름 + 설명 + 칼로리 + 비교 박스)
   resultCountry.innerHTML = `
     <div class="main-result-line">
       ${info.flag} <strong>${info.country}</strong> — ${top.className}
@@ -1202,7 +1240,20 @@ async function predict(img) {
     <div class="sub-info">
       ${calorieEmoji(info.calories)} ${info.calories} kcal
     </div>
+    ${compareSection}
   `;
+
+  // 🔍 이미지 버튼 클릭 시 구글 이미지 검색 열기
+  const imgBtns = resultCountry.querySelectorAll(".compare-img-btn");
+  imgBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const q = btn.dataset.query;
+      window.open(
+        `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(q)}`,
+        "_blank"
+      );
+    });
+  });
 
   // Top-3 리스트 (ASCII bar + kcal)
   resultList.innerHTML = "";
@@ -1230,6 +1281,7 @@ async function predict(img) {
 
   setStatus("Prediction complete!");
 }
+
 
 /**********************
  * FOOD → RESTAURANT SEARCH
@@ -1314,6 +1366,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
