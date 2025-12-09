@@ -1285,21 +1285,24 @@ async function predict(img) {
  * FOOD → RESTAURANT SEARCH
  **********************/
 foodRestaurantBtn.addEventListener("click", () => {
-  const food = foodRestaurantBtn.dataset.food;      // 예: "Dongpo Pork"
+  const food = foodRestaurantBtn.dataset.food;       // 예: "Dongpo Pork"
   const country = foodRestaurantBtn.dataset.country; // 예: "China"
 
   // 각 나라 언어로 '맛집' 번역
   const queryTranslated = translateWord(country, "restaurant");
 
-  // 🔥 핵심: 원산지 국가 이름까지 같이 넣어서 검색
-  // 예: "Dongpo Pork 好吃的餐厅 China"
-  const query = `${food} ${queryTranslated} ${country}`;
+  // 나라별 대표 지역(도시) 선택, 없으면 그냥 country 사용
+  const region = countryRegion[country] || country;
+
+  // 예: "Dongpo Pork 好吃的餐厅 Shanghai, China"
+  const query = `${food} ${queryTranslated} ${region}`;
 
   window.open(
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`,
     "_blank"
   );
 });
+
 
 
 /**********************
@@ -1369,6 +1372,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
