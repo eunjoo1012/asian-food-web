@@ -817,8 +817,8 @@ const foodInfo = {
     flag: "🇨🇳",
     calories: 360,
     description:
-      "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea."
-    "compareText": 
+  "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea.",
+compareText: 
   "Some dim sum items have a round, bite-sized shape that can resemble takoyaki. However, dim sum is steamed or boiled, while takoyaki is a grilled batter ball filled with octopus.",
 "compareImages": ["Dim Sum", "Takoyaki"]
 
@@ -917,8 +917,8 @@ const foodInfo = {
     flag: "🇯🇵",
     calories: 400,
     description:
-      "Seafood or vegetables battered and deep-fried until light and crispy."
-    "compareText": 
+  "Seafood or vegetables battered and deep-fried until light and crispy.",
+compareText:
     "Tempura’s light, airy batter can look similar to Korean fried dishes like kkanpunggi. But tempura uses a thin, crisp coating, while kkanpunggi is heavier, sauced, and strongly seasoned.",
     "compareImages": ["Tempura", "Kkanpunggi"]
 
@@ -928,8 +928,8 @@ const foodInfo = {
     flag: "🇯🇵",
     calories: 540,
     description:
-      "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce."
-    "compareText": 
+  "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce.",
+compareText: 
     "Both Katsu Don and Korean bulgogi rice bowls look similar because they are served over rice. However, Katsu Don uses a fried pork cutlet simmered with egg, while bulgogi uses thinly sliced marinated beef.",
    "compareImages": ["Katsu Don", "Bulgogi"]
 
@@ -1395,6 +1395,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
