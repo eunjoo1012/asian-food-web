@@ -813,16 +813,15 @@ const foodInfo = {
   // (네가 적어준 foodInfo 그대로 – 생략 안 함)
   // China
   "Dim Sum": {
-    country: "China",
-    flag: "🇨🇳",
-    calories: 360,
-    description:
-  "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea.",
-compareText: 
-  "Some dim sum items have a round, bite-sized shape that can resemble takoyaki. However, dim sum is steamed or boiled, while takoyaki is a grilled batter ball filled with octopus.",
-"compareImages": ["Dim Sum", "Takoyaki"]
-
-  },
+  country: "China",
+  flag: "🇨🇳",
+  calories: 360,
+  description:
+    "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea.",
+  compareText:
+    "Dim sum dumplings can look similar to Korean mandu because both are dough wrappers filled with meat or vegetables. However, dim sum is usually steamed and has delicate, thin wrappers, while Korean mandu often has thicker dough and is steamed, pan-fried, or boiled.",
+  compareImages: ["Dim Sum", "Korean Mandu"]
+},
   "Chinese Eight Treasure Stir-fry": {
     country: "China",
     flag: "🇨🇳",
@@ -1395,6 +1394,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
