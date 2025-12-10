@@ -944,6 +944,24 @@ body.show-detail .home-menu {
 }
 
 
+.back-btn-main {
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 15, 25, 0.7);
+  color: #f5f5f5;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.back-btn-main:hover {
+  background: rgba(40, 60, 90, 0.9);
+}
+
 
 
 
