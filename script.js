@@ -108,6 +108,7 @@ classifierSection.style.display = "none";   // UI 숨기기
 // 2) 오른쪽 카드: Make 1-day Course → 관광 모드
 cardCourseMain.addEventListener("click", (e) => {
   e.preventDefault();
+classifierSection.style.display = "none";
 
   openDetail();
   document.body.classList.add("view-travel-only");
@@ -124,6 +125,7 @@ cardCourseMain.addEventListener("click", (e) => {
 // 3) 왼쪽 카드: Find Asian Restaurants → 맛집 모드
 cardFindRest.addEventListener("click", (e) => {
   e.preventDefault();
+classifierSection.style.display = "none";
 
   openDetail();
   document.body.classList.add("view-travel-only");
@@ -1394,6 +1396,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
