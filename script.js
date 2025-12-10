@@ -923,16 +923,16 @@ compareText:
 
   },
   "Katsu Don": {
-    country: "Japan",
-    flag: "🇯🇵",
-    calories: 540,
-    description:
-  "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce.",
-compareText: 
-    "Both Katsu Don and Korean bulgogi rice bowls look similar because they are served over rice. However, Katsu Don uses a fried pork cutlet simmered with egg, while bulgogi uses thinly sliced marinated beef.",
-   "compareImages": ["Katsu Don", "Bulgogi"]
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 540,
+  description:
+    "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce.",
+  compareText:
+    "Katsu Don is one of Japan’s donburi dishes, which are rice bowls topped with various ingredients. It can be confused with other donburi because they share a similar bowl-over-rice presentation, but Katsu Don is unique for its breaded pork cutlet simmered with egg.",
+  compareImages: ["Katsu Don", "Donburi"]
+},
 
-  },
   "Okonomiyaki": {
     country: "Japan",
     flag: "🇯🇵",
@@ -1394,6 +1394,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
