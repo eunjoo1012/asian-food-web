@@ -6,7 +6,7 @@ console.log("script.js loaded");
 /**********************
  * TEACHABLE MACHINE MODEL
  **********************/
-const MODEL_URL = "https://teachablemachine.withgoogle.com/models/SCrCm4nRI/";
+const MODEL_URL = "https://teachablemachine.withgoogle.com/models/hKuFMntU8/";
 
 // HTML Elements – Food Classifier
 const fileInput = document.getElementById("image-input");
@@ -1396,6 +1396,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
