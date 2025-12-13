@@ -719,7 +719,7 @@ const courseDB = {
   }
 };
 
-let selectedStyle = "foodculture";   // 원래 chill 이던 부분
+let selectedStyle = "foodculture";   
 
 
 tourStyleButtons.forEach(btn => {
@@ -804,7 +804,7 @@ tourCourseBtn.addEventListener("click", () => {
   // 코스 렌더링
   renderCourse(area, selectedStyle);
 
-  // 🔥 코스 + 지도 풀사이즈 모드로 전환
+  //  코스 + 지도 풀사이즈 모드로 전환
   document.body.classList.add("full-course-view");
 });
 
@@ -812,7 +812,6 @@ tourCourseBtn.addEventListener("click", () => {
  * FOOD INFO DATABASE
  **********************/
 const foodInfo = {
-  // (네가 적어준 foodInfo 그대로 – 생략 안 함)
   // China
   "Dim Sum": {
   country: "China",
@@ -1396,6 +1395,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
