@@ -876,6 +876,69 @@ const foodInfo = {
     description:
       "Famous Beijing dish with crispy duck skin and tender meat, typically served with pancakes and sweet sauce."
   },
+  "Char Siu": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 500,
+  description:
+    "Cantonese-style barbecued pork with a sweet and savory glaze, often served sliced with rice or noodles."
+},
+
+"Chow Mein": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 600,
+  description:
+    "Stir-fried noodles mixed with vegetables and meat, known for its savory flavor and slightly crispy texture."
+},
+
+"Gong Bao Jiding": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 550,
+  description:
+    "Spicy Sichuan dish made with diced chicken, peanuts, and chili peppers in a bold, savory sauce."
+},
+
+"Mooncake": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 400,
+  description:
+    "Traditional Chinese pastry eaten during the Mid-Autumn Festival, filled with sweet bean paste or lotus seed paste."
+},
+
+"Red Bean Soup": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 250,
+  description:
+    "Warm and mildly sweet dessert soup made from red beans, commonly enjoyed after meals."
+},
+
+"Sweet and Sour Pork": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 700,
+  description:
+    "Deep-fried pork coated in a bright sweet and sour sauce, combining crispy texture with tangy flavor."
+},
+
+"Wonton Soup": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 350,
+  description:
+    "Light soup with delicate dumplings filled with meat, served in a clear and comforting broth."
+},
+
+"Xiaolongbao": {
+  country: "China",
+  flag: "🇨🇳",
+  calories: 300,
+  description:
+    "Shanghai-style soup dumplings filled with pork and rich broth, known for their juicy interior."
+},
 
   // Japan
   "Sushi": {
@@ -948,6 +1011,70 @@ compareText:
     description:
       "Hot pot dish of beef, tofu, and vegetables simmered in sweet soy-based broth."
   },
+  "Gyudon": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 650,
+  description:
+    "Japanese rice bowl topped with thinly sliced beef and onions simmered in a sweet soy-based sauce."
+},
+
+"Matcha Parfait": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 450,
+  description:
+    "Layered Japanese dessert made with matcha ice cream, red beans, mochi, and whipped cream."
+},
+
+"Mochi": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 120,
+  description:
+    "Soft and chewy rice cake made from glutinous rice, often filled with sweet red bean paste."
+},
+
+"Oden": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 250,
+  description:
+    "Comforting winter stew with ingredients like radish, eggs, and fish cakes simmered in light broth."
+},
+
+"Onigiri": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 180,
+  description:
+    "Hand-formed rice ball usually wrapped in seaweed and filled with ingredients like tuna or plum."
+},
+
+"Tonkatsu": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 700,
+  description:
+    "Deep-fried breaded pork cutlet served with shredded cabbage and savory tonkatsu sauce."
+},
+
+"Udon": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 450,
+  description:
+    "Thick wheat noodles served in a mild broth, known for their soft and chewy texture."
+},
+
+"Yakitori": {
+  country: "Japan",
+  flag: "🇯🇵",
+  calories: 300,
+  description:
+    "Grilled chicken skewers seasoned with salt or sweet soy-based sauce, commonly enjoyed as street food."
+},
+
 
   // Korea
   "Bibimbap": {
@@ -1010,6 +1137,69 @@ compareText:
     description:
       "Chewy rice cakes cooked in spicy gochujang sauce, often with fish cake and boiled egg."
   },
+  "Injeolmi": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 220,
+  description:
+    "Traditional Korean rice cake coated with roasted soybean powder, known for its soft and chewy texture."
+},
+
+"Songpyeon": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 200,
+  description:
+    "Half-moon-shaped rice cake steamed with pine needles, traditionally eaten during Chuseok."
+},
+
+"Bossam": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 600,
+  description:
+    "Boiled pork slices served with fresh vegetables, kimchi, and savory dipping sauces."
+},
+
+"Galbi-jjim": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 700,
+  description:
+    "Braised beef short ribs cooked in a sweet soy-based sauce with vegetables, often served on special occasions."
+},
+
+"Korean Seafood Pancake": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 500,
+  description:
+    "Crispy savory pancake made with seafood, vegetables, and batter, commonly enjoyed on rainy days."
+},
+
+"Mul-naengmyeon": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 450,
+  description:
+    "Cold buckwheat noodles served in icy broth with cucumber, radish, and sliced beef."
+},
+
+"Sundubu Jjigae": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 350,
+  description:
+    "Spicy stew made with soft tofu, vegetables, and seafood or meat, served bubbling hot."
+},
+
+"Tteokguk": {
+  country: "Korea",
+  flag: "🇰🇷",
+  calories: 400,
+  description:
+    "Traditional Korean rice cake soup eaten on Lunar New Year, symbolizing a fresh start."
+},
 
   // Thailand
   "Pad Thai": {
@@ -1067,7 +1257,70 @@ compareText:
     calories: 350,
     description:
       "Sweet glutinous rice topped with coconut milk and slices of ripe mango."
-  }
+  },
+  "Boat Noodle": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 350,
+  description:
+    "Rich Thai noodle soup traditionally served from boats, known for its dark, savory broth and tender meat."
+},
+
+"Kai Jeow": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 400,
+  description:
+    "Thai-style omelet deep-fried until fluffy, often served over rice with chili sauce."
+},
+
+"Khanom Krok": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 300,
+  description:
+    "Small coconut pancakes with a crispy outside and creamy center, commonly sold as street food."
+},
+
+"Pad See Ew": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 600,
+  description:
+    "Stir-fried wide rice noodles with soy sauce, vegetables, and meat, known for its smoky flavor."
+},
+
+"Panang Curry": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 650,
+  description:
+    "Thick and mildly spicy Thai curry made with coconut milk, meat, and aromatic spices."
+},
+
+"Roti Sai Mai": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 350,
+  description:
+    "Thai-style dessert made of thin roti wrapped around colorful sugar floss, popular at markets."
+},
+
+"Sai Krok Isan": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 450,
+  description:
+    "Northeastern Thai fermented sausage with a tangy flavor, typically grilled and served with vegetables."
+},
+
+"Tom Kha Gai": {
+  country: "Thailand",
+  flag: "🇹🇭",
+  calories: 450,
+  description:
+    "Creamy coconut milk soup with chicken, galangal, and herbs, balancing sour and savory flavors."
+}
 };
 
 /**********************
@@ -1395,6 +1648,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
