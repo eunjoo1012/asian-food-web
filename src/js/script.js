@@ -1,4 +1,4 @@
-**********************
+/*********************
  * BASIC CHECK
  **********************/
 console.log("script.js loaded");
@@ -1648,6 +1648,7 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
 
 
 
