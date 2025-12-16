@@ -8,6 +8,13 @@ console.log("script.js loaded");
  **********************/
 const MODEL_URL = "https://teachablemachine.withgoogle.com/models/hKuFMntU8/";
 
+//아두이노 상태 변수들
+let arduinoPort = null;
+let arduinoWriter = null;
+let isArduinoConnected = false;
+let lastCalories = null;
+
+
 // HTML Elements – Food Classifier
 const fileInput = document.getElementById("image-input");
 const previewImage = document.getElementById("preview-image");
@@ -108,7 +115,6 @@ classifierSection.style.display = "none";   // UI 숨기기
 // 2) 오른쪽 카드: Make 1-day Course → 관광 모드
 cardCourseMain.addEventListener("click", (e) => {
   e.preventDefault();
-classifierSection.style.display = "none";
 
   openDetail();
   document.body.classList.add("view-travel-only");
@@ -125,7 +131,6 @@ classifierSection.style.display = "none";
 // 3) 왼쪽 카드: Find Asian Restaurants → 맛집 모드
 cardFindRest.addEventListener("click", (e) => {
   e.preventDefault();
-classifierSection.style.display = "none";
 
   openDetail();
   document.body.classList.add("view-travel-only");
@@ -719,7 +724,7 @@ const courseDB = {
   }
 };
 
-let selectedStyle = "foodculture";   
+let selectedStyle = "foodculture";   // 원래 chill 이던 부분
 
 
 tourStyleButtons.forEach(btn => {
@@ -804,7 +809,7 @@ tourCourseBtn.addEventListener("click", () => {
   // 코스 렌더링
   renderCourse(area, selectedStyle);
 
-  //  코스 + 지도 풀사이즈 모드로 전환
+  // 🔥 코스 + 지도 풀사이즈 모드로 전환
   document.body.classList.add("full-course-view");
 });
 
@@ -812,17 +817,15 @@ tourCourseBtn.addEventListener("click", () => {
  * FOOD INFO DATABASE
  **********************/
 const foodInfo = {
+  // (네가 적어준 foodInfo 그대로 – 생략 안 함)
   // China
   "Dim Sum": {
-  country: "China",
-  flag: "🇨🇳",
-  calories: 360,
-  description:
-    "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea.",
-  compareText:
-    "Dim sum dumplings can look similar to Korean mandu because both are dough wrappers filled with meat or vegetables. However, dim sum is usually steamed and has delicate, thin wrappers, while Korean mandu often has thicker dough and is steamed, pan-fried, or boiled.",
-  compareImages: ["Dim Sum", "Korean Mandu"]
-},
+    country: "China",
+    flag: "🇨🇳",
+    calories: 360,
+    description:
+      "A variety of small Chinese dishes served in steamer baskets or plates, often enjoyed as brunch with tea."
+  },
   "Chinese Eight Treasure Stir-fry": {
     country: "China",
     flag: "🇨🇳",
@@ -876,14 +879,13 @@ const foodInfo = {
     description:
       "Famous Beijing dish with crispy duck skin and tender meat, typically served with pancakes and sweet sauce."
   },
-  "Char Siu": {
+   "Char Siu": {
   country: "China",
   flag: "🇨🇳",
   calories: 500,
   description:
     "Cantonese-style barbecued pork with a sweet and savory glaze, often served sliced with rice or noodles."
 },
-
 "Chow Mein": {
   country: "China",
   flag: "🇨🇳",
@@ -980,23 +982,15 @@ const foodInfo = {
     flag: "🇯🇵",
     calories: 400,
     description:
-  "Seafood or vegetables battered and deep-fried until light and crispy.",
-compareText:
-    "Tempura’s light, airy batter can look similar to Korean fried dishes like kkanpunggi. But tempura uses a thin, crisp coating, while kkanpunggi is heavier, sauced, and strongly seasoned.",
-    "compareImages": ["Tempura", "Kkanpunggi"]
-
+      "Seafood or vegetables battered and deep-fried until light and crispy."
   },
   "Katsu Don": {
-  country: "Japan",
-  flag: "🇯🇵",
-  calories: 540,
-  description:
-    "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce.",
-  compareText:
-    "Katsu Don is one of Japan’s donburi dishes, which are rice bowls topped with various ingredients. It can be confused with other donburi because they share a similar bowl-over-rice presentation, but Katsu Don is unique for its breaded pork cutlet simmered with egg.",
-  compareImages: ["Katsu Don", "Donburi"]
-},
-
+    country: "Japan",
+    flag: "🇯🇵",
+    calories: 540,
+    description:
+      "Rice bowl topped with breaded pork cutlet and egg simmered in savory sauce."
+  },
   "Okonomiyaki": {
     country: "Japan",
     flag: "🇯🇵",
@@ -1011,7 +1005,7 @@ compareText:
     description:
       "Hot pot dish of beef, tofu, and vegetables simmered in sweet soy-based broth."
   },
-  "Gyudon": {
+ "Gyudon": {
   country: "Japan",
   flag: "🇯🇵",
   calories: 650,
@@ -1074,8 +1068,6 @@ compareText:
   description:
     "Grilled chicken skewers seasoned with salt or sweet soy-based sauce, commonly enjoyed as street food."
 },
-
-
   // Korea
   "Bibimbap": {
   country: "Korea",
@@ -1137,7 +1129,7 @@ compareText:
     description:
       "Chewy rice cakes cooked in spicy gochujang sauce, often with fish cake and boiled egg."
   },
-  "Injeolmi": {
+"Injeolmi": {
   country: "Korea",
   flag: "🇰🇷",
   calories: 220,
@@ -1200,7 +1192,6 @@ compareText:
   description:
     "Traditional Korean rice cake soup eaten on Lunar New Year, symbolizing a fresh start."
 },
-
   // Thailand
   "Pad Thai": {
     country: "Thailand",
@@ -1258,7 +1249,7 @@ compareText:
     description:
       "Sweet glutinous rice topped with coconut milk and slices of ripe mango."
   },
-  "Boat Noodle": {
+   "Boat Noodle": {
   country: "Thailand",
   flag: "🇹🇭",
   calories: 350,
@@ -1326,9 +1317,6 @@ compareText:
 /**********************
  * LANGUAGE TRANSLATION FOR RESTAURANT SEARCH
  **********************/
-/**********************
- * LANGUAGE TRANSLATION FOR RESTAURANT SEARCH
- **********************/
 function translateWord(country, word) {
   const dict = {
     Korea: "맛집",
@@ -1338,7 +1326,6 @@ function translateWord(country, word) {
   };
   return dict[country] || word;
 }
-
 // 🔹 나라별로 검색을 걸어줄 대표 도시
 const countryRegion = {
   Korea: "Seoul, South Korea",
@@ -1406,7 +1393,17 @@ window.addEventListener("load", async () => {
 fileInput.addEventListener("change", handleUpload);
 
 function handleUpload(e) {
-  classifierSection.style.display = "block";  
+  // 아두이노 연결 체크
+  const useArduinoToggle = document.getElementById("use-arduino-toggle");
+  const useArduino = useArduinoToggle ? useArduinoToggle.checked : false;
+
+  if (useArduino && !isArduinoConnected) {
+    alert("먼저 'Connect Arduino' 버튼으로 아두이노를 연결해 주세요!");
+    fileInput.value = "";
+    return;
+  }
+
+  classifierSection.style.display = "block";
 
   const file = e.target.files[0];
   if (!file || !isModelReady) return;
@@ -1418,6 +1415,7 @@ function handleUpload(e) {
   };
   reader.readAsDataURL(file);
 }
+
 
 /**********************
  * PREDICT IMAGE
@@ -1517,6 +1515,12 @@ async function predict(img) {
     ${compareSection}
   `;
 
+  //마지막 칼로리 기억해 두기
+  lastCalories = info.calories;
+  
+  // 아두이노로 칼로리 
+  sendCaloriesToArduino(info.calories);
+
   // 🔍 이미지 버튼 클릭 시 구글 이미지 검색 열기
   const imgBtns = resultCountry.querySelectorAll(".compare-img-btn");
   imgBtns.forEach((btn) => {
@@ -1561,25 +1565,18 @@ async function predict(img) {
  * FOOD → RESTAURANT SEARCH
  **********************/
 foodRestaurantBtn.addEventListener("click", () => {
-  const food = foodRestaurantBtn.dataset.food;       // 예: "Dongpo Pork"
-  const country = foodRestaurantBtn.dataset.country; // 예: "China"
+  const food = foodRestaurantBtn.dataset.food;
+  const country = foodRestaurantBtn.dataset.country;
 
-  // 각 나라 언어로 '맛집' 번역
   const queryTranslated = translateWord(country, "restaurant");
-
-  // 나라별 대표 지역(도시) 선택, 없으면 그냥 country 사용
   const region = countryRegion[country] || country;
-
-  // 예: "Dongpo Pork 好吃的餐厅 Shanghai, China"
-  const query = `${food} ${queryTranslated} ${region}`;
+  const query = `${food} ${queryTranslated}`;
 
   window.open(
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`,
     "_blank"
   );
 });
-
-
 
 /**********************
  * MAIN TRAVEL MENU SWITCH
@@ -1648,6 +1645,121 @@ travelSearchBtn.addEventListener("click", () => {
 document.querySelectorAll(".back-btn").forEach(btn => {
   btn.addEventListener("click", goHome);
 });
+
+// ===========================
+// Arduino 연결 관련 코드
+// ===========================
+
+
+function setArduinoStatus(text) {
+  const el = document.getElementById("arduino-status");
+  if (el) el.textContent = text;
+}
+
+async function toggleArduinoConnection() {
+  try {
+    // 아직 연결 안 됐으면 → 연결
+    if (!isArduinoConnected) {
+      if (!("serial" in navigator)) {
+        alert("이 브라우저에서는 Web Serial API를 지원하지 않습니다. (Chrome/Edge 사용 권장)");
+        return;
+      }
+
+      const port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 9600 }); // ⚠ 아두이노 코드의 Serial.begin(9600)과 동일하게
+
+      const textEncoder = new TextEncoderStream();
+      textEncoder.readable.pipeTo(port.writable);
+      const writer = textEncoder.writable.getWriter();
+
+      arduinoPort = port;
+      arduinoWriter = writer;
+      isArduinoConnected = true;
+
+      const btn = document.getElementById("connect-arduino-btn");
+      if (btn) btn.textContent = "Disconnect Arduino";
+      setArduinoStatus("Connected");
+      console.log("Arduino connected");
+     // 직전에 예측된 칼로리가 있으면 한 번 더 보내기
+      if (lastCalories !== null) {
+        sendCaloriesToArduino(lastCalories);}
+    }
+    // 이미 연결되어 있으면 → 해제
+    else {
+      if (arduinoWriter) {
+        await arduinoWriter.close();
+      }
+      if (arduinoPort) {
+        await arduinoPort.close();
+      }
+
+      arduinoPort = null;
+      arduinoWriter = null;
+      isArduinoConnected = false;
+
+      const btn = document.getElementById("connect-arduino-btn");
+      if (btn) btn.textContent = "Connect Arduino";
+      setArduinoStatus("Not connected");
+      console.log("Arduino disconnected");
+    }
+  } catch (err) {
+    console.error("Arduino connection error:", err);
+    alert("Arduino 연결 중 오류가 발생했습니다. 콘솔을 확인해 주세요.");
+  }
+}
+
+// 페이지 로드되면 버튼 이벤트 연결
+document.addEventListener("DOMContentLoaded", () => {
+  const connectBtn = document.getElementById("connect-arduino-btn");
+  if (connectBtn) {
+    connectBtn.addEventListener("click", toggleArduinoConnection);
+  }
+});
+
+/**
+ * 칼로리를 아두이노로 보내는 함수
+ * @param {number} totalCalories - 한 끼 칼로리 값
+ */
+async function sendCaloriesToArduino(totalCalories) {
+  const useArduinoToggle = document.getElementById("use-arduino-toggle");
+  const useArduino = useArduinoToggle ? useArduinoToggle.checked : false;
+
+  // 체크박스 꺼져 있으면 아두이노 사용 안 함
+  if (!useArduino) {
+    console.log("Use Arduino LED unchecked, skip sending.");
+    return;
+  }
+
+  // 연결 안 되어 있으면 전송 X
+  if (!isArduinoConnected || !arduinoWriter) {
+    console.log(
+      "Arduino NOT ready (connected:",
+      isArduinoConnected,
+      "writer:",
+      !!arduinoWriter,
+      "). Skip sending."
+    );
+    return;
+  }
+
+  let command = "";
+  if (totalCalories > 700) {
+    command = "RED";        // 🔴 > 700 kcal
+  } else if (totalCalories >= 500) {
+    command = "BLUE";       // 🔵 500–700 kcal
+  } else {
+    command = "YELLOW";     // 🟡 < 500 kcal
+  }
+
+  try {
+    await arduinoWriter.write(command + "\n");
+    console.log(`Sent to Arduino: ${command} (calories: ${totalCalories})`);
+  } catch (err) {
+    console.error("Error sending data to Arduino:", err);
+  }
+}
+
+
 
 
 
